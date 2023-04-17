@@ -119,6 +119,27 @@ module carfield import carfield_pkg::*;
     logic [HypNumPhys-1:0]                  hyper_dq_oe;
     logic [HypNumPhys-1:0]                  hyper_reset_n_wire;
 
+    assign jtag_tdo_o = '0;
+    assign jtag_tdo_oe_o = '0;
+    assign uart_tx_o = '0;
+    assign uart_rts_no = '0;
+    assign uart_dtr_no = '0;
+    assign i2c_sda_o = '0;
+    assign i2c_sda_en_o = '0;
+    assign i2c_scl_o = '0;
+    assign i2c_scl_en_o = '0;
+    assign spih_sck_o = '0;
+    assign spih_sck_en_o = '0;
+    assign spih_csb_o = '0;
+    assign spih_csb_en_o = '0;
+    assign spih_sd_o = '0;
+    assign spih_sd_en_o = '0;
+    assign gpio_o = '0;
+    assign gpio_en_o = '0;
+    assign slink_rcv_clk_o = '0;
+    assign slink_o = '0;
+
+/*
     // the SoC
     cheshire_soc #(
         .Cfg               ( Cfg                    ),
@@ -341,5 +362,5 @@ module carfield import carfield_pkg::*;
         .PAD ( pad_hyper_dq[i][7] )
       );
     end // block: gen_hyper_phy
-
+*/
 endmodule
