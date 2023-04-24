@@ -91,6 +91,8 @@ module carfield_soc_fixture;
 
   logic uart_tx;
   logic uart_rx;
+  logic ot_uart_tx;
+  logic ot_uart_rx;
 
   logic i2c_sda_o;
   logic i2c_sda_i;
@@ -149,6 +151,8 @@ module carfield_soc_fixture;
     .jtag_ot_tdo_oe_o(                    ),
     .uart_tx_o       ( uart_tx            ),
     .uart_rx_i       ( uart_rx            ),
+    .uart_ot_tx_o    ( ot_uart_tx         ),
+    .uart_ot_rx_i    ( ot_uart_rx         ),
     .uart_rts_no     (                    ),
     .uart_dtr_no     (                    ),
     .uart_cts_ni     ( 1'b0               ),
