@@ -30,6 +30,7 @@ sources:
   - hw/carfield_pkg.sv
   # Level 1
   - hw/cheshire_wrap.sv
+  - hw/hyperbus_wrap.sv
   - hw/l2_wrapper.sv
   # Level 2
   - hw/carfield.sv

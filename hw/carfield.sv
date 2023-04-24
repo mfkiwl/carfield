@@ -96,13 +96,6 @@ module carfield
 **********************************/
 `CHESHIRE_TYPEDEF_ALL(carfield_, Cfg)
 
-// Type for address map entries
-typedef struct packed {
-  logic [$bits(aw_bt)-1:0] idx;
-  logic [Cfg.AddrWidth-1:0] start_addr;
-  logic [Cfg.AddrWidth-1:0] end_addr;
-} addr_rule_t;
-
 // Generate indices and get maps for all ports
 localparam axi_in_t   AxiIn   = gen_axi_in(Cfg);
 localparam axi_out_t  AxiOut  = gen_axi_out(Cfg);
@@ -551,80 +544,69 @@ logic [HypNumPhys-1:0]                  hyper_reset_n_wire;
 logic [HypNumPhys-1:0]                  hyper_rst_n_out_wire;
 logic [HypNumPhys-1:0]                  hyper_rst_n_pen_wire;
 
-axi_cdc_dst #(
-  .LogDepth   ( LogDepth                   ),
-  .aw_chan_t  ( carfield_axi_llc_aw_chan_t ),
-  .w_chan_t   ( carfield_axi_llc_w_chan_t  ),
-  .b_chan_t   ( carfield_axi_llc_b_chan_t  ),
-  .ar_chan_t  ( carfield_axi_llc_ar_chan_t ),
-  .r_chan_t   ( carfield_axi_llc_r_chan_t  ),
-  .axi_req_t  ( carfield_axi_llc_req_t     ),
-  .axi_resp_t ( carfield_axi_llc_rsp_t     )
-) i_dram_mst_cdc_dst (
-  // asynchronous slave port
-  .async_data_slave_aw_data_i ( llc_aw_data ),
-  .async_data_slave_aw_wptr_i ( llc_aw_wptr ),
-  .async_data_slave_aw_rptr_o ( llc_aw_rptr ),
-  .async_data_slave_w_data_i  ( llc_w_data  ),
-  .async_data_slave_w_wptr_i  ( llc_w_wptr  ),
-  .async_data_slave_w_rptr_o  ( llc_w_rptr  ),
-  .async_data_slave_b_data_o  ( llc_b_data  ),
-  .async_data_slave_b_wptr_o  ( llc_b_wptr  ),
-  .async_data_slave_b_rptr_i  ( llc_b_rptr  ),
-  .async_data_slave_ar_data_i ( llc_ar_data ),
-  .async_data_slave_ar_wptr_i ( llc_ar_wptr ),
-  .async_data_slave_ar_rptr_o ( llc_ar_rptr ),
-  .async_data_slave_r_data_o  ( llc_r_data  ),
-  .async_data_slave_r_wptr_o  ( llc_r_wptr  ),
-  .async_data_slave_r_rptr_i  ( llc_r_rptr  ),
-  // synchronous master port
-  .dst_clk_i                  ( clk_i    ),
-  .dst_rst_ni                 ( rst_ni   ),
-  .dst_req_o                  ( dram_req ),
-  .dst_resp_i                 ( dram_rsp )
-);
-
-hyperbus #(
-  .NumChips         ( HypNumChips            ),
-  .NumPhys          ( HypNumPhys             ),
-  .IsClockODelayed  ( 1'b0                   ),
-  .AxiAddrWidth     ( Cfg.AddrWidth          ),
-  .AxiDataWidth     ( Cfg.AxiDataWidth       ),
-  .AxiIdWidth       ( AxiSlvIdWidth+1        ),
-  .AxiUserWidth     ( Cfg.AxiUserWidth       ),
-  .axi_req_t        ( carfield_axi_llc_req_t ),
-  .axi_rsp_t        ( carfield_axi_llc_rsp_t ),
-  .RegAddrWidth     ( Cfg.AddrWidth          ),
-  .RegDataWidth     ( 32'd32                 ),
-  .reg_req_t        ( carfield_reg_req_t     ),
-  .reg_rsp_t        ( carfield_reg_rsp_t     ),
-  .axi_rule_t       ( addr_rule_t            ),
-  .RxFifoLogDepth   ( 32'd2                  ),
-  .TxFifoLogDepth   ( 32'd2                  ),
-  .RstChipBase      ( 'h0                    ),
-  .RstChipSpace     ( 'h1_0000               ),
-  .PhyStartupCycles ( 300 * 200              ),
-  .AxiLogDepth      ( 32'd3                  )
-) i_hyperbus (
-  .clk_phy_i       ( hyp_clk_phy_i      ),
-  .rst_phy_ni      ( hyp_rst_phy_ni     ),
-  .clk_sys_i       ( clk_i              ),
-  .rst_sys_ni      ( rst_ni             ),
-  .test_mode_i     ( testmode_i         ),
-  .axi_req_i       ( dram_req           ),
-  .axi_rsp_o       ( dram_rsp           ),
-  .reg_req_i       ( ext_reg_req        ),
-  .reg_rsp_o       ( ext_reg_rsp        ),
-  .hyper_cs_no     ( hyper_cs_n_wire    ),
-  .hyper_ck_o      ( hyper_ck_wire      ),
-  .hyper_ck_no     ( hyper_ck_n_wire    ),
-  .hyper_rwds_o    ( hyper_rwds_o       ),
-  .hyper_rwds_i    ( hyper_rwds_i       ),
-  .hyper_rwds_oe_o ( hyper_rwds_oe      ),
-  .hyper_dq_i      ( hyper_dq_i         ),
-  .hyper_dq_o      ( hyper_dq_o         ),
-  .hyper_dq_oe_o   ( hyper_dq_oe        ),
-  .hyper_reset_no  ( hyper_reset_n_wire )
+hyperbus_wrap      #(
+  .NumChips         ( HypNumChips                ),
+  .NumPhys          ( HypNumPhys                 ),
+  .IsClockODelayed  ( 1'b0                       ),
+  .AxiAddrWidth     ( Cfg.AddrWidth              ),
+  .AxiDataWidth     ( Cfg.AxiDataWidth           ),
+  .AxiIdWidth       ( LlcIdWidth                 ),
+  .AxiUserWidth     ( Cfg.AxiUserWidth           ),
+  .axi_req_t        ( carfield_axi_llc_req_t     ),
+  .axi_rsp_t        ( carfield_axi_llc_rsp_t     ),
+  .axi_w_chan_t     ( carfield_axi_llc_w_chan_t  ),
+  .axi_b_chan_t     ( carfield_axi_llc_b_chan_t  ),
+  .axi_ar_chan_t    ( carfield_axi_llc_ar_chan_t ),
+  .axi_r_chan_t     ( carfield_axi_llc_r_chan_t  ),
+  .axi_aw_chan_t    ( carfield_axi_llc_aw_chan_t ),
+  .RegAddrWidth     ( Cfg.AddrWidth              ),
+  .RegDataWidth     ( 32'd32                     ),
+  .reg_req_t        ( carfield_reg_req_t         ),
+  .reg_rsp_t        ( carfield_reg_rsp_t         ),
+  .RxFifoLogDepth   ( 32'd2                      ),
+  .TxFifoLogDepth   ( 32'd2                      ),
+  .RstChipBase      ( 'h0                        ),
+  .RstChipSpace     ( 'h1_0000                   ),
+  .PhyStartupCycles ( 300 * 200                  ),
+  .AxiLogDepth      ( LogDepth                   ),
+  .AxiSlaveArWidth  ( LlcArWidth                 ),
+  .AxiSlaveAwWidth  ( LlcAwWidth                 ),
+  .AxiSlaveBWidth   ( LlcBWidth                  ),
+  .AxiSlaveRWidth   ( LlcRWidth                  ),
+  .AxiSlaveWWidth   ( LlcWWidth                  )
+) i_hyperbus_wrap   (
+  .clk_phy_i           ( hyp_clk_phy_i      ),
+  .rst_phy_ni          ( hyp_rst_phy_ni     ),
+  .clk_i               ( clk_i              ),
+  .rst_ni              ( rst_ni             ),
+  .test_mode_i         ( test_mode_i        ),
+  .axi_slave_ar_data_i ( llc_ar_data        ),
+  .axi_slave_ar_wptr_i ( llc_ar_wptr        ),
+  .axi_slave_ar_rptr_o ( llc_ar_rptr        ),
+  .axi_slave_aw_data_i ( llc_aw_data        ),
+  .axi_slave_aw_wptr_i ( llc_aw_wptr        ),
+  .axi_slave_aw_rptr_o ( llc_aw_rptr        ),
+  .axi_slave_b_data_o  ( llc_b_data         ),
+  .axi_slave_b_wptr_o  ( llc_b_wptr         ),
+  .axi_slave_b_rptr_i  ( llc_b_rptr         ),
+  .axi_slave_r_data_o  ( llc_r_data         ),
+  .axi_slave_r_wptr_o  ( llc_r_wptr         ),
+  .axi_slave_r_rptr_i  ( llc_r_rptr         ),
+  .axi_slave_w_data_i  ( llc_w_data         ),
+  .axi_slave_w_wptr_i  ( llc_w_wptr         ),
+  .axi_slave_w_rptr_o  ( llc_w_rptr         ),
+  .reg_req_i           ( ext_reg_req        ),
+  .reg_rsp_o           ( ext_reg_rsp        ),
+  .hyper_cs_no         ( hyper_cs_n_wire    ),
+  .hyper_ck_o          ( hyper_ck_wire      ),
+  .hyper_ck_no         ( hyper_ck_n_wire    ),
+  .hyper_rwds_o        ( hyper_rwds_o       ),
+  .hyper_rwds_i        ( hyper_rwds_i       ),
+  .hyper_rwds_oe_o     ( hyper_rwds_oe      ),
+  .hyper_dq_i          ( hyper_dq_i         ),
+  .hyper_dq_o          ( hyper_dq_o         ),
+  .hyper_dq_oe_o       ( hyper_dq_oe        ),
+  .hyper_reset_no      ( hyper_reset_n_wire )
 );
 
 // flip the polarity of the output enables

@@ -48,8 +48,8 @@ typedef enum doub_bt {
 
 // Ext Slaves: L2Ports + Safety Island + Integer Cluster + Security Island Mailbox
 localparam bit [2:0] AxiNumExtSlv = 3'd2 + 3'd1 + 3'd1 + 3'd1;
-// Ext Masters: Integer Cluster + Security Island
-localparam bit [2:0] AxiNumExtMst = 3'd1 + 3'd1;
+// Ext Masters: Integer Cluster + Security Island + Safety Island
+localparam bit [2:0] AxiNumExtMst = 3'd1 + 3'd1 + 3'd1;
 // Ext Interrupts: Security Island Mailbox
 localparam bit [2:0] NumExtIntrs = 3'd1;
 
