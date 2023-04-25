@@ -231,6 +231,8 @@ localparam int unsigned LlcWWidth  = (2**LogDepth)*
                                       axi_pkg::w_width(Cfg.AxiDataWidth,
                                                        Cfg.AxiUserWidth );
 
+logic [Cfg.AxiExtNumSlv] slave_isolate, slave_isolated;
+
 logic [LlcArWidth-1:0] llc_ar_data;
 logic [    LogDepth:0] llc_ar_wptr;
 logic [    LogDepth:0] llc_ar_rptr;
@@ -325,6 +327,9 @@ logic [ 3:0] spim_sd_en;
 // irq for Secure Subsytem and Cheshire
 logic        ibex_mbox_irq;
 logic        ches_mbox_irq;
+
+// Temporary assign
+assign slave_isolate = '0;
 
 /***************
 * Carfield IPs *
@@ -544,6 +549,9 @@ logic [HypNumPhys-1:0]                  hyper_reset_n_wire;
 logic [HypNumPhys-1:0]                  hyper_rst_n_out_wire;
 logic [HypNumPhys-1:0]                  hyper_rst_n_pen_wire;
 
+logic axi_hyper_isolate, axi_hyper_isolated;
+assign axi_hyper_isolate = '0;
+
 hyperbus_wrap      #(
   .NumChips         ( HypNumChips                ),
   .NumPhys          ( HypNumPhys                 ),
@@ -573,13 +581,16 @@ hyperbus_wrap      #(
   .AxiSlaveAwWidth  ( LlcAwWidth                 ),
   .AxiSlaveBWidth   ( LlcBWidth                  ),
   .AxiSlaveRWidth   ( LlcRWidth                  ),
-  .AxiSlaveWWidth   ( LlcWWidth                  )
+  .AxiSlaveWWidth   ( LlcWWidth                  ),
+  .AxiMaxTrans      ( Cfg.AxiMaxSlvTrans         )
 ) i_hyperbus_wrap   (
   .clk_phy_i           ( hyp_clk_phy_i      ),
   .rst_phy_ni          ( hyp_rst_phy_ni     ),
   .clk_i               ( clk_i              ),
   .rst_ni              ( rst_ni             ),
   .test_mode_i         ( test_mode_i        ),
+  .axi_isolate_i       ( axi_hyper_isolate  ), // To SoC Bus
+  .axi_isolated_o      ( axy_hyper_isolated ), // To SoC Bus
   .axi_slave_ar_data_i ( llc_ar_data        ),
   .axi_slave_ar_wptr_i ( llc_ar_wptr        ),
   .axi_slave_ar_rptr_o ( llc_ar_rptr        ),
@@ -668,18 +679,23 @@ end
 // Reconfigurable L2 Memory
 logic l2_ecc_err;
 
-l2_wrapper #(
+l2_wrap #(
   .NumPort      ( NumL2Ports             ),
   .AxiAddrWidth ( Cfg.AddrWidth          ),
   .AxiDataWidth ( Cfg.AxiDataWidth       ),
   .AxiIdWidth   ( AxiSlvIdWidth          ),
   .AxiUserWidth ( Cfg.AxiUserWidth       ),
+  .AxiMaxTrans  ( Cfg.AxiMaxSlvTrans     ),
   .LogDepth     ( LogDepth               ),
   .NumRules     ( L2NumRules             ),
   .L2MemSize    ( L2MemSize              )
 ) i_reconfigrurable_l2 (
   .clk_i               ( clk_i                                ),
   .rst_ni              ( rst_ni                               ),
+  .axi_isolate_i       ( {slave_isolate[L2Port1SlvIdx],
+                          slave_isolate[L2Port2SlvIdx]}       ), // To SoC Bus
+  .axi_isolated_o      ( {slave_isolated[L2Port1SlvIdx],
+                          slave_isolated[L2Port2SlvIdx]}      ), // To SoC Bus
   .slvport_ar_data_i   ( axi_slv_ext_ar_data [NumL2Ports-1:0] ),
   .slvport_ar_wptr_i   ( axi_slv_ext_ar_wptr [NumL2Ports-1:0] ),
   .slvport_ar_rptr_o   ( axi_slv_ext_ar_rptr [NumL2Ports-1:0] ),
@@ -719,6 +735,8 @@ safety_island_synth_wrapper #(
   .AxiUserWidth             ( Cfg.AxiUserWidth           ),
   .AxiInIdWidth             ( AxiSlvIdWidth              ),
   .AxiOutIdWidth            ( Cfg.AxiMstIdWidth          ),
+  .AxiMaxInTrans            ( Cfg.AxiMaxSlvTrans         ),
+  .AxiMaxOutTrans           ( Cfg.AxiMaxMstTrans         ),
   .LogDepth                 ( LogDepth                   ),
   .SafetyIslandBaseAddr     ( SafetyIslandBase           ),
   .SafetyIslandAddrRange    ( SafetyIslandSize           ),
@@ -749,17 +767,19 @@ safety_island_synth_wrapper #(
   .AsyncAxiOutArWidth       ( CarfieldAxiMstArWidth      ),
   .AsyncAxiOutRWidth        ( CarfieldAxiMstRWidth       )
 ) i_safety_island_wrap    (
-  .clk_i                  ( clk_i                         ),
-  .ref_clk_i              ( clk_i                         ),
-  .rst_ni                 ( rst_ni                        ),
-  .test_enable_i          ( '0                            ),
-  .bootmode_i             ( safety_island_bootmode        ),
-  .irqs_i                 ( '0                            ),
-  .jtag_tck_i             ( safety_jtag_tck               ),
-  .jtag_trst_ni           ( safety_jtag_trst              ),
-  .jtag_tms_i             ( safety_jtag_tms               ),
-  .jtag_tdi_i             ( safety_jtag_tdi               ),
-  .jtag_tdo_o             ( safety_jtag_tdo               ),
+  .clk_i                  ( clk_i                              ),
+  .ref_clk_i              ( clk_i                              ),
+  .rst_ni                 ( rst_ni                             ),
+  .test_enable_i          ( '0                                 ),
+  .bootmode_i             ( safety_island_bootmode             ),
+  .irqs_i                 ( '0                                 ),
+  .axi_isolate_i          ( slave_isolate[SafetyIslandSlvIdx]  ),
+  .axi_isolated_o         ( slave_isolated[SafetyIslandSlvIdx] ),
+  .jtag_tck_i             ( safety_jtag_tck                    ),
+  .jtag_trst_ni           ( safety_jtag_trst                   ),
+  .jtag_tms_i             ( safety_jtag_tms                    ),
+  .jtag_tdi_i             ( safety_jtag_tdi                    ),
+  .jtag_tdo_o             ( safety_jtag_tdo                    ),
   // Slave port
   .async_axi_in_aw_data_i ( axi_slv_ext_aw_data [SafetyIslandSlvIdx] ),
   .async_axi_in_aw_wptr_i ( axi_slv_ext_aw_wptr [SafetyIslandSlvIdx] ),
@@ -835,27 +855,29 @@ pulp_cluster #(
   .LOG_DEPTH                      ( LogDepth                  ),
   .BaseAddr                       ( IntClusterBase            )
 ) i_integer_cluster            (
-  .clk_i                       ( clk_i                         ),
-  .rst_ni                      ( rst_ni                        ),
-  .ref_clk_i                   ( clk_i                         ),
-  .pmu_mem_pwdn_i              ( '0                            ),
-  .base_addr_i                 ( '0                            ),
-  .test_mode_i                 ( test_mode_i                   ),
-  .cluster_id_i                ( IntClusterIndex               ),
-  .en_sa_boot_i                ( '0                            ), // To Soc Control
-  .fetch_en_i                  ( '0                            ), // To Soc Control
-  .eoc_o                       (                               ), // To Soc Control
-  .busy_o                      (                               ), // To Soc Control
-  .dma_pe_evt_ack_i            ( '0                            ), // To edge propagator
-  .dma_pe_evt_valid_o          (                               ), // To edge propagator
-  .dma_pe_irq_ack_i            ( '1                            ), // To edge propagator (?)
-  .dma_pe_irq_valid_o          (                               ), // To edge propagator (?)
-  .dbg_irq_valid_i             ( '0                            ), // To edge propagator (?)
-  .pf_evt_ack_i                ( '1                            ), // To edge propagator (?)
-  .pf_evt_valid_o              (                               ), // To edge propagator (?)
-  .async_cluster_events_wptr_i ( '0                            ), // To edge propagator (?)
-  .async_cluster_events_rptr_o (                               ), // To edge propagator (?)
-  .async_cluster_events_data_i ( '0                            ), // To edge propagator (?)
+  .clk_i                       ( clk_i                             ),
+  .rst_ni                      ( rst_ni                            ),
+  .ref_clk_i                   ( clk_i                             ),
+  .pmu_mem_pwdn_i              ( '0                                ),
+  .base_addr_i                 ( '0                                ),
+  .test_mode_i                 ( test_mode_i                       ),
+  .cluster_id_i                ( IntClusterIndex                   ),
+  .en_sa_boot_i                ( '0                                ), // To Soc Control
+  .fetch_en_i                  ( '0                                ), // To Soc Control
+  .eoc_o                       (                                   ), // To Soc Control
+  .busy_o                      (                                   ), // To Soc Control
+  .axi_isolate_i               ( slave_isolate[IntClusterSlvIdx]   ), // To SoC Control
+  .axi_isolated_o              ( slave_isolated[IntClusterSlvIdx]  ), // To SoC Control
+  .dma_pe_evt_ack_i            ( '0                                ), // To edge propagator
+  .dma_pe_evt_valid_o          (                                   ), // To edge propagator
+  .dma_pe_irq_ack_i            ( '1                                ), // To edge propagator (?)
+  .dma_pe_irq_valid_o          (                                   ), // To edge propagator (?)
+  .dbg_irq_valid_i             ( '0                                ), // To edge propagator (?)
+  .pf_evt_ack_i                ( '1                                ), // To edge propagator (?)
+  .pf_evt_valid_o              (                                   ), // To edge propagator (?)
+  .async_cluster_events_wptr_i ( '0                                ), // To edge propagator (?)
+  .async_cluster_events_rptr_o (                                   ), // To edge propagator (?)
+  .async_cluster_events_data_i ( '0                                ), // To edge propagator (?)
   // AXI4 Slave port
   .async_data_slave_aw_data_i  ( axi_slv_intcluster_aw_data ),
   .async_data_slave_aw_wptr_i  ( axi_slv_intcluster_aw_wptr ),

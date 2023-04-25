@@ -6,7 +6,7 @@
 // Yvan Tortorella <yvan.tortorella@unibo.it>
 
 `include "axi/typedef.svh"
-module l2_wrapper
+module l2_wrap
   import carfield_pkg::*;
   import axi_pkg::*;
   import car_l2_pkg::*;
@@ -17,6 +17,7 @@ module l2_wrapper
   parameter int unsigned AxiDataWidth = 64,
   parameter int unsigned AxiIdWidth   = 5,
   parameter int unsigned AxiUserWidth = 1,
+  parameter int unsigned AxiMaxTrans  = 8,
   parameter int unsigned LogDepth     = 3,
   /// Mapping rules
   parameter int unsigned NumRules   = car_l2_pkg::NUM_MAP_TYPES * NumPort,
@@ -46,7 +47,8 @@ module l2_wrapper
 )(
   input  logic                            clk_i            ,
   input  logic                            rst_ni           ,
-  // Port 1
+  input  logic [NumPort-1:0]              axi_isolate_i    ,
+  output logic [NumPort-1:0]              axi_isolated_o   ,
   input  logic [NumPort-1:0][ArWidth-1:0] slvport_ar_data_i,
   input  logic [NumPort-1:0][ LogDepth:0] slvport_ar_wptr_i,
   output logic [NumPort-1:0][ LogDepth:0] slvport_ar_rptr_o,
@@ -74,8 +76,8 @@ module l2_wrapper
                     logic [AxiStrbWidth-1:0],
                     logic [AxiUserWidth-1:0])
 
-axi_async_req_t [NumPort-1:0] axi_async_req;
-axi_async_rsp_t [NumPort-1:0] axi_async_rsp;
+axi_async_req_t [NumPort-1:0] axi_async_req, axi_isolate_req;
+axi_async_rsp_t [NumPort-1:0] axi_async_rsp, axi_isolate_rsp;
 
 for (genvar i = 0; i < NumPort; i++) begin: gen_cdc_fifos
   axi_cdc_dst #(
@@ -109,6 +111,27 @@ for (genvar i = 0; i < NumPort; i++) begin: gen_cdc_fifos
     .dst_rst_ni ( rst_ni            ),
     .dst_req_o  ( axi_async_req [i] ),
     .dst_resp_i ( axi_async_rsp [i] )
+  );
+
+  axi_isolate            #(
+    .NumPending           ( AxiMaxTrans     ),
+    .TerminateTransaction ( 1               ),
+    .AtopSupport          ( 1               ),
+    .AxiAddrWidth         ( AxiAddrWidth    ),
+    .AxiDataWidth         ( AxiDataWidth    ),
+    .AxiIdWidth           ( AxiIdWidth      ),
+    .AxiUserWidth         ( AxiUserWidth    ),
+    .axi_req_t            ( axi_async_req_t ),
+    .axi_resp_t           ( axi_async_rsp_t )
+  ) i_axi_slave_isolate   (
+    .clk_i                ( clk_i              ),
+    .rst_ni               ( rst_ni             ),
+    .slv_req_i            ( axi_async_req[i]   ),
+    .slv_resp_o           ( axi_async_rsp[i]   ),
+    .mst_req_o            ( axi_isolate_req[i] ),
+    .mst_resp_i           ( axi_isolate_rsp[i] ),
+    .isolate_i            ( axi_isolate_i[i]   ),
+    .isolated_o           ( axi_isolated_o[i]  )
   );
 end
 
@@ -145,12 +168,12 @@ car_l2_top #(
   .axi_req_t           ( axi_async_req_t ),
   .axi_resp_t          ( axi_async_rsp_t )
 ) i_l2_top             (
-  .clk_i               ( clk_i         ),
-  .rst_ni              ( rst_ni        ),
-  .mapping_rules_i     ( mapping_rules ),
-  .axi_req_i           ( axi_async_req ),
-  .axi_resp_o          ( axi_async_rsp ),
-  .ecc_error_o         ( ecc_error_o   )
+  .clk_i               ( clk_i           ),
+  .rst_ni              ( rst_ni          ),
+  .mapping_rules_i     ( mapping_rules   ),
+  .axi_req_i           ( axi_isolate_req ),
+  .axi_resp_o          ( axi_isolate_rsp ),
+  .ecc_error_o         ( ecc_error_o     )
 );
 
-endmodule: l2_wrapper
+endmodule: l2_wrap

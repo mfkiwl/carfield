@@ -12,6 +12,7 @@ module hyperbus_wrap #(
   parameter int unsigned AxiDataWidth    = -1,
   parameter int unsigned AxiIdWidth      = -1,
   parameter int unsigned AxiUserWidth    = -1,
+  parameter int unsigned AxiMaxTrans     = 0 ,
   parameter type         axi_req_t       = logic,
   parameter type         axi_rsp_t       = logic,
   parameter type         axi_w_chan_t    = logic,
@@ -39,11 +40,13 @@ module hyperbus_wrap #(
   parameter int unsigned AxiSlaveRWidth  = 0,
   parameter int unsigned AxiSlaveWWidth  = 0
 )(
-  input  logic clk_phy_i  ,
-  input  logic rst_phy_ni ,
-  input  logic clk_i      ,
-  input  logic rst_ni     ,
-  input  logic test_mode_i,
+  input  logic clk_phy_i     ,
+  input  logic rst_phy_ni    ,
+  input  logic clk_i         ,
+  input  logic rst_ni        ,
+  input  logic test_mode_i   ,
+  input  logic axi_isolate_i ,
+  output logic axi_isolated_o,
   // AXI bus
   input  logic [AxiSlaveArWidth-1:0] axi_slave_ar_data_i,
   input  logic [      AxiLogDepth:0] axi_slave_ar_wptr_i,
@@ -82,8 +85,8 @@ typedef struct packed {
   logic [AxiAddrWidth-1:0] end_addr;
 } addr_rule_t;
 
-axi_req_t hyper_req;
-axi_rsp_t hyper_rsp;
+axi_req_t hyper_req, hyper_isolate_req;
+axi_rsp_t hyper_rsp, hyper_isolate_rsp;
 
 axi_cdc_dst      #(
   .LogDepth       ( AxiLogDepth   ),
@@ -118,47 +121,68 @@ axi_cdc_dst      #(
   .dst_resp_i                 ( hyper_rsp )
 );
 
+axi_isolate            #(
+  .NumPending           ( AxiMaxTrans  ),
+  .TerminateTransaction ( 1            ),
+  .AtopSupport          ( 1            ),
+  .AxiAddrWidth         ( AxiAddrWidth ),
+  .AxiDataWidth         ( AxiDataWidth ),
+  .AxiIdWidth           ( AxiIdWidth   ),
+  .AxiUserWidth         ( AxiUserWidth ),
+  .axi_req_t            ( axi_req_t    ),
+  .axi_resp_t           ( axi_rsp_t    )
+) i_axi_slave_isolate   (
+  .clk_i                ( clk_i             ),
+  .rst_ni               ( rst_ni            ),
+  .slv_req_i            ( hyper_req         ),
+  .slv_resp_o           ( hyper_rsp         ),
+  .mst_req_o            ( hyper_isolate_req ),
+  .mst_resp_i           ( hyper_isolate_rsp ),
+  .isolate_i            ( axi_isolate_i     ),
+  .isolated_o           ( axi_isolated_o    )
+);
+
 hyperbus           #(
-  .NumChips         ( NumChips               ),
-  .NumPhys          ( NumPhys                ),
-  .IsClockODelayed  ( IsClockODelayed        ),
-  .AxiAddrWidth     ( AxiAddrWidth           ),
-  .AxiDataWidth     ( AxiDataWidth           ),
-  .AxiIdWidth       ( AxiIdWidth             ),
-  .AxiUserWidth     ( AxiUserWidth           ),
-  .axi_req_t        ( axi_req_t              ),
-  .axi_rsp_t        ( axi_rsp_t              ),
-  .RegAddrWidth     ( RegAddrWidth           ),
-  .RegDataWidth     ( RegDataWidth           ),
-  .reg_req_t        ( reg_req_t              ),
-  .reg_rsp_t        ( reg_rsp_t              ),
-  .axi_rule_t       ( addr_rule_t            ),
-  .RxFifoLogDepth   ( RxFifoLogDepth         ),
-  .TxFifoLogDepth   ( TxFifoLogDepth         ),
-  .RstChipBase      ( RstChipBase            ),
-  .RstChipSpace     ( RstChipSpace           ),
-  .PhyStartupCycles ( PhyStartupCycles       ),
-  .AxiLogDepth      ( AxiLogDepth            )
+  .NumChips         ( NumChips         ),
+  .NumPhys          ( NumPhys          ),
+  .IsClockODelayed  ( IsClockODelayed  ),
+  .AxiAddrWidth     ( AxiAddrWidth     ),
+  .AxiDataWidth     ( AxiDataWidth     ),
+  .AxiIdWidth       ( AxiIdWidth       ),
+  .AxiUserWidth     ( AxiUserWidth     ),
+  .axi_req_t        ( axi_req_t        ),
+  .axi_rsp_t        ( axi_rsp_t        ),
+  .RegAddrWidth     ( RegAddrWidth     ),
+  .RegDataWidth     ( RegDataWidth     ),
+  .reg_req_t        ( reg_req_t        ),
+  .reg_rsp_t        ( reg_rsp_t        ),
+  .axi_rule_t       ( addr_rule_t      ),
+  .RxFifoLogDepth   ( RxFifoLogDepth   ),
+  .TxFifoLogDepth   ( TxFifoLogDepth   ),
+  .RstChipBase      ( RstChipBase      ),
+  .RstChipSpace     ( RstChipSpace     ),
+  .PhyStartupCycles ( PhyStartupCycles ),
+  .AxiLogDepth      ( AxiLogDepth      )
 ) i_hyperbus        (
-  .clk_phy_i        ( clk_phy_i       ),
-  .rst_phy_ni       ( rst_phy_ni      ),
-  .clk_sys_i        ( clk_i           ),
-  .rst_sys_ni       ( rst_ni          ),
-  .test_mode_i      ( test_mode_i     ),
-  .axi_req_i        ( hyper_req       ),
-  .axi_rsp_o        ( hyper_rsp       ),
-  .reg_req_i        ( reg_req_i       ),
-  .reg_rsp_o        ( reg_rsp_o       ),
-  .hyper_cs_no      ( hyper_cs_no     ),
-  .hyper_ck_o       ( hyper_ck_o      ),
-  .hyper_ck_no      ( hyper_ck_no     ),
-  .hyper_rwds_o     ( hyper_rwds_o    ),
-  .hyper_rwds_i     ( hyper_rwds_i    ),
-  .hyper_rwds_oe_o  ( hyper_rwds_oe_o ),
-  .hyper_dq_i       ( hyper_dq_i      ),
-  .hyper_dq_o       ( hyper_dq_o      ),
-  .hyper_dq_oe_o    ( hyper_dq_oe_o   ),
-  .hyper_reset_no   ( hyper_reset_no  )
+  .clk_phy_i        ( clk_phy_i         ),
+  .rst_phy_ni       ( rst_phy_ni        ),
+  .clk_sys_i        ( clk_i             ),
+  .rst_sys_ni       ( rst_ni            ),
+  .test_mode_i      ( test_mode_i       ),
+  .axi_req_i        ( hyper_isolate_req ),
+  .axi_rsp_o        ( hyper_isolate_rsp ),
+  .reg_req_i        ( reg_req_i         ),
+  .reg_rsp_o        ( reg_rsp_o         ),
+  .hyper_cs_no      ( hyper_cs_no       ),
+  .hyper_ck_o       ( hyper_ck_o        ),
+  .hyper_ck_no      ( hyper_ck_no       ),
+  .hyper_rwds_o     ( hyper_rwds_o      ),
+  .hyper_rwds_i     ( hyper_rwds_i      ),
+  .hyper_rwds_oe_o  ( hyper_rwds_oe_o   ),
+  .hyper_dq_i       ( hyper_dq_i        ),
+  .hyper_dq_o       ( hyper_dq_o        ),
+  .hyper_dq_oe_o    ( hyper_dq_oe_o     ),
+  .hyper_reset_no   ( hyper_reset_no    )
 );
 
 endmodule: hyperbus_wrap
