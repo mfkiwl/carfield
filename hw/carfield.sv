@@ -17,16 +17,34 @@ module carfield
   import safety_island_pkg::*;
   import tlul_pkg::*;
 #(
-  parameter cheshire_cfg_t Cfg = carfield_pkg::CarfieldCfgDefault,
-  parameter int unsigned HypNumPhys  = 1,
-  parameter int unsigned HypNumChips = 1
+  parameter int unsigned HypNumPhys  = 2,
+  parameter int unsigned HypNumChips = 2,
+  parameter int unsigned SlinkNumChan = 1,
+  parameter int unsigned SlinkNumLanes = 8,
+  parameter int unsigned SpihNumCs = 2,
+  parameter int unsigned NumGpios = 32,
+  parameter string RomCtrlBootRomInitFile = "",
+  parameter string OtpCtrlMemInitFile     = "",
+  parameter string FlashCtrlMemInitFile   = ""
 ) (
-  input   logic                                       clk_i,
+  // CLOCK pins
+  // ref clock
+  input   logic                                       ref_clk_i,
+  // BYPASS FLL pis
+  input   logic                                       bypass_fll_i,
+  // EXT CLK 0
+  input   logic                                       ext_clk_0_i,
+  // EXT CLK 1
+  input   logic                                       ext_clk_1_i,
+  // SEL CLK pins
+  input   logic [1:0]                                 sel_clk_src_i,
+  // RESET pin
   input   logic                                       rst_ni,
+  // TESTMODE pin
   input   logic                                       test_mode_i,
-  // Boot mode selection
+  // Cheshire BOOT pins (3 pins)
   input   logic [1:0]                                 boot_mode_i,
-  // CLINT
+  // CLINT (what is this?)
   input   logic                                       rtc_i,
   // Cheshire JTAG Interface
   input   logic                                       jtag_tck_i,
@@ -48,27 +66,33 @@ module carfield
   input   logic                                       jtag_safety_island_tms_i,
   input   logic                                       jtag_safety_island_tdi_i,
   output  logic                                       jtag_safety_island_tdo_o,
-  // UART Interface
+  // Secure Subsystem BOOT pins
+  input   logic [1:0]                                 bootmode_ot_i,
+  // unused by safety island -- tdo pad always out mode
+  output  logic                                       jtag_safe_isln_tdo_oe_o,
+  // Safety Island BOOT pins
+  input   logic [1:0]                                 bootmode_safe_isln_i,
+  // Host UART Interface
   output logic                                        uart_tx_o,
   input  logic                                        uart_rx_i,
-  // Cheshire UART Interface
+  // Secure Subsystem UART Interface
   output logic                                        uart_ot_tx_o,
   input  logic                                        uart_ot_rx_i,
-  // Controle Flow UART Modem
-  output logic                                        uart_rts_no,
-  output logic                                        uart_dtr_no,
-  input  logic                                        uart_cts_ni,
-  input  logic                                        uart_dsr_ni,
-  input  logic                                        uart_dcd_ni,
-  input  logic                                        uart_rin_ni,
-  // I2C Interface
+  // Controle Flow UART Modem (what is this?)
+  //output logic                                      uart_rts_no,
+  //output logic                                      uart_dtr_no,
+  //input  logic                                      uart_cts_ni,
+  //input  logic                                      uart_dsr_ni,
+  //input  logic                                      uart_dcd_ni,
+  //input  logic                                      uart_rin_ni,
+  // Host I2C Interface pins
   output logic                                        i2c_sda_o,
   input  logic                                        i2c_sda_i,
   output logic                                        i2c_sda_en_o,
   output logic                                        i2c_scl_o,
   input  logic                                        i2c_scl_i,
   output logic                                        i2c_scl_en_o,
-  // SPI Host Interface
+  // Host SPI Master Interface
   output logic                                        spih_sck_o,
   output logic                                        spih_sck_en_o,
   output logic [SpihNumCs-1:0]                        spih_csb_o,
@@ -76,7 +100,31 @@ module carfield
   output logic [ 3:0]                                 spih_sd_o,
   output logic [ 3:0]                                 spih_sd_en_o,
   input  logic [ 3:0]                                 spih_sd_i,
-  // GPIO interface
+  // Secure Subsystem QSPI Master Interface
+  output logic                                        spih_ot_sck_o,
+  output logic                                        spih_ot_sck_en_o,
+  output logic                                        spih_ot_csb_o,
+  output logic                                        spih_ot_csb_en_o,
+  output logic [ 3:0]                                 spih_ot_sd_o,
+  output logic [ 3:0]                                 spih_ot_sd_en_o,
+  input  logic [ 3:0]                                 spih_ot_sd_i,
+  // ETHERNET interface
+  input  logic                                        eth_rxck_i,
+  input  logic                                        eth_rxctl_i,
+  input  logic  [ 3:0]                                eth_rxd_i,
+  input  logic                                        eth_md_i,
+  output logic                                        eth_txck_o,
+  output logic                                        eth_txctl_o,
+  output logic  [ 3:0]                                eth_txd_o,
+  output logic                                        eth_md_o,
+  output logic                                        eth_md_oe,
+  output logic                                        eth_md_oe,
+  output logic                                        eth_mdc_o,
+  output logic                                        eth_rst_n_o,
+  // CAN interface
+  input  logic                                        can_rx_i,
+  output logic                                        can_tx_o,
+  // GPIOs
   input  logic [31:0]                                 gpio_i,
   output logic [31:0]                                 gpio_o,
   output logic [31:0]                                 gpio_en_o,
@@ -85,22 +133,29 @@ module carfield
   output logic [SlinkNumChan-1:0]                     slink_rcv_clk_o,
   input  logic [SlinkNumChan-1:0][SlinkNumLanes-1:0]  slink_i,
   output logic [SlinkNumChan-1:0][SlinkNumLanes-1:0]  slink_o,
-  // HyperBus clocks
-  input  logic                                        hyp_clk_phy_i,
-  input  logic                                        hyp_rst_phy_ni,
-  // Physical interace: facing HyperBus
-  inout  [HypNumPhys-1:0][HypNumChips-1:0]            pad_hyper_csn,
-  inout  [HypNumPhys-1:0]                             pad_hyper_ck,
-  inout  [HypNumPhys-1:0]                             pad_hyper_ckn,
-  inout  [HypNumPhys-1:0]                             pad_hyper_rwds,
-  inout  [HypNumPhys-1:0]                             pad_hyper_reset,
-  inout  [HypNumPhys-1:0][7:0]                        pad_hyper_dq
+  // HyperBus interface
+  output logic [HypNumPhys-1:0][HypNumChips-1:0]      hyper_cs_n_o,
+  output logic [HypNumPhys-1:0]                       hyper_ck_o,
+  output logic [HypNumPhys-1:0]                       hyper_ck_n_o,
+  output logic [HypNumPhys-1:0]                       hyper_rwds_o,
+  input  logic [HypNumPhys-1:0]                       hyper_rwds_i,
+  output logic [HypNumPhys-1:0]                       hyper_rwds_oe_o,
+  input  logic [HypNumPhys-1:0][7:0]                  hyper_dq_i,
+  output logic [HypNumPhys-1:0][7:0]                  hyper_dq_o,
+  output logic [HypNumPhys-1:0]                       hyper_dq_oe_o,
+  output logic [HypNumPhys-1:0]                       hyper_reset_n_o,
+
+  // padframe configuration
+  output logic                                        padframe_cfg_clk_o,
+  input  logic                                        padframe_cfg_rstn_o,
+  output carfield_reg_req_t                           padframe_cfg_req_o,
+  input  carfield_reg_rsp_t                           padframe_cfg_rsp_i,
+
 );
 
 /*********************************
 * General parameters and defines *
 **********************************/
-`CHESHIRE_TYPEDEF_ALL(carfield_, Cfg)
 
 // Generate indices and get maps for all ports
 localparam axi_in_t   AxiIn   = gen_axi_in(Cfg);
@@ -336,6 +391,17 @@ carfield_reg_rsp_t reg_hyper_rsp;
 carfield_reg_req_t reg_wdt_req;
 carfield_reg_rsp_t reg_wdt_rsp;
 
+// Temporary assign -- CLOCK
+// these clocks will be generated by the soc ctrl module (PLLs)
+logic clk_i;
+logic hyp_clk_phy_i;
+logic hyp_rst_phy_ni;
+assign clk_i = ref_clk_i;
+assign hyp_clk_phy_i = ref_clk_i;
+assign hyp_rst_phy_ni = ref_clk_i;
+assign padframe_cfg_clk_o = ref_clk_i;
+assign padframe_cfg_rstn_o = rst_ni;
+
 /***************
 * Carfield IPs *
 ***************/
@@ -537,26 +603,6 @@ cheshire_wrap #(
 );
 
 // Hyperbus
-logic [HypNumPhys-1:0][HypNumChips-1:0] hyper_cs_n_wire;
-logic [HypNumPhys-1:0][HypNumChips-1:0] hyper_cs_pen_wire;
-logic [HypNumPhys-1:0][HypNumChips-1:0] hyper_cs_pad_out;
-logic [HypNumPhys-1:0]                  hyper_ck_wire;
-logic [HypNumPhys-1:0]                  hyper_ck_out_wire;
-logic [HypNumPhys-1:0]                  hyper_ck_pen_wire;
-logic [HypNumPhys-1:0]                  hyper_ck_n_wire;
-logic [HypNumPhys-1:0]                  hyper_ck_n_out_wire;
-logic [HypNumPhys-1:0]                  hyper_ck_n_pen_wire;
-logic [HypNumPhys-1:0]                  hyper_rwds_o;
-logic [HypNumPhys-1:0]                  hyper_rwds_i;
-logic [HypNumPhys-1:0]                  hyper_rwds_oe;
-logic [HypNumPhys-1:0]                  hyper_rwds_pen;
-logic [HypNumPhys-1:0][7:0]             hyper_dq_i;
-logic [HypNumPhys-1:0][7:0]             hyper_dq_o;
-logic [HypNumPhys-1:0][7:0]             hyper_dq_pen;
-logic [HypNumPhys-1:0]                  hyper_dq_oe;
-logic [HypNumPhys-1:0]                  hyper_reset_n_wire;
-logic [HypNumPhys-1:0]                  hyper_rst_n_out_wire;
-logic [HypNumPhys-1:0]                  hyper_rst_n_pen_wire;
 
 hyperbus_wrap      #(
   .NumChips         ( HypNumChips                ),
@@ -617,11 +663,11 @@ hyperbus_wrap      #(
   .hyper_ck_no         ( hyper_ck_n_wire    ),
   .hyper_rwds_o        ( hyper_rwds_o       ),
   .hyper_rwds_i        ( hyper_rwds_i       ),
-  .hyper_rwds_oe_o     ( hyper_rwds_oe      ),
+  .hyper_rwds_oe_o     ( hyper_rwds_oe_o    ),
   .hyper_dq_i          ( hyper_dq_i         ),
   .hyper_dq_o          ( hyper_dq_o         ),
-  .hyper_dq_oe_o       ( hyper_dq_oe        ),
-  .hyper_reset_no      ( hyper_reset_n_wire )
+  .hyper_dq_oe_o       ( hyper_dq_oe_o      ),
+  .hyper_reset_no      ( hyper_reset_n_o    )
 );
 
 for (genvar i = 0 ; i<HypNumPhys; i++) begin : gen_hyper_phy

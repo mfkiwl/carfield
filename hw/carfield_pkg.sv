@@ -6,6 +6,8 @@
 // Yvan Tortorella <yvan.tortorella@unibo.it>
 // Alessandro Ottaviano <aottaviano@iis.ee.ethz.ch>
 
+`include "cheshire/typedef.svh"
+
 /// Carfield constants and Cheshire overwrites
 package carfield_pkg;
 
@@ -112,7 +114,7 @@ localparam bit [2:0] AxiNumExtMst = 3'd1 + 3'd1 + 3'd1;
 // Ext Interrupts: Security Island Mailbox
 localparam bit [2:0] NumExtIntrs = 3'd1;
 
-localparam cheshire_cfg_t CarfieldCfgDefault = '{
+localparam cheshire_cfg_t Cfg = '{
   // CVA6 parameters
   Cva6RASDepth      : ariane_pkg::ArianeDefaultConfig.RASDepth,
   Cva6BTBEntries    : ariane_pkg::ArianeDefaultConfig.BTBEntries,
@@ -227,6 +229,11 @@ localparam cheshire_cfg_t CarfieldCfgDefault = '{
   // All non-set values should be zero
   default: '0
 };
+
+/**********************/
+/* CHESHIRE TYPEDEF   */
+/**********************/
+`CHESHIRE_TYPEDEF_ALL(carfield_, Cfg)
 
 /**********************/
 /* General Parameters */
