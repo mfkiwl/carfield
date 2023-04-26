@@ -90,17 +90,86 @@ module carfield_soc_fixture;
   logic [SlinkNumChan-1:0][SlinkNumLanes-1:0] slink_i;
   logic [SlinkNumChan-1:0][SlinkNumLanes-1:0] slink_o;
 
-  wire  [NumPhys-1:0][NumChips-1:0] hyper_cs_n_wire;
-  wire  [NumPhys-1:0]               hyper_ck_wire;
-  wire  [NumPhys-1:0]               hyper_ck_n_wire;
-  wire  [NumPhys-1:0]               hyper_rwds_wire;
-  wire  [NumPhys-1:0][7:0]          hyper_dq_wire;
-  wire  [NumPhys-1:0]               hyper_reset_n_wire;
+  // hyperbus tristate signals
+  wire  [NumPhys-1:0][NumChips-1:0] w_hyper_csn;
+  wire  [NumPhys-1:0]               w_hyper_ck;
+  wire  [NumPhys-1:0]               w_hyper_ckn;
+  wire  [NumPhys-1:0]               w_hyper_rwds;
+  wire  [NumPhys-1:0][7:0]          w_hyper_dq;
+  wire  [NumPhys-1:0]               w_hyper_reset_n;
+  // cs
+  logic [NumPhys-1:0][NumChips-1:0] hyper_cs_no;
+  // ck
+  logic [NumPhys-1:0]               hyper_ck_o;
+  // ck_no
+  logic [NumPhys-1:0]               hyper_ck_no;
+  // rwd
+  logic [NumPhys-1:0]               hyper_rwds_o;
+  logic [NumPhys-1:0]               hyper_rwds_i;
+  logic [NumPhys-1:0]               hyper_rwds_oe_o;
+  // dq
+  logic [NumPhys-1:0][7:0]          hyper_dq_i;
+  logic [NumPhys-1:0][7:0]          hyper_dq_o;
+  logic [NumPhys-1:0]               hyper_dq_oe_o;
+  // reset
+  logic [NumPhys-1:0]               hyper_reset_no;
+
+  // tristate for hyperbus
+  for (genvar i = 0 ; i<NumPhys; i++) begin : gen_hyper_phy
+    for (genvar j = 0; j<NumChips; j++) begin : gen_hyper_cs
+      pad_functional_pd padinst_hyper_csno (
+        .OEN ( 1'b0                ),
+        .I   ( hyper_cs_no[i][j]   ),
+        .O   (                     ),
+        .PEN (                     ),
+        .PAD ( w_hyper_csn[i][j] )
+      );
+    end
+    pad_functional_pd padinst_hyper_ck (
+      .OEN ( 1'b0             ),
+      .I   ( hyper_ck_o[i]    ),
+      .O   (                  ),
+      .PEN (                  ),
+      .PAD ( w_hyper_ck[i] )
+    );
+    pad_functional_pd padinst_hyper_ckno   (
+      .OEN ( 1'b0              ),
+      .I   ( hyper_ck_no[i]    ),
+      .O   (                   ),
+      .PEN (                   ),
+      .PAD ( w_hyper_ckn[i] )
+    );
+    pad_functional_pd padinst_hyper_rwds0  (
+      .OEN (~hyper_rwds_oe_o[i] ),
+      .I   ( hyper_rwds_o[i]    ),
+      .O   ( hyper_rwds_i[i]    ),
+      .PEN (                    ),
+      .PAD ( w_hyper_rwds[i] )
+    );
+    pad_functional_pd padinst_hyper_resetn (
+      .OEN ( 1'b0                  ),
+      .I   ( hyper_reset_no[i]     ),
+      .O   (                       ),
+      .PEN (                       ),
+      .PAD ( w_hyper_reset_n[i] )
+    );
+    for (genvar j = 0; j < 8; j++) begin : gen_hyper_dq
+      pad_functional_pd padinst_hyper_dqio0  (
+        .OEN (~hyper_dq_oe_o[i]    ),
+        .I   ( hyper_dq_o[i][j]    ),
+        .O   ( hyper_dq_i[i][j]    ),
+        .PEN (                     ),
+        .PAD ( w_hyper_dq[i][j] )
+      );
+    end
+  end
 
   carfield      #(
-    .Cfg         ( DutCfg   ),
-    .HypNumPhys  ( NumPhys  ),
-    .HypNumChips ( NumChips )
+    .Cfg         ( DutCfg    ),
+    .HypNumPhys  ( NumPhys   ),
+    .HypNumChips ( NumChips  ),
+    .reg_req_t   ( reg_req_t ),
+    .reg_rsp_t   ( reg_rsp_t )
   ) i_dut                       (
     .host_clk_i                 ( clk                       ),
     .periph_clk_i               ( clk                       ),
@@ -130,18 +199,13 @@ module carfield_soc_fixture;
     .uart_rx_i                  ( uart_rx                   ),
     .uart_ot_tx_o               ( ot_uart_tx                ),
     .uart_ot_rx_i               ( ot_uart_rx                ),
-    .uart_rts_no                (                           ),
-    .uart_dtr_no                (                           ),
-    .uart_cts_ni                ( 1'b0                      ),
-    .uart_dsr_ni                ( 1'b0                      ),
-    .uart_dcd_ni                ( 1'b0                      ),
-    .uart_rin_ni                ( 1'b0                      ),
     .i2c_sda_o                  ( i2c_sda_o                 ),
     .i2c_sda_i                  ( i2c_sda_i                 ),
     .i2c_sda_en_o               ( i2c_sda_en                ),
     .i2c_scl_o                  ( i2c_scl_o                 ),
     .i2c_scl_i                  ( i2c_scl_i                 ),
     .i2c_scl_en_o               ( i2c_scl_en                ),
+    // hostd spi
     .spih_sck_o                 ( spih_sck_o                ),
     .spih_sck_en_o              ( spih_sck_en               ),
     .spih_csb_o                 ( spih_csb_o                ),
@@ -149,6 +213,14 @@ module carfield_soc_fixture;
     .spih_sd_o                  ( spih_sd_o                 ),
     .spih_sd_en_o               ( spih_sd_en                ),
     .spih_sd_i                  ( spih_sd_i                 ),
+    // secd spi
+    .spih_ot_sck_o              (                           ),
+    .spih_ot_sck_en_o           (                           ),
+    .spih_ot_csb_o              (                           ),
+    .spih_ot_csb_en_o           (                           ),
+    .spih_ot_sd_o               (                           ),
+    .spih_ot_sd_en_o            (                           ),
+    .spih_ot_sd_i               ( '0                        ),
     .gpio_i                     ( '0                        ),
     .gpio_o                     (                           ),
     .gpio_en_o                  (                           ),
@@ -158,12 +230,20 @@ module carfield_soc_fixture;
     .slink_o                    ( slink_o                   ),
     .hyp_clk_phy_i              ( clk                       ),
     .hyp_rst_phy_ni             ( rst_n                     ),
-    .pad_hyper_csn              ( hyper_cs_n_wire           ),
-    .pad_hyper_ck               ( hyper_ck_wire             ),
-    .pad_hyper_ckn              ( hyper_ck_n_wire           ),
-    .pad_hyper_rwds             ( hyper_rwds_wire           ),
-    .pad_hyper_reset            ( hyper_reset_n_wire        ),
-    .pad_hyper_dq               ( hyper_dq_wire             )
+    .hyper_cs_no                ( hyper_cs_no               ),
+    .hyper_ck_o                 ( hyper_ck_o                ),
+    .hyper_ck_no                ( hyper_ck_no               ),
+    .hyper_rwds_o               ( hyper_rwds_o              ),
+    .hyper_rwds_i               ( hyper_rwds_i              ),
+    .hyper_rwds_oe_o            ( hyper_rwds_oe_o           ),
+    .hyper_dq_i                 ( hyper_dq_i                ),
+    .hyper_dq_o                 ( hyper_dq_o                ),
+    .hyper_dq_oe_o              ( hyper_dq_oe_o             ),
+    .hyper_reset_no             ( hyper_reset_no            ),
+    .pll_cfg_reg_req_o          (                           ),
+    .pll_cfg_reg_rsp_i          ( '0                        ),
+    .padframe_cfg_reg_req_o     (                           ),
+    .padframe_cfg_reg_rsp_i     ( '0                        )
   );
 
   //////////////
@@ -177,19 +257,19 @@ module carfield_soc_fixture;
           /*.mem_file_name ( "s27ks0641.mem"    ),*/
           .TimingModel ( "S27KS0641DPBHI020"    )
         ) i_s27ks0641  (
-          .DQ7      ( hyper_dq_wire[i][7]      ),
-          .DQ6      ( hyper_dq_wire[i][6]      ),
-          .DQ5      ( hyper_dq_wire[i][5]      ),
-          .DQ4      ( hyper_dq_wire[i][4]      ),
-          .DQ3      ( hyper_dq_wire[i][3]      ),
-          .DQ2      ( hyper_dq_wire[i][2]      ),
-          .DQ1      ( hyper_dq_wire[i][1]      ),
-          .DQ0      ( hyper_dq_wire[i][0]      ),
-          .RWDS     ( hyper_rwds_wire[i]       ),
-          .CSNeg    ( hyper_cs_n_wire[i][j]    ),
-          .CK       ( hyper_ck_wire[i]         ),
-          .CKNeg    ( hyper_ck_n_wire[i]       ),
-          .RESETNeg ( hyper_reset_n_wire[i]    )
+          .DQ7      ( w_hyper_dq[i][7]   ),
+          .DQ6      ( w_hyper_dq[i][6]   ),
+          .DQ5      ( w_hyper_dq[i][5]   ),
+          .DQ4      ( w_hyper_dq[i][4]   ),
+          .DQ3      ( w_hyper_dq[i][3]   ),
+          .DQ2      ( w_hyper_dq[i][2]   ),
+          .DQ1      ( w_hyper_dq[i][1]   ),
+          .DQ0      ( w_hyper_dq[i][0]   ),
+          .RWDS     ( w_hyper_rwds[i]    ),
+          .CSNeg    ( w_hyper_csn[i][j] ),
+          .CK       ( w_hyper_ck[i]      ),
+          .CKNeg    ( w_hyper_ckn[i]    ),
+          .RESETNeg ( w_hyper_reset_n[i] )
         );
       end
     end
