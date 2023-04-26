@@ -212,8 +212,7 @@ localparam int unsigned IntClusterNumAxiSlv = 4;
 localparam int unsigned IntClusterAxiIdInWidth = $clog2(IntClusterNumCacheBanks) + 1;
 localparam int unsigned IntClusterAxiIdOutWidth = IntClusterAxiIdInWidth     +
                                                   $clog2(IntClusterNumAxiSlv);
-localparam int unsigned IntClusterNarrowAddrWidth = 32;
-localparam int unsigned IntClusterNarrowDataWidth = 32;
+localparam int unsigned IntClusterMaxUniqId = 1;
 localparam logic [ 5:0] IntClusterIndex = '0;
 
 endpackage

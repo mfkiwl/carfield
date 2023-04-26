@@ -544,21 +544,16 @@ axi_cdc_src  #(
   .async_data_master_r_rptr_o  ( axi_slv_intcluster_r_rptr_o  )
 );
 
-axi_id_serialize #(
-  .AxiSlvPortIdWidth      ( ExtSlvIdWidth              ),
-  .AxiSlvPortMaxTxns      ( Cfg.AxiMaxSlvTrans         ),
-  .AxiMstPortIdWidth      ( IntClusterAxiIdInWidth     ),
-  .AxiMstPortMaxUniqIds   ( 2**IntClusterAxiIdInWidth  ), // Max value
-  .AxiMstPortMaxTxnsPerId ( Cfg.AxiMaxMstTrans         ),
-  .AxiAddrWidth           ( Cfg.AddrWidth              ),
-  .AxiDataWidth           ( Cfg.AxiDataWidth           ),
-  .AxiUserWidth           ( Cfg.AxiUserWidth           ),
-  .AtopSupport            ( 0                          ), // Change me if needed
-  .slv_req_t              ( cheshire_axi_ext_slv_req_t ),
-  .slv_resp_t             ( cheshire_axi_ext_slv_rsp_t ),
-  .mst_req_t              ( axi_intcluster_slv_req_t   ),
-  .mst_resp_t             ( axi_intcluster_slv_rsp_t   )
-) i_integer_cluster_axi_slv_id_serializer          (
+axi_id_remap            #(
+  .AxiSlvPortIdWidth     ( ExtSlvIdWidth              ),
+  .AxiSlvPortMaxUniqIds  ( IntClusterMaxUniqId        ),
+  .AxiMaxTxnsPerId       ( Cfg.AxiMaxSlvTrans         ),
+  .AxiMstPortIdWidth     ( IntClusterAxiIdInWidth     ),
+  .slv_req_t             ( cheshire_axi_ext_slv_req_t ),
+  .slv_resp_t            ( cheshire_axi_ext_slv_rsp_t ),
+  .mst_req_t             ( axi_intcluster_slv_req_t   ),
+  .mst_resp_t            ( axi_intcluster_slv_rsp_t   )
+) i_integer_cluster_axi_slv_id_remap               (
   .clk_i       ( clk_i                             ),
   .rst_ni      ( rst_ni                            ),
   .slv_req_i   ( axi_ext_slv_req[IntClusterSlvIdx] ),
@@ -604,21 +599,16 @@ axi_cdc_dst #(
   .dst_resp_i ( axi_intcluster_ser_mst_rsp )
 );
 
-axi_id_serialize #(
-  .AxiSlvPortIdWidth      ( IntClusterAxiIdOutWidth    ),
-  .AxiSlvPortMaxTxns      ( Cfg.AxiMaxSlvTrans         ),
-  .AxiMstPortIdWidth      ( Cfg.AxiMstIdWidth          ),
-  .AxiMstPortMaxUniqIds   ( 2**IntClusterAxiIdInWidth  ), // Max value
-  .AxiMstPortMaxTxnsPerId ( Cfg.AxiMaxMstTrans         ),
-  .AxiAddrWidth           ( Cfg.AddrWidth              ),
-  .AxiDataWidth           ( Cfg.AxiDataWidth           ),
-  .AxiUserWidth           ( Cfg.AxiUserWidth           ),
-  .AtopSupport            ( 0                          ), // Change me if needed
-  .slv_req_t              ( axi_intcluster_mst_req_t   ),
-  .slv_resp_t             ( axi_intcluster_mst_rsp_t   ),
-  .mst_req_t              ( cheshire_axi_ext_mst_req_t ),
-  .mst_resp_t             ( cheshire_axi_ext_mst_rsp_t )
-) i_integer_cluster_axi_mst_id_serializer          (
+axi_id_remap            #(
+  .AxiSlvPortIdWidth     ( IntClusterAxiIdOutWidth    ),
+  .AxiSlvPortMaxUniqIds  ( IntClusterMaxUniqId        ),
+  .AxiMaxTxnsPerId       ( Cfg.AxiMaxMstTrans         ),
+  .AxiMstPortIdWidth     ( Cfg.AxiMstIdWidth          ),
+  .slv_req_t             ( axi_intcluster_mst_req_t   ),
+  .slv_resp_t            ( axi_intcluster_mst_rsp_t   ),
+  .mst_req_t             ( cheshire_axi_ext_mst_req_t ),
+  .mst_resp_t            ( cheshire_axi_ext_mst_rsp_t )
+) i_integer_cluster_axi_mst_id_remap               (
   .clk_i       ( clk_i                             ),
   .rst_ni      ( rst_ni                            ),
   .slv_req_i   ( axi_intcluster_ser_mst_req        ),

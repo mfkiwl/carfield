@@ -772,9 +772,10 @@ safety_island_synth_wrapper #(
   .rst_ni                 ( rst_ni                             ),
   .test_enable_i          ( '0                                 ),
   .bootmode_i             ( safety_island_bootmode             ),
-  .irqs_i                 ( '0                                 ),
+  .fetch_en_i             ( '0                                 ), // To SoC Bus
   .axi_isolate_i          ( slave_isolate[SafetyIslandSlvIdx]  ),
   .axi_isolated_o         ( slave_isolated[SafetyIslandSlvIdx] ),
+  .irqs_i                 ( '0                                 ),
   .jtag_tck_i             ( safety_jtag_tck                    ),
   .jtag_trst_ni           ( safety_jtag_trst                   ),
   .jtag_tms_i             ( safety_jtag_tms                    ),
