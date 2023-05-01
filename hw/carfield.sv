@@ -14,12 +14,12 @@ module carfield
   import cheshire_pkg::*;
   import safety_island_pkg::*;
 #(
-  parameter cheshire_cfg_t Cfg = carfield_pkg::CarfieldCfgDefault,
   parameter int unsigned HypNumPhys  = 2,
   parameter int unsigned HypNumChips = 2,
   parameter int unsigned SlinkNumChan = 1,
   parameter int unsigned SlinkNumLanes = 8,
   parameter int unsigned SpihNumCs = 2,
+  parameter int unsigned NumGpios = 32,
   parameter string RomCtrlBootRomInitFile = "",
   parameter string OtpCtrlMemInitFile     = "",
   parameter string FlashCtrlMemInitFile   = ""
@@ -76,12 +76,12 @@ module carfield
   output logic                                        uart_ot_tx_o,
   input  logic                                        uart_ot_rx_i,
   // Controle Flow UART Modem (what is this?)
-  //output logic                                        uart_rts_no,
-  //output logic                                        uart_dtr_no,
-  //input  logic                                        uart_cts_ni,
-  //input  logic                                        uart_dsr_ni,
-  //input  logic                                        uart_dcd_ni,
-  //input  logic                                        uart_rin_ni,
+  //output logic                                      uart_rts_no,
+  //output logic                                      uart_dtr_no,
+  //input  logic                                      uart_cts_ni,
+  //input  logic                                      uart_dsr_ni,
+  //input  logic                                      uart_dcd_ni,
+  //input  logic                                      uart_rin_ni,
   // Host I2C Interface pins
   output logic                                        i2c_sda_o,
   input  logic                                        i2c_sda_i,
@@ -106,7 +106,21 @@ module carfield
   output logic [ 3:0]                                 spih_ot_sd_en_o,
   input  logic [ 3:0]                                 spih_ot_sd_i,
   // ETHERNET interface
+  input  logic                                        eth_rxck_i,
+  input  logic                                        eth_rxctl_i,
+  input  logic  [ 3:0]                                eth_rxd_i,
+  input  logic                                        eth_md_i,
+  output logic                                        eth_txck_o,
+  output logic                                        eth_txctl_o,
+  output logic  [ 3:0]                                eth_txd_o,
+  output logic                                        eth_md_o,
+  output logic                                        eth_md_oe,
+  output logic                                        eth_md_oe,
+  output logic                                        eth_mdc_o,
+  output logic                                        eth_rst_n_o,
   // CAN interface
+  input  logic                                        can_rx_i,
+  output logic                                        can_tx_o,
   // GPIOs
   input  logic [31:0]                                 gpio_i,
   output logic [31:0]                                 gpio_o,
@@ -126,13 +140,19 @@ module carfield
   input  logic [HypNumPhys-1:0][7:0]                  hyper_dq_i,
   output logic [HypNumPhys-1:0][7:0]                  hyper_dq_o,
   output logic [HypNumPhys-1:0]                       hyper_dq_oe_o,
-  output logic [HypNumPhys-1:0]                       hyper_reset_n_o
+  output logic [HypNumPhys-1:0]                       hyper_reset_n_o,
+
+  // padframe configuration
+  output logic                                        padframe_cfg_clk_o,
+  input  logic                                        padframe_cfg_rstn_o,
+  output carfield_reg_req_t                           padframe_cfg_req_o,
+  input  carfield_reg_rsp_t                           padframe_cfg_rsp_i,
+  
 );
 
 /*********************************
 * General parameters and defines *
 **********************************/
-`CHESHIRE_TYPEDEF_ALL(carfield_, Cfg)
 
 // Generate indices and get maps for all ports
 localparam axi_in_t   AxiIn   = gen_axi_in(Cfg);
@@ -377,6 +397,8 @@ logic hyp_rst_phy_ni;
 assign clk_i = ref_clk_i;
 assign hyp_clk_phy_i = ref_clk_i;
 assign hyp_rst_phy_ni = ref_clk_i;
+assign padframe_cfg_clk_o = ref_clk_i;
+assign padframe_cfg_rstn_o = rst_ni;
 
 /***************
 * Carfield IPs *
