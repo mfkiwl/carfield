@@ -32,7 +32,6 @@ gen_script: update
 
 $(ROOT)/scripts/patches/.applied:
 	cd $$(bender path cheshire) && git apply $(ROOT)/scripts/patches/cheshire.patch
-	cd $$(bender path cva6)     && git apply $(ROOT)/scripts/patches/cva6.patch
 	touch $@
 
 update:
