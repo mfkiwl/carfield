@@ -5,15 +5,22 @@
 set PROJECT   carfield
 set TIMESTAMP [exec date +%Y%m%d_%H%M%S]
 
+# Add ignored files to this list
+set IgnoredFiles [list [exec bender path cva6]/core/include/axi_intf.sv]
+
 new_project sg_projects/${PROJECT}_${TIMESTAMP}
 current_methodology $env(SPYGLASS_HOME)/GuideWare/latest/block/rtl_handoff
+
+# Ignore re-defined files
+foreach file $IgnoredFiles {
+  set_option ignorefile $file
+}
 
 # Read the RTL
 read_file -type sourcelist tmp/files
 
-set_option enableSV09 yes
+set_option enableSV12 yes
 set_option language_mode mixed
-set_option allow_module_override yes
 set_option designread_disable_flatten no
 set_option mthresh 32768
 set_option top carfield_wrap
