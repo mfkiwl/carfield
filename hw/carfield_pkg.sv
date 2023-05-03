@@ -5,6 +5,8 @@
 // Thomas Benz  <tbenz@ethz.ch>
 // Yvan Tortorella <yvan.tortorella@unibo.it>
 
+`include "cheshire/typedef.svh"
+
 /// Carfield constants and Cheshire overwrites
 package carfield_pkg;
 
