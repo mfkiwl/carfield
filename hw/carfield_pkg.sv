@@ -128,8 +128,6 @@ typedef enum doub_bt {
 localparam bit [3:0] AxiNumExtSlv = 3'd2 + 3'd1 + 3'd1 + 3'd1 + 3'd1 + 3'd1 + 3'd1;
 // Ext Masters: Integer Cluster + Security Island + Safety Island + Floating Point Cluster
 localparam bit [2:0] AxiNumExtMst = 3'd1 + 3'd1 + 3'd1 + 3'd1;
-// Ext Interrupts: Security Island Mailbox
-localparam bit [2:0] NumExtIntrs = 3'd1;
 
 // Safety island configuration
 localparam safety_island_cfg_t SafetyIslandCfg = '{
@@ -164,10 +162,14 @@ localparam cheshire_cfg_t CarfieldCfgDefault = '{
   Cva6RASDepth      : ariane_pkg::ArianeDefaultConfig.RASDepth,
   Cva6BTBEntries    : ariane_pkg::ArianeDefaultConfig.BTBEntries,
   Cva6BHTEntries    : ariane_pkg::ArianeDefaultConfig.BHTEntries,
+  Cva6CLICNumInterruptSrc : 128,
+  Cva6CLICIntCtlBits      : ariane_pkg::ArianeDefaultConfig.CLICIntCtlBits,
   Cva6NrPMPEntries  : 0,
   Cva6ExtCieLength  : 'h1000_0000, // [0x2000_0000, 0x7000_0000) is non-CIE,
                                    // [0x7000_0000, 0x8000_0000) is CIE
   Cva6ExtCieOnTop   : 1,
+  // External interrupts
+  NumExtIntrs       : 2,  // TODO check this
   // Harts
   DualCore          : 0,  // Only one core, but rest of config allows for two
   CoreMaxTxnsPerId  : 4,
@@ -222,8 +224,6 @@ localparam cheshire_cfg_t CarfieldCfgDefault = '{
   RegExtRegionEnd   : '{ 0, 0, 0, 0, 0, 0, PllEnd,  CarRegsEnd },
   // RTC
   RtcFreq           : 32768,
-  // Ext Irq
-  NumExtIntrs       : NumExtIntrs,
   // Features
   Bootrom           : 1,
   Uart              : 1,
@@ -234,6 +234,8 @@ localparam cheshire_cfg_t CarfieldCfgDefault = '{
   SerialLink        : 1,
   Vga               : 1,
   AxiRt             : 1,
+  Clic              : 1,
+  IrqRouter         : 1,
   // Debug
   DbgIdCode         : CheshireIdCode,
   DbgMaxReqs        : 4,

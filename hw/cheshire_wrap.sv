@@ -259,6 +259,7 @@ module cheshire_wrap
   output logic [iomsb(Cfg.NumExtIrqHarts):0] seip_ext_o,
   output logic [iomsb(Cfg.NumExtIrqHarts):0] mtip_ext_o,
   output logic [iomsb(Cfg.NumExtIrqHarts):0] msip_ext_o,
+  output logic [iomsb((2+Cfg.NumExtIrqHarts)*(Cfg.NumExtIntrs+NumIntIntrs)):0] intr_distributed_o,
   // Debug interface to external harts
   output logic                               dbg_active_o,
   output logic [iomsb(Cfg.NumExtDbgHarts):0] dbg_ext_req_o,
@@ -363,6 +364,7 @@ cheshire_soc #(
   .seip_ext_o,
   .mtip_ext_o,
   .msip_ext_o,
+  .intr_distributed_o,
   // Debug interface to external harts
   .dbg_active_o     ,
   .dbg_ext_req_o    ,

@@ -703,6 +703,7 @@ cheshire_wrap #(
   .seip_ext_o        ( /* Unused */ ), // Unused
   .mtip_ext_o        ( /* TODO: connect me */ ),
   .msip_ext_o        ( /* Unused */ ), // We use mailboxes for this
+  .intr_distributed_o (          ),
   // Debug interface to external harts
   .dbg_active_o      (           ),
   .dbg_ext_req_o     (           ),
