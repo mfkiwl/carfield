@@ -19,18 +19,18 @@ foreach file $IgnoredFiles {
 # Read the RTL
 read_file -type sourcelist tmp/files
 
+# Read constraints
+read_file -type sgdc sgdc/func.sgdc
+
+# Set options
 set_option enableSV12 yes
 set_option language_mode mixed
 set_option designread_disable_flatten no
 set_option mthresh 32768
 set_option top carfield_wrap
 
-# Read constraints
-current_design carfield_wrap
-set_option sdc2sgdc yes
-sdc_data -file sdc/func.sdc
-
 # Link Design
+current_design carfield_wrap
 compile_design
 
 # Set lint_rtl goal and run
