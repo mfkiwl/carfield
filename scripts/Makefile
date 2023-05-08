@@ -23,7 +23,7 @@ bender_defs := -t asic \
 # PHONY since these targets are all pretty fast compared to spyglass
 .PHONY: lint gen_script update
 
-lint: update gen_script spyglass/sdc/func.sdc spyglass/scripts/run_lint.tcl
+lint: update gen_script spyglass/sgdc/func.sgdc spyglass/scripts/run_lint.tcl
 	cd spyglass; $(SNPS_SG) sg_shell -tcl scripts/run_lint.tcl
 
 gen_script: update
