@@ -56,6 +56,10 @@ sources:
   - target: any(fpga, xilinx)
     files:
       - target/xilinx/src/carfield_top_xilinx.sv
+  - target: all(fpga, test)
+    files:
+      - target/xilinx/src/tb_carfield_top_xilinx.sv
+
 
   - target: spyglass
     files:
