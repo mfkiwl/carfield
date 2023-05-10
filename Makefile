@@ -20,7 +20,7 @@ VOPTARGS ?=
 # Include cheshire's makefrag only if the dependency was cloned
 -include $(CHS_ROOT)/cheshire.mk
 
-# Spatz 
+# Spatz
 SPATZ_ROOT ?= $(ROOT)/spatz
 SPATZ_MAKEDIR := $(SPATZ_ROOT)/hw/system/spatz_cluster
 
@@ -59,7 +59,7 @@ endif
 ######################
 
 CAR_NONFREE_REMOTE ?= git@iis-git.ee.ethz.ch:carfield/carfield-nonfree.git
-CAR_NONFREE_COMMIT ?= 6c22cff5b6cde5a7d83a5c1b474c8d35d37fd81c
+CAR_NONFREE_COMMIT ?= 6a8cb8ab9382a8722d2f2ef6d85fd6b2865e7fff
 
 car-nonfree-init:
 	git clone $(CAR_NONFREE_REMOTE) nonfree
