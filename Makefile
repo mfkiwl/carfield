@@ -77,6 +77,9 @@ include $(CAR_SW_DIR)/sw.mk
 # Simulation #
 ##############
 
+hw/carfield_reg_pkg.sv hw/carfield_reg_top.sv: hw/regs/carfield_regs.hjson
+	$(REGGEN) -r $< --outdir $(dir $@)
+
 tb/hyp_vip:
 	git clone git@iis-git.ee.ethz.ch:carfield/hyp_vip.git $@
 
