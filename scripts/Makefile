@@ -35,3 +35,4 @@ gen_script: update
 update:
 	bender update
 	make -C $(ROOT) chs-hw-all
+	make -C $(ROOT) spatz-init
