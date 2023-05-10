@@ -8,17 +8,8 @@ ROOT        := $(patsubst %/,%, $(dir $(abspath $(lastword $(MAKEFILE_LIST))/../
 
 SNPS_SG     ?= spyglass-2022.06
 
-bender_defs := -t asic \
-               -t synthesis \
-               -t top_level \
-               -t intel16 \
-               -t scm_use_latch_scm \
-               -t cva6 \
-               -t cv64a6_imafdc_sv39 \
-               -t cluster_standalone \
-               --define SYNTHESIS \
-               --define EXCLUDE_PADFRAME \
-               --define SPYGLASS
+bender_defs  ?=
+bender_targs ?=
 
 # PHONY since these targets are all pretty fast compared to spyglass
 .PHONY: lint gen_script update
@@ -28,7 +19,7 @@ lint: update gen_script spyglass/sgdc/func.sgdc spyglass/scripts/run_lint.tcl
 
 gen_script: update
 	mkdir -p spyglass/tmp
-	bender script verilator -t rtl -t spyglass -t cva6_test $(bender_defs) > spyglass/tmp/files
+	bender script verilator $(bender_targs) $(bender_defs) > spyglass/tmp/files
 
 update:
 	bender update
