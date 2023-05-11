@@ -14,6 +14,9 @@ synth_targs += -t top_level
 synth_targs += -t intel16
 synth_targs += -t scm_use_latch_scm
 synth_targs += -t cluster_standalone
+synth_targs += -t cv64a6_imafdc_sv39
 
 # bender defines
 synth_defs += -D SPYGLASS
+synth_defs += -D SYNTHESIS
+synth_defs += -D EXCLUDE_PADFRAME

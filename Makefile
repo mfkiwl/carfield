@@ -39,6 +39,7 @@ TARGETS += -t sim
 TARGETS += -t test
 TARGETS += -t integer_cluster
 TARGETS += -t cv32e40p_use_ff_regfile
+TARGETS += -t cv64a6_imafdcsclic_sv39
 TARGETS += -t spatz
 TARGETS += -t simulation
 TARGETS += $(common_targs)
@@ -107,6 +108,9 @@ chs-init:
 	$(MAKE) -B chs-sim-all
 	$(MAKE) -B chs-sw-all
 
+############
+# RTL LINT #
+############
 SPYGLASS_TARGS += $(common_targs)
 SPYGLASS_TARGS += $(synth_targs)
 SPYGLASS_DEFS += $(common_defs)

@@ -8,7 +8,6 @@
 # bender targets
 common_targs += -t rtl
 common_targs += -t cva6
-common_targs += -t cv64a6_imafdc_sv39
 
 # bender defines
 common_defs += -D FEATURE_ICACHE_STAT

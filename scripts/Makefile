@@ -8,8 +8,19 @@ ROOT        := $(patsubst %/,%, $(dir $(abspath $(lastword $(MAKEFILE_LIST))/../
 
 SNPS_SG     ?= spyglass-2022.06
 
-bender_defs  ?=
-bender_targs ?=
+bender_defs  ?= -D SPYGLASS        \
+                -D SYNTHESIS       \
+                -D EXCLUDE_PADFRAME
+
+bender_targs ?= -t asic               \
+                -t spyglass           \
+                -t cva6_test          \
+                -t synthesis          \
+                -t top_level          \
+                -t intel16            \
+                -t scm_use_latch_scm  \
+                -t cluster_standalone \
+                -t cv64a6_imafdc_sv39
 
 # PHONY since these targets are all pretty fast compared to spyglass
 .PHONY: lint gen_script update
