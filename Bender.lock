@@ -22,8 +22,8 @@ packages:
     - apb
     - register_interface
   axi:
-    revision: fd60be8b51a4fa7476856be162ce3334474592ba
-    version: 0.39.0-beta.4
+    revision: 56533cbbdf9ea41ab1daaa164595faae3d7ace5a
+    version: 0.39.0-beta.8
     source:
       Git: https://github.com/pulp-platform/axi.git
     dependencies:
@@ -144,8 +144,8 @@ packages:
     - common_cells
     - register_interface
   cluster_interconnect:
-    revision: 7d0a4f8acae71a583a6713cab5554e60b9bb8d27
-    version: 1.2.1
+    revision: 89e1019d64a86425211be6200770576cbdf3e8b3
+    version: null
     source:
       Git: https://github.com/pulp-platform/cluster_interconnect.git
     dependencies:
@@ -169,7 +169,7 @@ packages:
     revision: 9c07fa860593b2caabd9b5681740c25fac04b878
     version: 0.2.3
     source:
-      Git: https://github.com/pulp-platform/common_verification.git
+      Git: https://github.com/pulp-platform/common_verification
     dependencies: []
   cv32e40p:
     revision: f67ee07376845b8b8975f86c831c5d17cffcc5cb
@@ -274,13 +274,6 @@ packages:
     - common_cells
     - register_interface
     - tech_cells_generic
-  ibex:
-    revision: 95b85ddd1c995ace9f89ee42530f9e24820c1051
-    version: null
-    source:
-      Git: https://github.com/lowRISC/ibex.git
-    dependencies:
-    - tech_cells_generic
   icache-intc:
     revision: 663c3b6d3c2bf63ff25cda46f33c799c647b3985
     version: 1.0.1
@@ -313,8 +306,8 @@ packages:
     - common_cells
     - register_interface
   mchan:
-    revision: a9c71f2d9845a4ca05cf2c6ad089b4753f76fc2e
-    version: 1.2.3
+    revision: 7f064f205a3e0203e959b14773c4afecf56681ab
+    version: null
     source:
       Git: https://github.com/pulp-platform/mchan.git
     dependencies:
@@ -350,7 +343,7 @@ packages:
     dependencies:
     - axi_slice
   pulp_cluster:
-    revision: 2376e7d79e77a32863ff845275857a8694f7e225
+    revision: 40c0647df3750f9525be1b0ea641bb8759d6508d
     version: null
     source:
       Git: https://github.com/pulp-platform/pulp_cluster.git
@@ -368,9 +361,10 @@ packages:
     - hci
     - hier-icache
     - hwpe-datamover-example
-    - ibex
+    - idma
     - mchan
     - per2axi
+    - register_interface
     - scm
     - tech_cells_generic
     - timer_unit
@@ -385,7 +379,7 @@ packages:
     - register_interface
     - tech_cells_generic
   register_interface:
-    revision: 7786760a75fed8534c84f6e52e80089e2d491b76
+    revision: 46c5ad30fa6e1906a94718c9b7ed9e434badcf5d
     version: null
     source:
       Git: https://github.com/pulp-platform/register_interface.git
@@ -393,6 +387,7 @@ packages:
     - apb
     - axi
     - common_cells
+    - common_verification
   riscv-dbg:
     revision: 138d74bcaa90c70180c12215db3776813d2a95f2
     version: 0.8.0
