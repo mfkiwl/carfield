@@ -169,7 +169,7 @@ packages:
     revision: 9c07fa860593b2caabd9b5681740c25fac04b878
     version: 0.2.3
     source:
-      Git: https://github.com/pulp-platform/common_verification
+      Git: https://github.com/pulp-platform/common_verification.git
     dependencies: []
   cv32e40p:
     revision: f67ee07376845b8b8975f86c831c5d17cffcc5cb
@@ -274,6 +274,13 @@ packages:
     - common_cells
     - register_interface
     - tech_cells_generic
+  ibex:
+    revision: 95b85ddd1c995ace9f89ee42530f9e24820c1051
+    version: null
+    source:
+      Git: https://github.com/lowRISC/ibex.git
+    dependencies:
+    - tech_cells_generic
   icache-intc:
     revision: 663c3b6d3c2bf63ff25cda46f33c799c647b3985
     version: 1.0.1
@@ -320,7 +327,7 @@ packages:
     dependencies:
     - common_cells
   opentitan:
-    revision: c4a1b1d9bca7ca443a64b9f7f5586afa7a28cc5f
+    revision: 969841978a293f6d7e890557257621c17f4eb44b
     version: null
     source:
       Git: https://github.com/alsaqr-platform/opentitan.git
@@ -343,7 +350,7 @@ packages:
     dependencies:
     - axi_slice
   pulp_cluster:
-    revision: 40c0647df3750f9525be1b0ea641bb8759d6508d
+    revision: 91ec9e6539e6e6a118756eeba73cb5013b15288f
     version: null
     source:
       Git: https://github.com/pulp-platform/pulp_cluster.git
@@ -361,6 +368,7 @@ packages:
     - hci
     - hier-icache
     - hwpe-datamover-example
+    - ibex
     - idma
     - mchan
     - per2axi
