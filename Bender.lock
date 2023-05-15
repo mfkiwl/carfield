@@ -68,7 +68,7 @@ packages:
     revision: 97dcb14ef057cbe5bd70dda2060b5bb9e7e04c6d
     version: 0.7.0
     source:
-      Git: https://github.com/pulp-platform/axi_riscv_atomics
+      Git: https://github.com/pulp-platform/axi_riscv_atomics.git
     dependencies:
     - axi
     - common_cells
@@ -327,7 +327,7 @@ packages:
     dependencies:
     - common_cells
   opentitan:
-    revision: 969841978a293f6d7e890557257621c17f4eb44b
+    revision: 567ae56d23633e2d9738f68ddfdd9b529c87d859
     version: null
     source:
       Git: https://github.com/alsaqr-platform/opentitan.git
