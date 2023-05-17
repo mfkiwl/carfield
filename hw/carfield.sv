@@ -779,7 +779,15 @@ l2_wrap #(
   .AxiMaxTrans  ( Cfg.AxiMaxSlvTrans     ),
   .LogDepth     ( LogDepth               ),
   .NumRules     ( L2NumRules             ),
-  .L2MemSize    ( L2MemSize              )
+  .L2MemSize    ( L2MemSize              ),
+  // Atomics
+  .L2MaxReadTxns  ( Cfg.LlcMaxReadTxns   ), // TODO: AMO parameters are default
+                                            // from the LLC (Cheshire), at the
+                                            // moment
+  .L2MaxWriteTxns ( Cfg.LlcMaxWriteTxns  ),
+  .AxiUserAmoMsb  ( Cfg.AxiUserAmoMsb    ),
+  .AxiUserAmoLsb  ( Cfg.AxiUserAmoLsb    ),
+  .L2AmoNumCuts   ( Cfg.LlcAmoNumCuts    )
 ) i_reconfigrurable_l2 (
   .clk_i               ( host_clk_i                           ),
   .rst_ni              ( host_pwr_on_rst_n                    ),
