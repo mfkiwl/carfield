@@ -35,6 +35,8 @@ module tb_carfield_soc;
       // Idle boot: preload with the specified mode
       case (preload_mode)
         0: begin      // JTAG
+          repeat(120000)
+            @(posedge fix.clk);
           fix.chs_vip.jtag_init();
           fix.chs_vip.jtag_elf_run(preload_elf);
           fix.chs_vip.jtag_wait_for_eoc(exit_code);
