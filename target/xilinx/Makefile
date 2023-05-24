@@ -17,6 +17,12 @@ TARGETS += -t cv64a6_imafdcsclic_sv39
 TARGETS += -t cva6
 TARGETS += -t integer_cluster
 TARGETS += -t cv32e40p_use_ff_regfile
+TARGETS += -t mchan
+TARGETS += -t spatz
+TARGETS += -t synthesis
+TARGETS += -t scm_use_latch_scm
+TARGETS += -t cluster_standalone
+TARGETS += -t cv64a6_imafdc_sv39
 
 # bender defines
 DEFINES += -D FEATURE_ICACHE_STAT

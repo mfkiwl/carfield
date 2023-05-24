@@ -123,8 +123,6 @@ module carfield
     output logic [ LlcWWidth-1:0]                     llc_w_data,
     output logic [    LogDepth:0]                     llc_w_wptr,
     input  logic [    LogDepth:0]                     llc_w_rptr,
-    output ext_reg_req_t                              ext_reg_req,
-    input  ext_reg_rsp_t                              ext_reg_rsp,
     output logic [HypNumPhys-1:0][HypNumChips-1:0]    hyper_cs_n_wire,
     output logic [HypNumPhys-1:0]                     hyper_ck_wire,
     output logic [HypNumPhys-1:0]                     hyper_ck_n_wire,
@@ -159,6 +157,7 @@ module carfield
   localparam axi_out_t  AxiOut  = gen_axi_out(Cfg);
 
 `ifndef TARGET_FPGA
+  // If FPGA we define these as a parameter
   localparam int unsigned LlcIdWidth = Cfg.AxiMstIdWidth + $clog2(AxiIn.num_in)+ Cfg.LlcNotBypass,
   localparam int unsigned LlcArWidth = (2**LogDepth)*
                                      axi_pkg::ar_width(Cfg.AddrWidth   ,
@@ -294,6 +293,7 @@ logic [iomsb(Cfg.AxiExtNumSlv):0] slave_isolate_req, slave_isolated_rsp, slave_i
 logic [iomsb(Cfg.AxiExtNumMst):0] master_isolated_rsp;
 
 `ifndef TARGET_FPGA
+  // If FPGA we define these as IOs
   logic [LlcArWidth-1:0] llc_ar_data;
   logic [    LogDepth:0] llc_ar_wptr;
   logic [    LogDepth:0] llc_ar_rptr;
@@ -757,7 +757,6 @@ cheshire_wrap #(
   .vga_green_o (                 ),
   .vga_blue_o  (                 )
 );
-`ifdef NEVERDEFINEDXX
 
 `ifndef TARGET_FPGA
   // Hyperbus
@@ -1039,6 +1038,9 @@ endgenerate
 
 // PULP integer cluster
 // Alt Clock Domain
+
+generate
+  if (0) begin
 pulp_cluster #(
   .NB_CORES                       ( IntClusterNumCores        ),
   .NB_HWPE_PORTS                  ( IntClusterNumHwpePorts    ),
@@ -1138,9 +1140,15 @@ pulp_cluster #(
   .async_data_master_b_wptr_i  ( axi_mst_intcluster_b_wptr  ),
   .async_data_master_b_rptr_o  ( axi_mst_intcluster_b_rptr  )
 );
+  end
+endgenerate
+
 
 // Floating Point Spatz Cluster
 // Alt Clock Domain
+
+generate
+  if (0) begin
 spatz_cluster_wrapper #(
     .AxiAddrWidth             ( Cfg.AddrWidth     ),
     .AxiDataWidth             ( Cfg.AxiDataWidth  ),
@@ -1230,9 +1238,14 @@ spatz_cluster_wrapper #(
    .async_axi_out_r_rptr_o  ( axi_mst_ext_r_rptr  [FPClusterMstIdx] ),
    .cluster_probe_o (        )
   );
+  end
+endgenerate
 
 // Security Island
 // Alt Clock Domain
+
+generate
+  if (0) begin
 secure_subsystem_synth_wrap #(
   .AxiAddrWidth          ( Cfg.AddrWidth              ),
   .AxiDataWidth          ( Cfg.AxiDataWidth           ),
@@ -1307,6 +1320,8 @@ secure_subsystem_synth_wrap #(
   .spi_host_SD_i    ( '0            ),
   .spi_host_SD_en_o (               )
 );
+  end
+endgenerate
 
 // Security Island Mailbox
 // Host Clock Domain
@@ -1829,7 +1844,5 @@ reg_err_slv #(
   .req_i   ( ext_reg_req[PllIdx] ),
   .rsp_o   ( ext_reg_rsp[PllIdx] )
 );
-
-`endif
 
 endmodule

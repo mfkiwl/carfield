@@ -12,24 +12,13 @@ puts "Running with SIMULATOR_PATH=$::env(SIMULATOR_PATH) ; GCC_PATH=$::env(GCC_P
 
 if { $command == "compile_simlib" } {
   compile_simlib -simulator questa -simulator_exec_path {$::env(SIMULATOR_PATH)} \
-	-gcc_exec_path {$::env(GCC_PATH)} -family virtexuplus \
+	-gcc_exec_path {$::env(GCC_PATH)} -family all \
 	-language verilog -dir {$::env(XILINX_SIMLIB_PATH)} -verbose
 
 } elseif { $command == "export_simulation" } {
-  open_project "../cheshire.xpr"
+  open_project $::env(VIVADO_PROJECT)
   export_simulation -simulator questa -directory "./ips" -lib_map_path "$::env(XILINX_SIMLIB_PATH)" \
     -absolute_path -force -of_objects [get_ips *]
-
-} elseif { $command == "export_example" } {
-
-  open_example_project -dir /tmp/ddr4_ex -force [get_ips xlnx_mig_ddr4]
-
-  close_project
-
-  open_project /tmp/ddr4_ex/xlnx_mig_ddr4_ex/xlnx_mig_ddr4_ex.xpr
-
-  export_simulation  -lib_map_path "$::env(XILINX_SIMLIB_PATH)" -absolute_path -export_source_files -directory "$script_path/ips/xlnx_mig_ddr4_ex" \
-    -simulator questa -use_ip_compiled_libs
 
 } else {
   puts "[$argv0] Unknown command: $command"
