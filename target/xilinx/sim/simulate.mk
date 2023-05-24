@@ -12,7 +12,7 @@ ip-sim-scripts := $(addsuffix /questa/compile.do, $(addprefix sim/ips/, $(ips-na
 
 # Pre-generated/modified example projects (contain the simulation top level)
 ifeq ($(BOARD),vcu128)
-	ip-example-projects := xlnx_mig_ddr4_ex
+	ip-example-projects := xlnx_mig_ddr4_carfield_ex
 endif
 ifeq ($(BOARD),genesys2)
 	ip-example-projects := xlnx_mig_7_ddr3_ex

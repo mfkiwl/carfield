@@ -13,16 +13,16 @@ XILINX_PART  ?= xcvu37p-fsvh2892-2L-e
 XILINX_BOARD ?= xilinx.com:vcu128:part0:1.0
 
 # bender targets
-TARGETS += -t cv64a6_imafdcsclic_sv39
 TARGETS += -t cva6
-TARGETS += -t integer_cluster
-TARGETS += -t cv32e40p_use_ff_regfile
 TARGETS += -t mchan
 TARGETS += -t spatz
-TARGETS += -t synthesis
-TARGETS += -t scm_use_latch_scm
-TARGETS += -t cluster_standalone
-TARGETS += -t cv64a6_imafdc_sv39
+TARGETS += -t cv32e40p_use_ff_regfile
+#TARGETS += -t sim
+#TARGETS += -t test
+#TARGETS += -t rtl
+#TARGETS += -t integer_cluster
+TARGETS += -t cv64a6_imafdcsclic_sv39
+#TARGETS += -t simulation
 
 # bender defines
 DEFINES += -D FEATURE_ICACHE_STAT
