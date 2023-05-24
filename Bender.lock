@@ -64,11 +64,20 @@ packages:
     dependencies:
     - axi
     - common_cells
+  axi_obi:
+    revision: ee057cb5bb246ecb158b4d1b9925a01c0ad829d5
+    version: null
+    source:
+      Git: git@iis-git.ee.ethz.ch:carfield/axi_obi.git
+    dependencies:
+    - axi
+    - common_cells
+    - obi
   axi_riscv_atomics:
     revision: 97dcb14ef057cbe5bd70dda2060b5bb9e7e04c6d
     version: 0.7.0
     source:
-      Git: https://github.com/pulp-platform/axi_riscv_atomics.git
+      Git: https://github.com/pulp-platform/axi_riscv_atomics
     dependencies:
     - axi
     - common_cells
@@ -177,7 +186,7 @@ packages:
     revision: 9c07fa860593b2caabd9b5681740c25fac04b878
     version: 0.2.3
     source:
-      Git: https://github.com/pulp-platform/common_verification.git
+      Git: https://github.com/pulp-platform/common_verification
     dependencies: []
   cv32e40p:
     revision: 9b77611a1d0c681f4819798d95422b0b895528a2
@@ -328,7 +337,7 @@ packages:
     dependencies:
     - common_cells
   obi:
-    revision: 1285848fe155e7803d409648dac8cd327993b042
+    revision: 676656d288499e6a849fe2645436aa62b607c7b1
     version: null
     source:
       Git: https://github.com/pulp-platform/obi.git
@@ -414,13 +423,14 @@ packages:
     - common_cells
     - tech_cells_generic
   safety_island:
-    revision: 67f0b4ef4c3b08fcd423bc5e70db144b196cd2d1
+    revision: 7d712950117d68c2fe1810028826f251dae69783
     version: null
     source:
       Git: git@iis-git.ee.ethz.ch:carfield/safety-island.git
     dependencies:
     - apb
     - axi
+    - axi_obi
     - bus_err_unit
     - clic
     - cluster_interconnect
