@@ -35,8 +35,12 @@ module tb_carfield_soc;
       // Idle boot: preload with the specified mode
       case (preload_mode)
         0: begin      // JTAG
-          repeat(120000)
-            @(posedge fix.clk);
+          if(preload_elf.match("*.dram.*")) begin
+            $display("Wait the hyperram");
+             repeat(120000) begin
+               @(posedge fix.clk);
+             end
+          end
           fix.chs_vip.jtag_init();
           fix.chs_vip.jtag_elf_run(preload_elf);
           fix.chs_vip.jtag_wait_for_eoc(exit_code);
