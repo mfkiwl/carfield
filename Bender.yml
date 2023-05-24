@@ -59,7 +59,11 @@ sources:
       - scripts/spyglass/src/carfield_wrap.sv
 
   - target: any(fpga, xilinx)
+    defines:
+      SYNTHESIS: 1
     files:
+      - target/xilinx/src/tc_clk_mux2.sv
+      - target/xilinx/src/prim_assert.sv
       - target/xilinx/src/carfield_top_xilinx.sv
       - target/xilinx/src/dram_wrapper.sv
   - target: all(fpga, test)

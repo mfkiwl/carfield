@@ -1,5 +1,13 @@
+// Copyright 2022 ETH Zurich and University of Bologna.
+// Solderpad Hardware License, Version 0.51, see LICENSE for details.
+// SPDX-License-Identifier: SHL-0.51
+//
+// Cyril Koenig <cykoenig@iis.ee.ethz.ch>
+
+
 `include "cheshire/typedef.svh"
 `include "phy_definitions.svh"
+`include "common_cells/registers.svh"
 
 (* DONT_TOUCH = "yes" *) 
 module dram_wrapper
@@ -42,6 +50,8 @@ module dram_wrapper
     bit     EnResizer;
     bit     EnCDC;
     bit     EnSpill1;
+    integer IdWidth;
+    integer AddrWidth;
     integer DataWidth;
     integer ProbeWidth;
   } dram_cfg_t;
@@ -52,6 +62,8 @@ module dram_wrapper
     EnResizer     : 1,
     EnCDC         : 1, // 333 MHz
     EnSpill1      : 1,
+    IdWidth       : 4,
+    AddrWidth     : 32,
     DataWidth     : 512,
     ProbeWidth    : 64
   };
@@ -63,6 +75,8 @@ module dram_wrapper
     EnResizer     : 0,
     EnCDC         : 1, // 200 MHz
     EnSpill1      : 1,
+    IdWidth       : 6,
+    AddrWidth     : 30,
     DataWidth     : 64,
     ProbeWidth    : 8
   };
@@ -234,6 +248,60 @@ module dram_wrapper
     end
   endgenerate
 
+  /////////////////
+  // ID resizer  //
+  /////////////////
+
+  // Padding when SoC id > DDR id
+  localparam IdPadding = $bits(spill_dram_req.aw.id) - cfg.IdWidth;
+
+  // Resize awid and arid before sending to the DDR
+  logic [cfg.IdWidth-1:0] spill_dram_req_awid, spill_dram_rsp_bid;
+  logic [cfg.IdWidth-1:0] spill_dram_req_arid, spill_dram_rsp_rid;
+  // Registers to prepare bid and rid
+  logic [$bits(spill_dram_req.aw.id)-1:0] spill_dram_rsp_bid_d, spill_dram_rsp_bid_q;
+  logic [$bits(spill_dram_req.ar.id)-1:0] spill_dram_rsp_rid_d, spill_dram_rsp_rid_q;
+  `FFAR(spill_dram_rsp_bid_q, spill_dram_rsp_bid_d, '0, dram_axi_clk, dram_rst_o);
+  `FFAR(spill_dram_rsp_rid_q, spill_dram_rsp_rid_d, '0, dram_axi_clk, dram_rst_o);
+
+  // Process ids
+  generate
+  if (IdPadding > 0)
+  begin
+    // Send rid and bid to SoC
+    assign spill_dram_rsp.r.id = spill_dram_rsp.r_valid ? { {IdPadding{1'b0}}, spill_dram_rsp_rid_q} : '0;
+    assign spill_dram_rsp.b.id = spill_dram_rsp.b_valid ? { {IdPadding{1'b0}}, spill_dram_rsp_bid_q} : '0;
+    // Sample rid and bid from arid and awid
+    assign spill_dram_rsp_rid_d = spill_dram_req.ar_valid ? spill_dram_req.ar.id : spill_dram_rsp_rid_q;
+    assign spill_dram_rsp_bid_d = spill_dram_req.aw_valid ? spill_dram_req.aw.id : spill_dram_rsp_bid_q;
+    // Resize arid and awid for DDR
+    assign spill_dram_req_arid = spill_dram_req.ar.id[cfg.IdWidth-1:0];
+    assign spill_dram_req_awid = spill_dram_req.aw.id[cfg.IdWidth-1:0];
+  end
+  else
+  begin
+    // Forward arid awid rid bid to and from DDR
+    assign spill_dram_req_arid = spill_dram_req.ar.id;
+    assign spill_dram_req_awid = spill_dram_req.aw.id;
+    assign spill_dram_rsp.r.id = spill_dram_rsp_rid;
+    assign spill_dram_rsp.b.id = spill_dram_rsp_bid;
+  end
+  endgenerate
+
+
+  ///////////////////////
+  // User and address  //
+  ///////////////////////
+  
+  assign spill_dram_rsp.b.user = '0;
+  assign spill_dram_rsp.r.user = '0;
+
+  logic [cfg.AddrWidth-1:0] spill_dram_req_awaddr;
+  logic [cfg.AddrWidth-1:0] spill_dram_req_araddr;
+
+  assign spill_dram_req_awaddr = spill_dram_req.aw.addr[cfg.AddrWidth-1:0];
+  assign spill_dram_req_araddr = spill_dram_req.ar.addr[cfg.AddrWidth-1:0];
+
 
   ///////////////////////
   // Instianciate DDR4 //
@@ -241,30 +309,9 @@ module dram_wrapper
 
 `ifdef USE_DDR4
 
-  // Resize addresses and IDs
-
-  logic [5:0] spill_dram_req_awid;
-  logic [5:0] spill_dram_req_arid;
-  logic [5:0] spill_dram_rsp_bid;
-  logic [5:0] spill_dram_rsp_rid;
-  logic [31:0] spill_dram_req_awaddr;
-  logic [31:0] spill_dram_req_araddr;
-
-  assign spill_dram_req_awaddr = spill_dram_req.aw.addr[31:0];
-  assign spill_dram_req_araddr = spill_dram_req.ar.addr[31:0];
-
-  assign spill_dram_req_awid = {2'b0, spill_dram_req.aw.id};
-  assign spill_dram_req_arid = {2'b0, spill_dram_req.ar.id};
-  assign spill_dram_rsp.b.id = spill_dram_rsp_bid[$bits(spill_dram_rsp.b.id)-1:0];
-  assign spill_dram_rsp.r.id = spill_dram_rsp_rid[$bits(spill_dram_rsp.r.id)-1:0];
-  assign spill_dram_rsp.b.user = '0;
-  assign spill_dram_rsp.r.user = '0;
-
-  // Instanciate RAM
-
 xlnx_mig_ddr4 i_dram (
     // Rst
-    .   sys_rst                     ( sys_rst_i      ),
+    .   sys_rst                     ( sys_rst        ),
     .   c0_ddr4_aresetn             ( soc_resetn_i   ),
     // Clk rst out
     .   c0_ddr4_ui_clk              ( dram_axi_clk   ),
@@ -337,6 +384,7 @@ xlnx_mig_ddr4 i_dram (
 `endif // USE_DDR4
 
 
+
   ///////////////////////
   // Instianciate DDR3 //
   ///////////////////////
@@ -348,8 +396,6 @@ xlnx_mig_ddr4 i_dram (
   assign dram_clk_o = dram_axi_clk;
 
 xlnx_mig_7_ddr3 i_dram (
-    .sys_clk_p           ( sysclk_p                      ),
-    .sys_clk_n           ( sysclk_n                      ),
     .sys_rst             ( sys_rst                       ),
     .ui_clk              ( dram_axi_clk                  ),
     .ui_clk_sync_rst     ( dram_rst_o                    ),
@@ -361,7 +407,7 @@ xlnx_mig_7_ddr3 i_dram (
     .app_ref_ack         (                               ), // keep open
     .app_zq_ack          (                               ), // keep open
     .aresetn             ( soc_resetn_i                  ),
-    .s_axi_awid          ( spill_dram_req.aw.id          ),
+    .s_axi_awid          ( spill_dram_req_awid           ),
     .s_axi_awaddr        ( spill_dram_req.aw.addr[29:0]  ),
     .s_axi_awlen         ( spill_dram_req.aw.len         ),
     .s_axi_awsize        ( spill_dram_req.aw.size        ),
@@ -370,7 +416,7 @@ xlnx_mig_7_ddr3 i_dram (
     .s_axi_awcache       ( spill_dram_req.aw.cache       ),
     .s_axi_awprot        ( spill_dram_req.aw.prot        ),
     .s_axi_awqos         ( spill_dram_req.aw.qos         ),
-    .s_axi_awvalid       ( spill_dram_req.aw_valid       ),
+    .s_axi_awvalid       ( spill_dram_req.aw_valid       ),spill_dram_rsp_bid
     .s_axi_awready       ( spill_dram_rsp.aw_ready       ),
     .s_axi_wdata         ( spill_dram_req.w.data         ),
     .s_axi_wstrb         ( spill_dram_req.w.strb         ),
@@ -378,10 +424,10 @@ xlnx_mig_7_ddr3 i_dram (
     .s_axi_wvalid        ( spill_dram_req.w_valid        ),
     .s_axi_wready        ( spill_dram_rsp.w_ready        ),
     .s_axi_bready        ( spill_dram_req.b_ready        ),
-    .s_axi_bid           ( spill_dram_rsp.b.id           ),
+    .s_axi_bid           ( spill_dram_rsp_bid            ),
     .s_axi_bresp         ( spill_dram_rsp.b.resp         ),
     .s_axi_bvalid        ( spill_dram_rsp.b_valid        ),
-    .s_axi_arid          ( spill_dram_req.ar.id          ),
+    .s_axi_arid          ( spill_dram_req_arid           ),
     .s_axi_araddr        ( spill_dram_req.ar.addr[29:0]  ),
     .s_axi_arlen         ( spill_dram_req.ar.len         ),
     .s_axi_arsize        ( spill_dram_req.ar.size        ),
@@ -393,13 +439,15 @@ xlnx_mig_7_ddr3 i_dram (
     .s_axi_arvalid       ( spill_dram_req.ar_valid       ),
     .s_axi_arready       ( spill_dram_rsp.ar_ready       ),
     .s_axi_rready        ( spill_dram_req.r_ready        ),
-    .s_axi_rid           ( spill_dram_rsp.r.id           ),
+    .s_axi_rid           ( spill_dram_rsp_rid            ),
     .s_axi_rdata         ( spill_dram_rsp.r.data         ),
     .s_axi_rresp         ( spill_dram_rsp.r.resp         ),
     .s_axi_rlast         ( spill_dram_rsp.r.last         ),
     .s_axi_rvalid        ( spill_dram_rsp.r_valid        ),
     .init_calib_complete (                               ),  // keep open
-    .device_temp         (                               )   // keep open
+    .device_temp         (                               ),  // keep open
+    // Phy
+    .*
   );
 `endif // USE_DDR3
 

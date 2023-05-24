@@ -9,7 +9,7 @@
 # Global Settings #
 ###################
 
-set MIG_CLK_SRC {i_dram_wrapper/addn_clk_1_o}
+set MIG_CLK_SRC {i_dram_wrapper/dram_clk_o}
 
 #####################
 # Timing Parameters #
