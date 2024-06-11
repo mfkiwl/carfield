@@ -209,7 +209,6 @@ module vip_carfield_soc
     );
 
   initial begin
-    
     @(posedge rst_n);
 
     @(posedge periph_clk);
@@ -218,7 +217,7 @@ module vip_carfield_soc
 
     reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_MACHI_OFFSET, 32'h00800207, 'hf, reg_error); //upper 16bits of MAC address + other configuration set to false/0
     @(posedge periph_clk);
-    
+
     @(posedge eth_rx_irq);
 
     while(1) begin
