@@ -29,7 +29,7 @@ dependencies:
   pulp-ethernet:      { git: https://github.com/pulp-platform/pulp-ethernet.git,        rev: db9a90dd27fa85ddbe9b7cd22e03bf43b2c14838 } # branch: handshake
   riscv-dbg:          { git: https://github.com/pulp-platform/riscv-dbg.git,            version: =0.8.0                               }
   streamer:           { git: https://gitlab.thalesdigital.io/musa/streamer.git,         rev: 532282c246778668b30ea99f26e34da6d1236222 } # branch: main
-  spacewire:          { git: https://gitlab.thalesdigital.io/musa/spacewire.git,        rev: 591cb3cfae27458de53a97e48bacdb02d952eaf7 } # branch: main
+  spacewire:          { git: https://gitlab.thalesdigital.io/musa/spacewire.git,        rev: ffc60f3361fb9ba01ca5cec9a231434785920f04 } # branch: yt/integration
 
 workspace:
   package_links:
