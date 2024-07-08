@@ -83,5 +83,10 @@ localparam doub_bt PcrsSize = 'h00001000;
 localparam bit     PllCfgEnable = 1;
 localparam doub_bt PllCfgBase = 'h21003000;
 localparam doub_bt PllCfgSize = 'h00001000;
+/**************************
+ * HyperBus Configuration *
+ **************************/
+localparam doub_bt NumHypPhys = 1;
+localparam doub_bt NumHypChips = 2;
 
 endpackage
