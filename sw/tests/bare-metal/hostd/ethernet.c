@@ -17,7 +17,7 @@
 
 static dif_rv_plic_t plic0;
 
-#define IRQID 83 // index of ethernet irq in the irq vector input to the PLIC
+#define IRQID 87 // index of ethernet irq in the irq vector input to the PLIC
 
 #define MACLO_OFFSET                 0x0
 #define MACHI_OFFSET                 0x4
@@ -32,9 +32,9 @@ static dif_rv_plic_t plic0;
 #define IDMA_RSP_READY_OFFSET        0x44
 #define IDMA_RSP_VALID_OFFSET        0x48
 
-#define RV_PLIC_PRIO83_REG_OFFSET    0x14c
+#define RV_PLIC_PRIO87_REG_OFFSET    0x15c
 #define RV_PLIC_IE0_2_REG_OFFSET     0x2008
-#define RV_PLIC_IE0_2_E_83_BIT       19
+#define RV_PLIC_IE0_2_E_87_BIT       23
 #define RV_PLIC_IP_2_REG_OFFSET      0x1008
 
 #define DUMMY_TIMER_CNT_GOLDEN_MAX 2
