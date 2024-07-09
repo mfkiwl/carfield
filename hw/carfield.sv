@@ -19,8 +19,8 @@ module carfield
   import cheshire_pkg::*;
 #(
   parameter cheshire_pkg::cheshire_cfg_t Cfg = carfield_pkg::CarfieldCfgDefault,
-  parameter int unsigned HypNumPhys  = 2,
-  parameter int unsigned HypNumChips = 2,
+  parameter int unsigned HypNumPhys  = carfield_configuration::NumHypPhys,
+  parameter int unsigned HypNumChips = carfield_configuration::NumHypChips,
 `ifdef GEN_NO_HYPERBUS // bender-xilinx.mk
   parameter int unsigned LlcIdWidth,
   parameter int unsigned LlcArWidth,

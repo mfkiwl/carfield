@@ -43,8 +43,8 @@ module carfield_soc_fixture;
   localparam real         TAppl         = 0.1;
   localparam real         TTest         = 0.9;
 
-  localparam int NumPhys  = 2;
-  localparam int NumChips = 2;
+  localparam int NumPhys  = carfield_configuration::NumHypPhys;
+  localparam int NumChips = carfield_configuration::NumHypChips;
 
   logic       clk;
   logic       periph_clk;
@@ -276,6 +276,8 @@ module carfield_soc_fixture;
     // memory model.
     .Hyp0UserPreloadMemFile ( `HYP0_PRELOAD_MEM_FILE ),
     .Hyp1UserPreloadMemFile ( `HYP1_PRELOAD_MEM_FILE ),
+    .HypNumPhys  ( NumPhys  ),
+    .HypNumChips ( NumChips ),
     .ClkPeriodSys  ( ClkPeriodSys ),
     .ClkPeriodJtag ( ClkPeriodJtag ),
     .ClkPeriodRtc  ( ClkPeriodRtc),
@@ -301,7 +303,10 @@ module carfield_soc_fixture;
 
   wire       eth_mdio;
   // I/O to INOUT behavioral conversion for carfield's peripherals that require it
-  vip_carfield_soc_tristate vip_tristate ( .* );
+  vip_carfield_soc_tristate #(
+    .HypNumPhys  ( NumPhys ),
+    .HypNumChips ( NumChips )
+  ) vip_tristate ( .* );
 
   //////////////////
   // Cheshire VIP //
