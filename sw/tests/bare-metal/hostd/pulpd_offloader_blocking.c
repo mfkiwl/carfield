@@ -34,6 +34,12 @@ int main(void)
 
   load_binary();
 
+  // The `load_binary()` function is usually loading the L2 or LLC with the
+  // cluster code. Both L2 and LLC are in the cachable region, and since we
+  // use WB caches we need to flush them to commit the content to the target
+  // memories.
+  fencei();
+
   volatile uint32_t pulp_boot_default = ELF_BOOT_ADDR;
   volatile uint32_t pulp_ret_val = 0;
 
