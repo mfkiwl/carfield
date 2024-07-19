@@ -75,8 +75,8 @@ packages:
     - common_cells
     - common_verification
   axi_rt:
-    revision: 2be9d4028cd3fd6617a0302a53212495a4c4e3fa
-    version: 0.0.0-alpha.4
+    revision: d5f857e74d0a5db4e4a2cc3652ca4f40f29a1484
+    version: 0.0.0-alpha.8
     source:
       Git: https://github.com/pulp-platform/axi_rt.git
     dependencies:
@@ -361,8 +361,8 @@ packages:
     - hwpe-stream
     - zeroriscy
   obi:
-    revision: 1aa411df145c4ebdd61f8fed4d003c33f7b20636
-    version: 0.1.2
+    revision: c2141a653c755461ff44f61d12aeb5d99fc8e760
+    version: 0.1.3
     source:
       Git: https://github.com/pulp-platform/obi.git
     dependencies:
