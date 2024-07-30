@@ -113,14 +113,6 @@ packages:
     source:
       Git: https://github.com/AlSaqr-platform/can_bus.git
     dependencies: []
-  carfield_padframe_behav:
-    revision: null
-    version: null
-    source:
-      Path: target/sim/src/behav-padframe
-    dependencies:
-    - common_cells
-    - register_interface
   cheshire:
     revision: ac8b56958ca89e7ce5ebece004ea19844dd4b8ef
     version: null
