@@ -142,7 +142,7 @@ module vip_carfield_soc
     );
 
     clk_rst_gen #(
-      .ClkPeriod    ( ClkPeriodEth ),
+      .ClkPeriod    ( ClkPeriodPeriph ),
       .RstClkCycles ( RstCycles    )
     ) i_clk_rst_eth (
       .clk_o  ( eth_clk   ),
