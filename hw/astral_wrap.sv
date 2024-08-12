@@ -325,7 +325,8 @@ module astral_wrap
   logic [ 1:0]                                 spih_csb_o_s;
   logic [ 3:0]                                 spih_sd_o_s;
   logic [ 3:0]                                 spih_sd_en_o_s;
-  assign soc2pad_port_signals.periph.spi.spih_csb_0_o    = spih_csb_o_s[0]; // TO CHECK POLARITY OF THE SIGNAL
+  // TODO: CHECK POLARITY OF THE SIGNAL (SPI CS)
+  assign soc2pad_port_signals.periph.spi.spih_csb_0_o    = spih_csb_o_s[0];
   assign soc2pad_port_signals.periph.spi.spih_csb_1_o    = spih_csb_o_s[1];
   assign soc2pad_port_signals.periph.spi.spih_sck_o      = spih_sck_o_s;
   assign soc2pad_port_signals.periph.spi.spih_sd_0_o     = spih_sd_o_s[0];
@@ -342,7 +343,8 @@ module astral_wrap
   logic                                        spih_ot_csb_o_s;
   logic [ 3:0]                                 spih_ot_sd_o_s;
   logic [ 3:0]                                 spih_ot_sd_en_o_s;
-  assign soc2pad_port_signals.periph.spi_ot.spih_ot_csb_o      = spih_ot_csb_o_s; // TO CHECK POLARITY OF THE SIGNAL
+  // TODO: CHECK POLARITY OF THE SIGNAL (SPI CS)
+  assign soc2pad_port_signals.periph.spi_ot.spih_ot_csb_o      = spih_ot_csb_o_s;
   assign soc2pad_port_signals.periph.spi_ot.spih_ot_sck_o      = spih_ot_sck_o_s;
   assign soc2pad_port_signals.periph.spi_ot.spih_ot_sd_0_o     = spih_ot_sd_o_s[0];
   assign soc2pad_port_signals.periph.spi_ot.spih_ot_sd_0_oen_i = spih_ot_sd_en_o_s[0];
@@ -372,18 +374,18 @@ module astral_wrap
   // Clock generation //
   //////////////////////
 
-  localparam int unsigned NUM_FLL = 4;
-  
-  logic[NUM_FLL-1:0] clk_fll_out;
-  logic[NUM_FLL-1:0] clk_fll_e;
-  logic[NUM_FLL-1:0] fll_lock;
-  logic[NUM_FLL-1:0] fll_pwd;
-  logic[NUM_FLL-1:0] fll_test_mode;
-  logic[NUM_FLL-1:0] fll_scan_e;
-  logic[NUM_FLL-1:0] fll_scan_in;
-  logic[NUM_FLL-1:0] fll_scan_out;
-  logic[NUM_FLL-1:0] fll_scan_jtag_in;
-  logic[NUM_FLL-1:0] fll_scan_jtag_out;
+  localparam int unsigned NumFll = 4;
+
+  logic[NumFll-1:0] clk_fll_out;
+  logic[NumFll-1:0] clk_fll_e;
+  logic[NumFll-1:0] fll_lock;
+  logic[NumFll-1:0] fll_pwd;
+  logic[NumFll-1:0] fll_test_mode;
+  logic[NumFll-1:0] fll_scan_e;
+  logic[NumFll-1:0] fll_scan_in;
+  logic[NumFll-1:0] fll_scan_out;
+  logic[NumFll-1:0] fll_scan_jtag_in;
+  logic[NumFll-1:0] fll_scan_jtag_out;
 
   // ref_clk
   assign ref_clk      = st_pad2soc_signals.periph.ref_clk_i;
@@ -410,7 +412,7 @@ module astral_wrap
   assign fll_test_mode    = '{default: 1'b0};
   assign fll_scan_e       = '{default: 1'b0};
   assign fll_scan_in      = '{default: 1'b0};
-  assign fll_scan_jtag_in = '{default: 1'b0};  
+  assign fll_scan_jtag_in = '{default: 1'b0};
 
   // synchronize power-on rst with ref clock (required by padframe)
   rstgen i_ref_clk_rstgen (
@@ -423,8 +425,9 @@ module astral_wrap
 
 `ifdef GF12_FLL
   gf12_fll_wrap #(
-    .NUM_FLL        ( 4                  ),
-    .FLL_REG_OFFSET ( 3                  ), // Addresses: 0x2002_0000, 0x2002_0008, 0x2002_0010, 0x2002_0018, 0x2002_0020, 0x2002_0028, ...
+    .NUM_FLL        ( NumFll             ),
+    // Addresses are double-word aligned (0x2002_0000, 0x2002_0008, ...)
+    .FLL_REG_OFFSET ( 3                  ),
     .reg_req_t      ( carfield_reg_req_t ),
     .reg_rsp_t      ( carfield_reg_rsp_t )
   ) i_fll_wrap (
@@ -453,7 +456,7 @@ module astral_wrap
   logic              dummy_rst;
   logic              dummy_clk;
   carfield_reg_rsp_t dummy_rsp;
-  
+
   clk_rst_gen #(
     .ClkPeriod    ( 20ns ),
     .RstClkCycles ( 33   )
