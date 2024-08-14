@@ -434,11 +434,11 @@ package astral_padframe_periph_config_reg_pkg;
     struct packed {
       logic        q;
     } pull_sel;
-  } astral_padframe_periph_config_reg2hw_muxed_v_18_cfg_reg_t;
+  } astral_padframe_periph_config_reg2hw_muxed_h_00_cfg_reg_t;
 
   typedef struct packed {
     logic [2:0]  q;
-  } astral_padframe_periph_config_reg2hw_muxed_v_18_mux_sel_reg_t;
+  } astral_padframe_periph_config_reg2hw_muxed_h_00_mux_sel_reg_t;
 
   typedef struct packed {
     struct packed {
@@ -456,11 +456,11 @@ package astral_padframe_periph_config_reg_pkg;
     struct packed {
       logic        q;
     } pull_sel;
-  } astral_padframe_periph_config_reg2hw_muxed_v_19_cfg_reg_t;
+  } astral_padframe_periph_config_reg2hw_muxed_h_01_cfg_reg_t;
 
   typedef struct packed {
     logic [2:0]  q;
-  } astral_padframe_periph_config_reg2hw_muxed_v_19_mux_sel_reg_t;
+  } astral_padframe_periph_config_reg2hw_muxed_h_01_mux_sel_reg_t;
 
   typedef struct packed {
     struct packed {
@@ -478,11 +478,11 @@ package astral_padframe_periph_config_reg_pkg;
     struct packed {
       logic        q;
     } pull_sel;
-  } astral_padframe_periph_config_reg2hw_muxed_v_20_cfg_reg_t;
+  } astral_padframe_periph_config_reg2hw_muxed_h_02_cfg_reg_t;
 
   typedef struct packed {
     logic [2:0]  q;
-  } astral_padframe_periph_config_reg2hw_muxed_v_20_mux_sel_reg_t;
+  } astral_padframe_periph_config_reg2hw_muxed_h_02_mux_sel_reg_t;
 
   typedef struct packed {
     struct packed {
@@ -500,11 +500,11 @@ package astral_padframe_periph_config_reg_pkg;
     struct packed {
       logic        q;
     } pull_sel;
-  } astral_padframe_periph_config_reg2hw_muxed_v_21_cfg_reg_t;
+  } astral_padframe_periph_config_reg2hw_muxed_h_03_cfg_reg_t;
 
   typedef struct packed {
     logic [2:0]  q;
-  } astral_padframe_periph_config_reg2hw_muxed_v_21_mux_sel_reg_t;
+  } astral_padframe_periph_config_reg2hw_muxed_h_03_mux_sel_reg_t;
 
   // Register -> HW type
   typedef struct packed {
@@ -545,14 +545,14 @@ package astral_padframe_periph_config_reg_pkg;
     astral_padframe_periph_config_reg2hw_muxed_v_16_mux_sel_reg_t muxed_v_16_mux_sel; // [42:40]
     astral_padframe_periph_config_reg2hw_muxed_v_17_cfg_reg_t muxed_v_17_cfg; // [39:35]
     astral_padframe_periph_config_reg2hw_muxed_v_17_mux_sel_reg_t muxed_v_17_mux_sel; // [34:32]
-    astral_padframe_periph_config_reg2hw_muxed_v_18_cfg_reg_t muxed_v_18_cfg; // [31:27]
-    astral_padframe_periph_config_reg2hw_muxed_v_18_mux_sel_reg_t muxed_v_18_mux_sel; // [26:24]
-    astral_padframe_periph_config_reg2hw_muxed_v_19_cfg_reg_t muxed_v_19_cfg; // [23:19]
-    astral_padframe_periph_config_reg2hw_muxed_v_19_mux_sel_reg_t muxed_v_19_mux_sel; // [18:16]
-    astral_padframe_periph_config_reg2hw_muxed_v_20_cfg_reg_t muxed_v_20_cfg; // [15:11]
-    astral_padframe_periph_config_reg2hw_muxed_v_20_mux_sel_reg_t muxed_v_20_mux_sel; // [10:8]
-    astral_padframe_periph_config_reg2hw_muxed_v_21_cfg_reg_t muxed_v_21_cfg; // [7:3]
-    astral_padframe_periph_config_reg2hw_muxed_v_21_mux_sel_reg_t muxed_v_21_mux_sel; // [2:0]
+    astral_padframe_periph_config_reg2hw_muxed_h_00_cfg_reg_t muxed_h_00_cfg; // [31:27]
+    astral_padframe_periph_config_reg2hw_muxed_h_00_mux_sel_reg_t muxed_h_00_mux_sel; // [26:24]
+    astral_padframe_periph_config_reg2hw_muxed_h_01_cfg_reg_t muxed_h_01_cfg; // [23:19]
+    astral_padframe_periph_config_reg2hw_muxed_h_01_mux_sel_reg_t muxed_h_01_mux_sel; // [18:16]
+    astral_padframe_periph_config_reg2hw_muxed_h_02_cfg_reg_t muxed_h_02_cfg; // [15:11]
+    astral_padframe_periph_config_reg2hw_muxed_h_02_mux_sel_reg_t muxed_h_02_mux_sel; // [10:8]
+    astral_padframe_periph_config_reg2hw_muxed_h_03_cfg_reg_t muxed_h_03_cfg; // [7:3]
+    astral_padframe_periph_config_reg2hw_muxed_h_03_mux_sel_reg_t muxed_h_03_mux_sel; // [2:0]
   } astral_padframe_periph_config_reg2hw_t;
 
   // Register offsets
@@ -593,14 +593,14 @@ package astral_padframe_periph_config_reg_pkg;
   parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_16_MUX_SEL_OFFSET = 8'h 88;
   parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_17_CFG_OFFSET = 8'h 8c;
   parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_17_MUX_SEL_OFFSET = 8'h 90;
-  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_18_CFG_OFFSET = 8'h 94;
-  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_18_MUX_SEL_OFFSET = 8'h 98;
-  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_19_CFG_OFFSET = 8'h 9c;
-  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_19_MUX_SEL_OFFSET = 8'h a0;
-  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_20_CFG_OFFSET = 8'h a4;
-  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_20_MUX_SEL_OFFSET = 8'h a8;
-  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_21_CFG_OFFSET = 8'h ac;
-  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_21_MUX_SEL_OFFSET = 8'h b0;
+  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_00_CFG_OFFSET = 8'h 94;
+  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_00_MUX_SEL_OFFSET = 8'h 98;
+  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_01_CFG_OFFSET = 8'h 9c;
+  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_01_MUX_SEL_OFFSET = 8'h a0;
+  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_02_CFG_OFFSET = 8'h a4;
+  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_02_MUX_SEL_OFFSET = 8'h a8;
+  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_03_CFG_OFFSET = 8'h ac;
+  parameter logic [BlockAw-1:0] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_03_MUX_SEL_OFFSET = 8'h b0;
 
   // Register index
   typedef enum int {
@@ -641,14 +641,14 @@ package astral_padframe_periph_config_reg_pkg;
     ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_16_MUX_SEL,
     ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_17_CFG,
     ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_17_MUX_SEL,
-    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_18_CFG,
-    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_18_MUX_SEL,
-    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_19_CFG,
-    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_19_MUX_SEL,
-    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_20_CFG,
-    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_20_MUX_SEL,
-    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_21_CFG,
-    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_21_MUX_SEL
+    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_00_CFG,
+    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_00_MUX_SEL,
+    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_01_CFG,
+    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_01_MUX_SEL,
+    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_02_CFG,
+    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_02_MUX_SEL,
+    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_03_CFG,
+    ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_03_MUX_SEL
   } astral_padframe_periph_config_id_e;
 
   // Register width information to check illegal writes
@@ -690,14 +690,14 @@ package astral_padframe_periph_config_reg_pkg;
     4'b 0001, // index[34] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_16_MUX_SEL
     4'b 0001, // index[35] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_17_CFG
     4'b 0001, // index[36] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_17_MUX_SEL
-    4'b 0001, // index[37] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_18_CFG
-    4'b 0001, // index[38] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_18_MUX_SEL
-    4'b 0001, // index[39] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_19_CFG
-    4'b 0001, // index[40] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_19_MUX_SEL
-    4'b 0001, // index[41] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_20_CFG
-    4'b 0001, // index[42] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_20_MUX_SEL
-    4'b 0001, // index[43] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_21_CFG
-    4'b 0001  // index[44] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_21_MUX_SEL
+    4'b 0001, // index[37] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_00_CFG
+    4'b 0001, // index[38] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_00_MUX_SEL
+    4'b 0001, // index[39] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_01_CFG
+    4'b 0001, // index[40] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_01_MUX_SEL
+    4'b 0001, // index[41] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_02_CFG
+    4'b 0001, // index[42] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_02_MUX_SEL
+    4'b 0001, // index[43] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_03_CFG
+    4'b 0001  // index[44] ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_03_MUX_SEL
   };
 
 endpackage

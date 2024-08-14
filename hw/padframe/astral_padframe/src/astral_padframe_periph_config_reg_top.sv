@@ -393,78 +393,78 @@ module astral_padframe_periph_config_reg_top #(
   logic [2:0] muxed_v_17_mux_sel_qs;
   logic [2:0] muxed_v_17_mux_sel_wd;
   logic muxed_v_17_mux_sel_we;
-  logic muxed_v_18_cfg_chip2pad_qs;
-  logic muxed_v_18_cfg_chip2pad_wd;
-  logic muxed_v_18_cfg_chip2pad_we;
-  logic muxed_v_18_cfg_input_en_qs;
-  logic muxed_v_18_cfg_input_en_wd;
-  logic muxed_v_18_cfg_input_en_we;
-  logic muxed_v_18_cfg_output_en_qs;
-  logic muxed_v_18_cfg_output_en_wd;
-  logic muxed_v_18_cfg_output_en_we;
-  logic muxed_v_18_cfg_pull_en_qs;
-  logic muxed_v_18_cfg_pull_en_wd;
-  logic muxed_v_18_cfg_pull_en_we;
-  logic muxed_v_18_cfg_pull_sel_qs;
-  logic muxed_v_18_cfg_pull_sel_wd;
-  logic muxed_v_18_cfg_pull_sel_we;
-  logic [2:0] muxed_v_18_mux_sel_qs;
-  logic [2:0] muxed_v_18_mux_sel_wd;
-  logic muxed_v_18_mux_sel_we;
-  logic muxed_v_19_cfg_chip2pad_qs;
-  logic muxed_v_19_cfg_chip2pad_wd;
-  logic muxed_v_19_cfg_chip2pad_we;
-  logic muxed_v_19_cfg_input_en_qs;
-  logic muxed_v_19_cfg_input_en_wd;
-  logic muxed_v_19_cfg_input_en_we;
-  logic muxed_v_19_cfg_output_en_qs;
-  logic muxed_v_19_cfg_output_en_wd;
-  logic muxed_v_19_cfg_output_en_we;
-  logic muxed_v_19_cfg_pull_en_qs;
-  logic muxed_v_19_cfg_pull_en_wd;
-  logic muxed_v_19_cfg_pull_en_we;
-  logic muxed_v_19_cfg_pull_sel_qs;
-  logic muxed_v_19_cfg_pull_sel_wd;
-  logic muxed_v_19_cfg_pull_sel_we;
-  logic [2:0] muxed_v_19_mux_sel_qs;
-  logic [2:0] muxed_v_19_mux_sel_wd;
-  logic muxed_v_19_mux_sel_we;
-  logic muxed_v_20_cfg_chip2pad_qs;
-  logic muxed_v_20_cfg_chip2pad_wd;
-  logic muxed_v_20_cfg_chip2pad_we;
-  logic muxed_v_20_cfg_input_en_qs;
-  logic muxed_v_20_cfg_input_en_wd;
-  logic muxed_v_20_cfg_input_en_we;
-  logic muxed_v_20_cfg_output_en_qs;
-  logic muxed_v_20_cfg_output_en_wd;
-  logic muxed_v_20_cfg_output_en_we;
-  logic muxed_v_20_cfg_pull_en_qs;
-  logic muxed_v_20_cfg_pull_en_wd;
-  logic muxed_v_20_cfg_pull_en_we;
-  logic muxed_v_20_cfg_pull_sel_qs;
-  logic muxed_v_20_cfg_pull_sel_wd;
-  logic muxed_v_20_cfg_pull_sel_we;
-  logic [2:0] muxed_v_20_mux_sel_qs;
-  logic [2:0] muxed_v_20_mux_sel_wd;
-  logic muxed_v_20_mux_sel_we;
-  logic muxed_v_21_cfg_chip2pad_qs;
-  logic muxed_v_21_cfg_chip2pad_wd;
-  logic muxed_v_21_cfg_chip2pad_we;
-  logic muxed_v_21_cfg_input_en_qs;
-  logic muxed_v_21_cfg_input_en_wd;
-  logic muxed_v_21_cfg_input_en_we;
-  logic muxed_v_21_cfg_output_en_qs;
-  logic muxed_v_21_cfg_output_en_wd;
-  logic muxed_v_21_cfg_output_en_we;
-  logic muxed_v_21_cfg_pull_en_qs;
-  logic muxed_v_21_cfg_pull_en_wd;
-  logic muxed_v_21_cfg_pull_en_we;
-  logic muxed_v_21_cfg_pull_sel_qs;
-  logic muxed_v_21_cfg_pull_sel_wd;
-  logic muxed_v_21_cfg_pull_sel_we;
-  logic [2:0] muxed_v_21_mux_sel_qs;
-  logic [2:0] muxed_v_21_mux_sel_wd;
-  logic muxed_v_21_mux_sel_we;
+  logic muxed_h_00_cfg_chip2pad_qs;
+  logic muxed_h_00_cfg_chip2pad_wd;
+  logic muxed_h_00_cfg_chip2pad_we;
+  logic muxed_h_00_cfg_input_en_qs;
+  logic muxed_h_00_cfg_input_en_wd;
+  logic muxed_h_00_cfg_input_en_we;
+  logic muxed_h_00_cfg_output_en_qs;
+  logic muxed_h_00_cfg_output_en_wd;
+  logic muxed_h_00_cfg_output_en_we;
+  logic muxed_h_00_cfg_pull_en_qs;
+  logic muxed_h_00_cfg_pull_en_wd;
+  logic muxed_h_00_cfg_pull_en_we;
+  logic muxed_h_00_cfg_pull_sel_qs;
+  logic muxed_h_00_cfg_pull_sel_wd;
+  logic muxed_h_00_cfg_pull_sel_we;
+  logic [2:0] muxed_h_00_mux_sel_qs;
+  logic [2:0] muxed_h_00_mux_sel_wd;
+  logic muxed_h_00_mux_sel_we;
+  logic muxed_h_01_cfg_chip2pad_qs;
+  logic muxed_h_01_cfg_chip2pad_wd;
+  logic muxed_h_01_cfg_chip2pad_we;
+  logic muxed_h_01_cfg_input_en_qs;
+  logic muxed_h_01_cfg_input_en_wd;
+  logic muxed_h_01_cfg_input_en_we;
+  logic muxed_h_01_cfg_output_en_qs;
+  logic muxed_h_01_cfg_output_en_wd;
+  logic muxed_h_01_cfg_output_en_we;
+  logic muxed_h_01_cfg_pull_en_qs;
+  logic muxed_h_01_cfg_pull_en_wd;
+  logic muxed_h_01_cfg_pull_en_we;
+  logic muxed_h_01_cfg_pull_sel_qs;
+  logic muxed_h_01_cfg_pull_sel_wd;
+  logic muxed_h_01_cfg_pull_sel_we;
+  logic [2:0] muxed_h_01_mux_sel_qs;
+  logic [2:0] muxed_h_01_mux_sel_wd;
+  logic muxed_h_01_mux_sel_we;
+  logic muxed_h_02_cfg_chip2pad_qs;
+  logic muxed_h_02_cfg_chip2pad_wd;
+  logic muxed_h_02_cfg_chip2pad_we;
+  logic muxed_h_02_cfg_input_en_qs;
+  logic muxed_h_02_cfg_input_en_wd;
+  logic muxed_h_02_cfg_input_en_we;
+  logic muxed_h_02_cfg_output_en_qs;
+  logic muxed_h_02_cfg_output_en_wd;
+  logic muxed_h_02_cfg_output_en_we;
+  logic muxed_h_02_cfg_pull_en_qs;
+  logic muxed_h_02_cfg_pull_en_wd;
+  logic muxed_h_02_cfg_pull_en_we;
+  logic muxed_h_02_cfg_pull_sel_qs;
+  logic muxed_h_02_cfg_pull_sel_wd;
+  logic muxed_h_02_cfg_pull_sel_we;
+  logic [2:0] muxed_h_02_mux_sel_qs;
+  logic [2:0] muxed_h_02_mux_sel_wd;
+  logic muxed_h_02_mux_sel_we;
+  logic muxed_h_03_cfg_chip2pad_qs;
+  logic muxed_h_03_cfg_chip2pad_wd;
+  logic muxed_h_03_cfg_chip2pad_we;
+  logic muxed_h_03_cfg_input_en_qs;
+  logic muxed_h_03_cfg_input_en_wd;
+  logic muxed_h_03_cfg_input_en_we;
+  logic muxed_h_03_cfg_output_en_qs;
+  logic muxed_h_03_cfg_output_en_wd;
+  logic muxed_h_03_cfg_output_en_we;
+  logic muxed_h_03_cfg_pull_en_qs;
+  logic muxed_h_03_cfg_pull_en_wd;
+  logic muxed_h_03_cfg_pull_en_we;
+  logic muxed_h_03_cfg_pull_sel_qs;
+  logic muxed_h_03_cfg_pull_sel_wd;
+  logic muxed_h_03_cfg_pull_sel_we;
+  logic [2:0] muxed_h_03_mux_sel_qs;
+  logic [2:0] muxed_h_03_mux_sel_wd;
+  logic muxed_h_03_mux_sel_we;
 
   // Register instances
   // R[info]: V(False)
@@ -3381,20 +3381,20 @@ module astral_padframe_periph_config_reg_top #(
   );
 
 
-  // R[muxed_v_18_cfg]: V(False)
+  // R[muxed_h_00_cfg]: V(False)
 
   //   F[chip2pad]: 0:0
   prim_subreg #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_18_cfg_chip2pad (
+  ) u_muxed_h_00_cfg_chip2pad (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_18_cfg_chip2pad_we),
-    .wd     (muxed_v_18_cfg_chip2pad_wd),
+    .we     (muxed_h_00_cfg_chip2pad_we),
+    .wd     (muxed_h_00_cfg_chip2pad_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3402,10 +3402,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_18_cfg.chip2pad.q ),
+    .q      (reg2hw.muxed_h_00_cfg.chip2pad.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_18_cfg_chip2pad_qs)
+    .qs     (muxed_h_00_cfg_chip2pad_qs)
   );
 
 
@@ -3414,13 +3414,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_18_cfg_input_en (
+  ) u_muxed_h_00_cfg_input_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_18_cfg_input_en_we),
-    .wd     (muxed_v_18_cfg_input_en_wd),
+    .we     (muxed_h_00_cfg_input_en_we),
+    .wd     (muxed_h_00_cfg_input_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3428,10 +3428,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_18_cfg.input_en.q ),
+    .q      (reg2hw.muxed_h_00_cfg.input_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_18_cfg_input_en_qs)
+    .qs     (muxed_h_00_cfg_input_en_qs)
   );
 
 
@@ -3440,13 +3440,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_18_cfg_output_en (
+  ) u_muxed_h_00_cfg_output_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_18_cfg_output_en_we),
-    .wd     (muxed_v_18_cfg_output_en_wd),
+    .we     (muxed_h_00_cfg_output_en_we),
+    .wd     (muxed_h_00_cfg_output_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3454,10 +3454,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_18_cfg.output_en.q ),
+    .q      (reg2hw.muxed_h_00_cfg.output_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_18_cfg_output_en_qs)
+    .qs     (muxed_h_00_cfg_output_en_qs)
   );
 
 
@@ -3466,13 +3466,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_18_cfg_pull_en (
+  ) u_muxed_h_00_cfg_pull_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_18_cfg_pull_en_we),
-    .wd     (muxed_v_18_cfg_pull_en_wd),
+    .we     (muxed_h_00_cfg_pull_en_we),
+    .wd     (muxed_h_00_cfg_pull_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3480,10 +3480,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_18_cfg.pull_en.q ),
+    .q      (reg2hw.muxed_h_00_cfg.pull_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_18_cfg_pull_en_qs)
+    .qs     (muxed_h_00_cfg_pull_en_qs)
   );
 
 
@@ -3492,13 +3492,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_18_cfg_pull_sel (
+  ) u_muxed_h_00_cfg_pull_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_18_cfg_pull_sel_we),
-    .wd     (muxed_v_18_cfg_pull_sel_wd),
+    .we     (muxed_h_00_cfg_pull_sel_we),
+    .wd     (muxed_h_00_cfg_pull_sel_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3506,26 +3506,26 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_18_cfg.pull_sel.q ),
+    .q      (reg2hw.muxed_h_00_cfg.pull_sel.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_18_cfg_pull_sel_qs)
+    .qs     (muxed_h_00_cfg_pull_sel_qs)
   );
 
 
-  // R[muxed_v_18_mux_sel]: V(False)
+  // R[muxed_h_00_mux_sel]: V(False)
 
   prim_subreg #(
     .DW      (3),
     .SWACCESS("RW"),
     .RESVAL  (3'h4)
-  ) u_muxed_v_18_mux_sel (
+  ) u_muxed_h_00_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_18_mux_sel_we),
-    .wd     (muxed_v_18_mux_sel_wd),
+    .we     (muxed_h_00_mux_sel_we),
+    .wd     (muxed_h_00_mux_sel_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3533,27 +3533,27 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_18_mux_sel.q ),
+    .q      (reg2hw.muxed_h_00_mux_sel.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_18_mux_sel_qs)
+    .qs     (muxed_h_00_mux_sel_qs)
   );
 
 
-  // R[muxed_v_19_cfg]: V(False)
+  // R[muxed_h_01_cfg]: V(False)
 
   //   F[chip2pad]: 0:0
   prim_subreg #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_19_cfg_chip2pad (
+  ) u_muxed_h_01_cfg_chip2pad (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_19_cfg_chip2pad_we),
-    .wd     (muxed_v_19_cfg_chip2pad_wd),
+    .we     (muxed_h_01_cfg_chip2pad_we),
+    .wd     (muxed_h_01_cfg_chip2pad_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3561,10 +3561,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_19_cfg.chip2pad.q ),
+    .q      (reg2hw.muxed_h_01_cfg.chip2pad.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_19_cfg_chip2pad_qs)
+    .qs     (muxed_h_01_cfg_chip2pad_qs)
   );
 
 
@@ -3573,13 +3573,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_19_cfg_input_en (
+  ) u_muxed_h_01_cfg_input_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_19_cfg_input_en_we),
-    .wd     (muxed_v_19_cfg_input_en_wd),
+    .we     (muxed_h_01_cfg_input_en_we),
+    .wd     (muxed_h_01_cfg_input_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3587,10 +3587,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_19_cfg.input_en.q ),
+    .q      (reg2hw.muxed_h_01_cfg.input_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_19_cfg_input_en_qs)
+    .qs     (muxed_h_01_cfg_input_en_qs)
   );
 
 
@@ -3599,13 +3599,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_19_cfg_output_en (
+  ) u_muxed_h_01_cfg_output_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_19_cfg_output_en_we),
-    .wd     (muxed_v_19_cfg_output_en_wd),
+    .we     (muxed_h_01_cfg_output_en_we),
+    .wd     (muxed_h_01_cfg_output_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3613,10 +3613,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_19_cfg.output_en.q ),
+    .q      (reg2hw.muxed_h_01_cfg.output_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_19_cfg_output_en_qs)
+    .qs     (muxed_h_01_cfg_output_en_qs)
   );
 
 
@@ -3625,13 +3625,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_19_cfg_pull_en (
+  ) u_muxed_h_01_cfg_pull_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_19_cfg_pull_en_we),
-    .wd     (muxed_v_19_cfg_pull_en_wd),
+    .we     (muxed_h_01_cfg_pull_en_we),
+    .wd     (muxed_h_01_cfg_pull_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3639,10 +3639,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_19_cfg.pull_en.q ),
+    .q      (reg2hw.muxed_h_01_cfg.pull_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_19_cfg_pull_en_qs)
+    .qs     (muxed_h_01_cfg_pull_en_qs)
   );
 
 
@@ -3651,13 +3651,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_19_cfg_pull_sel (
+  ) u_muxed_h_01_cfg_pull_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_19_cfg_pull_sel_we),
-    .wd     (muxed_v_19_cfg_pull_sel_wd),
+    .we     (muxed_h_01_cfg_pull_sel_we),
+    .wd     (muxed_h_01_cfg_pull_sel_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3665,26 +3665,26 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_19_cfg.pull_sel.q ),
+    .q      (reg2hw.muxed_h_01_cfg.pull_sel.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_19_cfg_pull_sel_qs)
+    .qs     (muxed_h_01_cfg_pull_sel_qs)
   );
 
 
-  // R[muxed_v_19_mux_sel]: V(False)
+  // R[muxed_h_01_mux_sel]: V(False)
 
   prim_subreg #(
     .DW      (3),
     .SWACCESS("RW"),
     .RESVAL  (3'h4)
-  ) u_muxed_v_19_mux_sel (
+  ) u_muxed_h_01_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_19_mux_sel_we),
-    .wd     (muxed_v_19_mux_sel_wd),
+    .we     (muxed_h_01_mux_sel_we),
+    .wd     (muxed_h_01_mux_sel_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3692,27 +3692,27 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_19_mux_sel.q ),
+    .q      (reg2hw.muxed_h_01_mux_sel.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_19_mux_sel_qs)
+    .qs     (muxed_h_01_mux_sel_qs)
   );
 
 
-  // R[muxed_v_20_cfg]: V(False)
+  // R[muxed_h_02_cfg]: V(False)
 
   //   F[chip2pad]: 0:0
   prim_subreg #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_20_cfg_chip2pad (
+  ) u_muxed_h_02_cfg_chip2pad (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_20_cfg_chip2pad_we),
-    .wd     (muxed_v_20_cfg_chip2pad_wd),
+    .we     (muxed_h_02_cfg_chip2pad_we),
+    .wd     (muxed_h_02_cfg_chip2pad_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3720,10 +3720,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_20_cfg.chip2pad.q ),
+    .q      (reg2hw.muxed_h_02_cfg.chip2pad.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_20_cfg_chip2pad_qs)
+    .qs     (muxed_h_02_cfg_chip2pad_qs)
   );
 
 
@@ -3732,13 +3732,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_20_cfg_input_en (
+  ) u_muxed_h_02_cfg_input_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_20_cfg_input_en_we),
-    .wd     (muxed_v_20_cfg_input_en_wd),
+    .we     (muxed_h_02_cfg_input_en_we),
+    .wd     (muxed_h_02_cfg_input_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3746,10 +3746,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_20_cfg.input_en.q ),
+    .q      (reg2hw.muxed_h_02_cfg.input_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_20_cfg_input_en_qs)
+    .qs     (muxed_h_02_cfg_input_en_qs)
   );
 
 
@@ -3758,13 +3758,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_20_cfg_output_en (
+  ) u_muxed_h_02_cfg_output_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_20_cfg_output_en_we),
-    .wd     (muxed_v_20_cfg_output_en_wd),
+    .we     (muxed_h_02_cfg_output_en_we),
+    .wd     (muxed_h_02_cfg_output_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3772,10 +3772,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_20_cfg.output_en.q ),
+    .q      (reg2hw.muxed_h_02_cfg.output_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_20_cfg_output_en_qs)
+    .qs     (muxed_h_02_cfg_output_en_qs)
   );
 
 
@@ -3784,13 +3784,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_20_cfg_pull_en (
+  ) u_muxed_h_02_cfg_pull_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_20_cfg_pull_en_we),
-    .wd     (muxed_v_20_cfg_pull_en_wd),
+    .we     (muxed_h_02_cfg_pull_en_we),
+    .wd     (muxed_h_02_cfg_pull_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3798,10 +3798,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_20_cfg.pull_en.q ),
+    .q      (reg2hw.muxed_h_02_cfg.pull_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_20_cfg_pull_en_qs)
+    .qs     (muxed_h_02_cfg_pull_en_qs)
   );
 
 
@@ -3810,13 +3810,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_20_cfg_pull_sel (
+  ) u_muxed_h_02_cfg_pull_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_20_cfg_pull_sel_we),
-    .wd     (muxed_v_20_cfg_pull_sel_wd),
+    .we     (muxed_h_02_cfg_pull_sel_we),
+    .wd     (muxed_h_02_cfg_pull_sel_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3824,26 +3824,26 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_20_cfg.pull_sel.q ),
+    .q      (reg2hw.muxed_h_02_cfg.pull_sel.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_20_cfg_pull_sel_qs)
+    .qs     (muxed_h_02_cfg_pull_sel_qs)
   );
 
 
-  // R[muxed_v_20_mux_sel]: V(False)
+  // R[muxed_h_02_mux_sel]: V(False)
 
   prim_subreg #(
     .DW      (3),
     .SWACCESS("RW"),
     .RESVAL  (3'h4)
-  ) u_muxed_v_20_mux_sel (
+  ) u_muxed_h_02_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_20_mux_sel_we),
-    .wd     (muxed_v_20_mux_sel_wd),
+    .we     (muxed_h_02_mux_sel_we),
+    .wd     (muxed_h_02_mux_sel_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3851,27 +3851,27 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_20_mux_sel.q ),
+    .q      (reg2hw.muxed_h_02_mux_sel.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_20_mux_sel_qs)
+    .qs     (muxed_h_02_mux_sel_qs)
   );
 
 
-  // R[muxed_v_21_cfg]: V(False)
+  // R[muxed_h_03_cfg]: V(False)
 
   //   F[chip2pad]: 0:0
   prim_subreg #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_21_cfg_chip2pad (
+  ) u_muxed_h_03_cfg_chip2pad (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_21_cfg_chip2pad_we),
-    .wd     (muxed_v_21_cfg_chip2pad_wd),
+    .we     (muxed_h_03_cfg_chip2pad_we),
+    .wd     (muxed_h_03_cfg_chip2pad_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3879,10 +3879,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_21_cfg.chip2pad.q ),
+    .q      (reg2hw.muxed_h_03_cfg.chip2pad.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_21_cfg_chip2pad_qs)
+    .qs     (muxed_h_03_cfg_chip2pad_qs)
   );
 
 
@@ -3891,13 +3891,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_21_cfg_input_en (
+  ) u_muxed_h_03_cfg_input_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_21_cfg_input_en_we),
-    .wd     (muxed_v_21_cfg_input_en_wd),
+    .we     (muxed_h_03_cfg_input_en_we),
+    .wd     (muxed_h_03_cfg_input_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3905,10 +3905,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_21_cfg.input_en.q ),
+    .q      (reg2hw.muxed_h_03_cfg.input_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_21_cfg_input_en_qs)
+    .qs     (muxed_h_03_cfg_input_en_qs)
   );
 
 
@@ -3917,13 +3917,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_21_cfg_output_en (
+  ) u_muxed_h_03_cfg_output_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_21_cfg_output_en_we),
-    .wd     (muxed_v_21_cfg_output_en_wd),
+    .we     (muxed_h_03_cfg_output_en_we),
+    .wd     (muxed_h_03_cfg_output_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3931,10 +3931,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_21_cfg.output_en.q ),
+    .q      (reg2hw.muxed_h_03_cfg.output_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_21_cfg_output_en_qs)
+    .qs     (muxed_h_03_cfg_output_en_qs)
   );
 
 
@@ -3943,13 +3943,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_21_cfg_pull_en (
+  ) u_muxed_h_03_cfg_pull_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_21_cfg_pull_en_we),
-    .wd     (muxed_v_21_cfg_pull_en_wd),
+    .we     (muxed_h_03_cfg_pull_en_we),
+    .wd     (muxed_h_03_cfg_pull_en_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3957,10 +3957,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_21_cfg.pull_en.q ),
+    .q      (reg2hw.muxed_h_03_cfg.pull_en.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_21_cfg_pull_en_qs)
+    .qs     (muxed_h_03_cfg_pull_en_qs)
   );
 
 
@@ -3969,13 +3969,13 @@ module astral_padframe_periph_config_reg_top #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h0)
-  ) u_muxed_v_21_cfg_pull_sel (
+  ) u_muxed_h_03_cfg_pull_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_21_cfg_pull_sel_we),
-    .wd     (muxed_v_21_cfg_pull_sel_wd),
+    .we     (muxed_h_03_cfg_pull_sel_we),
+    .wd     (muxed_h_03_cfg_pull_sel_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -3983,26 +3983,26 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_21_cfg.pull_sel.q ),
+    .q      (reg2hw.muxed_h_03_cfg.pull_sel.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_21_cfg_pull_sel_qs)
+    .qs     (muxed_h_03_cfg_pull_sel_qs)
   );
 
 
-  // R[muxed_v_21_mux_sel]: V(False)
+  // R[muxed_h_03_mux_sel]: V(False)
 
   prim_subreg #(
     .DW      (3),
     .SWACCESS("RW"),
     .RESVAL  (3'h4)
-  ) u_muxed_v_21_mux_sel (
+  ) u_muxed_h_03_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (muxed_v_21_mux_sel_we),
-    .wd     (muxed_v_21_mux_sel_wd),
+    .we     (muxed_h_03_mux_sel_we),
+    .wd     (muxed_h_03_mux_sel_wd),
 
     // from internal hardware
     .de     (1'b0),
@@ -4010,10 +4010,10 @@ module astral_padframe_periph_config_reg_top #(
 
     // to internal hardware
     .qe     (),
-    .q      (reg2hw.muxed_v_21_mux_sel.q ),
+    .q      (reg2hw.muxed_h_03_mux_sel.q ),
 
     // to register interface (read)
-    .qs     (muxed_v_21_mux_sel_qs)
+    .qs     (muxed_h_03_mux_sel_qs)
   );
 
 
@@ -4059,14 +4059,14 @@ module astral_padframe_periph_config_reg_top #(
     addr_hit[34] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_16_MUX_SEL_OFFSET);
     addr_hit[35] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_17_CFG_OFFSET);
     addr_hit[36] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_17_MUX_SEL_OFFSET);
-    addr_hit[37] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_18_CFG_OFFSET);
-    addr_hit[38] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_18_MUX_SEL_OFFSET);
-    addr_hit[39] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_19_CFG_OFFSET);
-    addr_hit[40] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_19_MUX_SEL_OFFSET);
-    addr_hit[41] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_20_CFG_OFFSET);
-    addr_hit[42] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_20_MUX_SEL_OFFSET);
-    addr_hit[43] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_21_CFG_OFFSET);
-    addr_hit[44] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_V_21_MUX_SEL_OFFSET);
+    addr_hit[37] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_00_CFG_OFFSET);
+    addr_hit[38] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_00_MUX_SEL_OFFSET);
+    addr_hit[39] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_01_CFG_OFFSET);
+    addr_hit[40] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_01_MUX_SEL_OFFSET);
+    addr_hit[41] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_02_CFG_OFFSET);
+    addr_hit[42] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_02_MUX_SEL_OFFSET);
+    addr_hit[43] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_03_CFG_OFFSET);
+    addr_hit[44] = (reg_addr == ASTRAL_PADFRAME_PERIPH_CONFIG_MUXED_H_03_MUX_SEL_OFFSET);
   end
 
   assign addrmiss = (reg_re || reg_we) ? ~|addr_hit : 1'b0 ;
@@ -4445,77 +4445,77 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_v_17_mux_sel_we = addr_hit[36] & reg_we & !reg_error;
   assign muxed_v_17_mux_sel_wd = reg_wdata[2:0];
 
-  assign muxed_v_18_cfg_chip2pad_we = addr_hit[37] & reg_we & !reg_error;
-  assign muxed_v_18_cfg_chip2pad_wd = reg_wdata[0];
+  assign muxed_h_00_cfg_chip2pad_we = addr_hit[37] & reg_we & !reg_error;
+  assign muxed_h_00_cfg_chip2pad_wd = reg_wdata[0];
 
-  assign muxed_v_18_cfg_input_en_we = addr_hit[37] & reg_we & !reg_error;
-  assign muxed_v_18_cfg_input_en_wd = reg_wdata[1];
+  assign muxed_h_00_cfg_input_en_we = addr_hit[37] & reg_we & !reg_error;
+  assign muxed_h_00_cfg_input_en_wd = reg_wdata[1];
 
-  assign muxed_v_18_cfg_output_en_we = addr_hit[37] & reg_we & !reg_error;
-  assign muxed_v_18_cfg_output_en_wd = reg_wdata[2];
+  assign muxed_h_00_cfg_output_en_we = addr_hit[37] & reg_we & !reg_error;
+  assign muxed_h_00_cfg_output_en_wd = reg_wdata[2];
 
-  assign muxed_v_18_cfg_pull_en_we = addr_hit[37] & reg_we & !reg_error;
-  assign muxed_v_18_cfg_pull_en_wd = reg_wdata[3];
+  assign muxed_h_00_cfg_pull_en_we = addr_hit[37] & reg_we & !reg_error;
+  assign muxed_h_00_cfg_pull_en_wd = reg_wdata[3];
 
-  assign muxed_v_18_cfg_pull_sel_we = addr_hit[37] & reg_we & !reg_error;
-  assign muxed_v_18_cfg_pull_sel_wd = reg_wdata[4];
+  assign muxed_h_00_cfg_pull_sel_we = addr_hit[37] & reg_we & !reg_error;
+  assign muxed_h_00_cfg_pull_sel_wd = reg_wdata[4];
 
-  assign muxed_v_18_mux_sel_we = addr_hit[38] & reg_we & !reg_error;
-  assign muxed_v_18_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_h_00_mux_sel_we = addr_hit[38] & reg_we & !reg_error;
+  assign muxed_h_00_mux_sel_wd = reg_wdata[2:0];
 
-  assign muxed_v_19_cfg_chip2pad_we = addr_hit[39] & reg_we & !reg_error;
-  assign muxed_v_19_cfg_chip2pad_wd = reg_wdata[0];
+  assign muxed_h_01_cfg_chip2pad_we = addr_hit[39] & reg_we & !reg_error;
+  assign muxed_h_01_cfg_chip2pad_wd = reg_wdata[0];
 
-  assign muxed_v_19_cfg_input_en_we = addr_hit[39] & reg_we & !reg_error;
-  assign muxed_v_19_cfg_input_en_wd = reg_wdata[1];
+  assign muxed_h_01_cfg_input_en_we = addr_hit[39] & reg_we & !reg_error;
+  assign muxed_h_01_cfg_input_en_wd = reg_wdata[1];
 
-  assign muxed_v_19_cfg_output_en_we = addr_hit[39] & reg_we & !reg_error;
-  assign muxed_v_19_cfg_output_en_wd = reg_wdata[2];
+  assign muxed_h_01_cfg_output_en_we = addr_hit[39] & reg_we & !reg_error;
+  assign muxed_h_01_cfg_output_en_wd = reg_wdata[2];
 
-  assign muxed_v_19_cfg_pull_en_we = addr_hit[39] & reg_we & !reg_error;
-  assign muxed_v_19_cfg_pull_en_wd = reg_wdata[3];
+  assign muxed_h_01_cfg_pull_en_we = addr_hit[39] & reg_we & !reg_error;
+  assign muxed_h_01_cfg_pull_en_wd = reg_wdata[3];
 
-  assign muxed_v_19_cfg_pull_sel_we = addr_hit[39] & reg_we & !reg_error;
-  assign muxed_v_19_cfg_pull_sel_wd = reg_wdata[4];
+  assign muxed_h_01_cfg_pull_sel_we = addr_hit[39] & reg_we & !reg_error;
+  assign muxed_h_01_cfg_pull_sel_wd = reg_wdata[4];
 
-  assign muxed_v_19_mux_sel_we = addr_hit[40] & reg_we & !reg_error;
-  assign muxed_v_19_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_h_01_mux_sel_we = addr_hit[40] & reg_we & !reg_error;
+  assign muxed_h_01_mux_sel_wd = reg_wdata[2:0];
 
-  assign muxed_v_20_cfg_chip2pad_we = addr_hit[41] & reg_we & !reg_error;
-  assign muxed_v_20_cfg_chip2pad_wd = reg_wdata[0];
+  assign muxed_h_02_cfg_chip2pad_we = addr_hit[41] & reg_we & !reg_error;
+  assign muxed_h_02_cfg_chip2pad_wd = reg_wdata[0];
 
-  assign muxed_v_20_cfg_input_en_we = addr_hit[41] & reg_we & !reg_error;
-  assign muxed_v_20_cfg_input_en_wd = reg_wdata[1];
+  assign muxed_h_02_cfg_input_en_we = addr_hit[41] & reg_we & !reg_error;
+  assign muxed_h_02_cfg_input_en_wd = reg_wdata[1];
 
-  assign muxed_v_20_cfg_output_en_we = addr_hit[41] & reg_we & !reg_error;
-  assign muxed_v_20_cfg_output_en_wd = reg_wdata[2];
+  assign muxed_h_02_cfg_output_en_we = addr_hit[41] & reg_we & !reg_error;
+  assign muxed_h_02_cfg_output_en_wd = reg_wdata[2];
 
-  assign muxed_v_20_cfg_pull_en_we = addr_hit[41] & reg_we & !reg_error;
-  assign muxed_v_20_cfg_pull_en_wd = reg_wdata[3];
+  assign muxed_h_02_cfg_pull_en_we = addr_hit[41] & reg_we & !reg_error;
+  assign muxed_h_02_cfg_pull_en_wd = reg_wdata[3];
 
-  assign muxed_v_20_cfg_pull_sel_we = addr_hit[41] & reg_we & !reg_error;
-  assign muxed_v_20_cfg_pull_sel_wd = reg_wdata[4];
+  assign muxed_h_02_cfg_pull_sel_we = addr_hit[41] & reg_we & !reg_error;
+  assign muxed_h_02_cfg_pull_sel_wd = reg_wdata[4];
 
-  assign muxed_v_20_mux_sel_we = addr_hit[42] & reg_we & !reg_error;
-  assign muxed_v_20_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_h_02_mux_sel_we = addr_hit[42] & reg_we & !reg_error;
+  assign muxed_h_02_mux_sel_wd = reg_wdata[2:0];
 
-  assign muxed_v_21_cfg_chip2pad_we = addr_hit[43] & reg_we & !reg_error;
-  assign muxed_v_21_cfg_chip2pad_wd = reg_wdata[0];
+  assign muxed_h_03_cfg_chip2pad_we = addr_hit[43] & reg_we & !reg_error;
+  assign muxed_h_03_cfg_chip2pad_wd = reg_wdata[0];
 
-  assign muxed_v_21_cfg_input_en_we = addr_hit[43] & reg_we & !reg_error;
-  assign muxed_v_21_cfg_input_en_wd = reg_wdata[1];
+  assign muxed_h_03_cfg_input_en_we = addr_hit[43] & reg_we & !reg_error;
+  assign muxed_h_03_cfg_input_en_wd = reg_wdata[1];
 
-  assign muxed_v_21_cfg_output_en_we = addr_hit[43] & reg_we & !reg_error;
-  assign muxed_v_21_cfg_output_en_wd = reg_wdata[2];
+  assign muxed_h_03_cfg_output_en_we = addr_hit[43] & reg_we & !reg_error;
+  assign muxed_h_03_cfg_output_en_wd = reg_wdata[2];
 
-  assign muxed_v_21_cfg_pull_en_we = addr_hit[43] & reg_we & !reg_error;
-  assign muxed_v_21_cfg_pull_en_wd = reg_wdata[3];
+  assign muxed_h_03_cfg_pull_en_we = addr_hit[43] & reg_we & !reg_error;
+  assign muxed_h_03_cfg_pull_en_wd = reg_wdata[3];
 
-  assign muxed_v_21_cfg_pull_sel_we = addr_hit[43] & reg_we & !reg_error;
-  assign muxed_v_21_cfg_pull_sel_wd = reg_wdata[4];
+  assign muxed_h_03_cfg_pull_sel_we = addr_hit[43] & reg_we & !reg_error;
+  assign muxed_h_03_cfg_pull_sel_wd = reg_wdata[4];
 
-  assign muxed_v_21_mux_sel_we = addr_hit[44] & reg_we & !reg_error;
-  assign muxed_v_21_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_h_03_mux_sel_we = addr_hit[44] & reg_we & !reg_error;
+  assign muxed_h_03_mux_sel_wd = reg_wdata[2:0];
 
   // Read data return
   always_comb begin
@@ -4743,51 +4743,51 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[37]: begin
-        reg_rdata_next[0] = muxed_v_18_cfg_chip2pad_qs;
-        reg_rdata_next[1] = muxed_v_18_cfg_input_en_qs;
-        reg_rdata_next[2] = muxed_v_18_cfg_output_en_qs;
-        reg_rdata_next[3] = muxed_v_18_cfg_pull_en_qs;
-        reg_rdata_next[4] = muxed_v_18_cfg_pull_sel_qs;
+        reg_rdata_next[0] = muxed_h_00_cfg_chip2pad_qs;
+        reg_rdata_next[1] = muxed_h_00_cfg_input_en_qs;
+        reg_rdata_next[2] = muxed_h_00_cfg_output_en_qs;
+        reg_rdata_next[3] = muxed_h_00_cfg_pull_en_qs;
+        reg_rdata_next[4] = muxed_h_00_cfg_pull_sel_qs;
       end
 
       addr_hit[38]: begin
-        reg_rdata_next[2:0] = muxed_v_18_mux_sel_qs;
+        reg_rdata_next[2:0] = muxed_h_00_mux_sel_qs;
       end
 
       addr_hit[39]: begin
-        reg_rdata_next[0] = muxed_v_19_cfg_chip2pad_qs;
-        reg_rdata_next[1] = muxed_v_19_cfg_input_en_qs;
-        reg_rdata_next[2] = muxed_v_19_cfg_output_en_qs;
-        reg_rdata_next[3] = muxed_v_19_cfg_pull_en_qs;
-        reg_rdata_next[4] = muxed_v_19_cfg_pull_sel_qs;
+        reg_rdata_next[0] = muxed_h_01_cfg_chip2pad_qs;
+        reg_rdata_next[1] = muxed_h_01_cfg_input_en_qs;
+        reg_rdata_next[2] = muxed_h_01_cfg_output_en_qs;
+        reg_rdata_next[3] = muxed_h_01_cfg_pull_en_qs;
+        reg_rdata_next[4] = muxed_h_01_cfg_pull_sel_qs;
       end
 
       addr_hit[40]: begin
-        reg_rdata_next[2:0] = muxed_v_19_mux_sel_qs;
+        reg_rdata_next[2:0] = muxed_h_01_mux_sel_qs;
       end
 
       addr_hit[41]: begin
-        reg_rdata_next[0] = muxed_v_20_cfg_chip2pad_qs;
-        reg_rdata_next[1] = muxed_v_20_cfg_input_en_qs;
-        reg_rdata_next[2] = muxed_v_20_cfg_output_en_qs;
-        reg_rdata_next[3] = muxed_v_20_cfg_pull_en_qs;
-        reg_rdata_next[4] = muxed_v_20_cfg_pull_sel_qs;
+        reg_rdata_next[0] = muxed_h_02_cfg_chip2pad_qs;
+        reg_rdata_next[1] = muxed_h_02_cfg_input_en_qs;
+        reg_rdata_next[2] = muxed_h_02_cfg_output_en_qs;
+        reg_rdata_next[3] = muxed_h_02_cfg_pull_en_qs;
+        reg_rdata_next[4] = muxed_h_02_cfg_pull_sel_qs;
       end
 
       addr_hit[42]: begin
-        reg_rdata_next[2:0] = muxed_v_20_mux_sel_qs;
+        reg_rdata_next[2:0] = muxed_h_02_mux_sel_qs;
       end
 
       addr_hit[43]: begin
-        reg_rdata_next[0] = muxed_v_21_cfg_chip2pad_qs;
-        reg_rdata_next[1] = muxed_v_21_cfg_input_en_qs;
-        reg_rdata_next[2] = muxed_v_21_cfg_output_en_qs;
-        reg_rdata_next[3] = muxed_v_21_cfg_pull_en_qs;
-        reg_rdata_next[4] = muxed_v_21_cfg_pull_sel_qs;
+        reg_rdata_next[0] = muxed_h_03_cfg_chip2pad_qs;
+        reg_rdata_next[1] = muxed_h_03_cfg_input_en_qs;
+        reg_rdata_next[2] = muxed_h_03_cfg_output_en_qs;
+        reg_rdata_next[3] = muxed_h_03_cfg_pull_en_qs;
+        reg_rdata_next[4] = muxed_h_03_cfg_pull_sel_qs;
       end
 
       addr_hit[44]: begin
-        reg_rdata_next[2:0] = muxed_v_21_mux_sel_qs;
+        reg_rdata_next[2:0] = muxed_h_03_mux_sel_qs;
       end
 
       default: begin

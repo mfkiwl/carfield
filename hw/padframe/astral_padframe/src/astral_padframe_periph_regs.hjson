@@ -113,14 +113,6 @@
 
 
 
-
-
-
-
-
-
-
-
       {
           name: MUXED_V_00_CFG
           desc: '''
@@ -196,7 +188,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_can_rx", desc: "Connect port rx from port group can to this pad." }
-                      { value: "2", name: "port_gpio_io_0", desc: "Connect port io_0 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_0", desc: "Connect port io_v_0 from port group gpio to this pad." }
                       { value: "3", name: "port_i2c_sda_o", desc: "Connect port sda_o from port group i2c to this pad." }
                       { value: "4", name: "port_spi_sck", desc: "Connect port sck from port group spi to this pad." }
                       { value: "5", name: "port_spi_ot_sck", desc: "Connect port sck from port group spi_ot to this pad." }
@@ -280,7 +272,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_can_tx", desc: "Connect port tx from port group can to this pad." }
-                      { value: "2", name: "port_gpio_io_1", desc: "Connect port io_1 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_1", desc: "Connect port io_v_1 from port group gpio to this pad." }
                       { value: "3", name: "port_i2c_sda_i", desc: "Connect port sda_i from port group i2c to this pad." }
                       { value: "4", name: "port_spi_csb_0", desc: "Connect port csb_0 from port group spi to this pad." }
                       { value: "5", name: "port_spi_ot_csb", desc: "Connect port csb from port group spi_ot to this pad." }
@@ -363,7 +355,7 @@
                   bits: "2:0"
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
-                      { value: "1", name: "port_gpio_io_2", desc: "Connect port io_2 from port group gpio to this pad." }
+                      { value: "1", name: "port_gpio_io_v_2", desc: "Connect port io_v_2 from port group gpio to this pad." }
                       { value: "2", name: "port_i2c_sda_en", desc: "Connect port sda_en from port group i2c to this pad." }
                       { value: "3", name: "port_spi_csb_1", desc: "Connect port csb_1 from port group spi to this pad." }
                       { value: "4", name: "port_spi_ot_sd_0", desc: "Connect port sd_0 from port group spi_ot to this pad." }
@@ -446,7 +438,7 @@
                   bits: "2:0"
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
-                      { value: "1", name: "port_gpio_io_3", desc: "Connect port io_3 from port group gpio to this pad." }
+                      { value: "1", name: "port_gpio_io_v_3", desc: "Connect port io_v_3 from port group gpio to this pad." }
                       { value: "2", name: "port_i2c_scl_o", desc: "Connect port scl_o from port group i2c to this pad." }
                       { value: "3", name: "port_spi_sd_0", desc: "Connect port sd_0 from port group spi to this pad." }
                       { value: "4", name: "port_spi_ot_sd_1", desc: "Connect port sd_1 from port group spi_ot to this pad." }
@@ -529,7 +521,7 @@
                   bits: "2:0"
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
-                      { value: "1", name: "port_gpio_io_4", desc: "Connect port io_4 from port group gpio to this pad." }
+                      { value: "1", name: "port_gpio_io_v_4", desc: "Connect port io_v_4 from port group gpio to this pad." }
                       { value: "2", name: "port_i2c_scl_i", desc: "Connect port scl_i from port group i2c to this pad." }
                       { value: "3", name: "port_serial_link_rcv_clk_i", desc: "Connect port rcv_clk_i from port group serial_link to this pad." }
                       { value: "4", name: "port_spi_sd_1", desc: "Connect port sd_1 from port group spi to this pad." }
@@ -613,7 +605,7 @@
                   bits: "2:0"
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
-                      { value: "1", name: "port_gpio_io_5", desc: "Connect port io_5 from port group gpio to this pad." }
+                      { value: "1", name: "port_gpio_io_v_5", desc: "Connect port io_v_5 from port group gpio to this pad." }
                       { value: "2", name: "port_i2c_scl_en", desc: "Connect port scl_en from port group i2c to this pad." }
                       { value: "3", name: "port_serial_link_i_0", desc: "Connect port i_0 from port group serial_link to this pad." }
                       { value: "4", name: "port_spi_sd_2", desc: "Connect port sd_2 from port group spi to this pad." }
@@ -697,7 +689,7 @@
                   bits: "1:0"
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
-                      { value: "1", name: "port_gpio_io_6", desc: "Connect port io_6 from port group gpio to this pad." }
+                      { value: "1", name: "port_gpio_io_v_6", desc: "Connect port io_v_6 from port group gpio to this pad." }
                       { value: "2", name: "port_serial_link_i_1", desc: "Connect port i_1 from port group serial_link to this pad." }
                       { value: "3", name: "port_spi_sd_3", desc: "Connect port sd_3 from port group spi to this pad." }
                   ]
@@ -780,7 +772,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_rxck", desc: "Connect port rxck from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_7", desc: "Connect port io_7 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_7", desc: "Connect port io_v_7 from port group gpio to this pad." }
                       { value: "3", name: "port_pll_io_0", desc: "Connect port io_0 from port group pll to this pad." }
                       { value: "4", name: "port_serial_link_i_2", desc: "Connect port i_2 from port group serial_link to this pad." }
                       { value: "5", name: "port_tc_active", desc: "Connect port active from port group tc to this pad." }
@@ -864,7 +856,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_rxctl", desc: "Connect port rxctl from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_8", desc: "Connect port io_8 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_8", desc: "Connect port io_v_8 from port group gpio to this pad." }
                       { value: "3", name: "port_pll_io_1", desc: "Connect port io_1 from port group pll to this pad." }
                       { value: "4", name: "port_serial_link_i_3", desc: "Connect port i_3 from port group serial_link to this pad." }
                       { value: "5", name: "port_tc_clk", desc: "Connect port clk from port group tc to this pad." }
@@ -948,7 +940,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_rxd_0", desc: "Connect port rxd_0 from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_9", desc: "Connect port io_9 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_9", desc: "Connect port io_v_9 from port group gpio to this pad." }
                       { value: "3", name: "port_pll_io_2", desc: "Connect port io_2 from port group pll to this pad." }
                       { value: "4", name: "port_serial_link_i_4", desc: "Connect port i_4 from port group serial_link to this pad." }
                       { value: "5", name: "port_tc_data", desc: "Connect port data from port group tc to this pad." }
@@ -1032,7 +1024,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_rxd_1", desc: "Connect port rxd_1 from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_10", desc: "Connect port io_10 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_10", desc: "Connect port io_v_10 from port group gpio to this pad." }
                       { value: "3", name: "port_pll_io_3", desc: "Connect port io_3 from port group pll to this pad." }
                       { value: "4", name: "port_ptme_clk", desc: "Connect port clk from port group ptme to this pad." }
                       { value: "5", name: "port_serial_link_i_5", desc: "Connect port i_5 from port group serial_link to this pad." }
@@ -1116,7 +1108,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_rxd_2", desc: "Connect port rxd_2 from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_11", desc: "Connect port io_11 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_11", desc: "Connect port io_v_11 from port group gpio to this pad." }
                       { value: "3", name: "port_pll_io_4", desc: "Connect port io_4 from port group pll to this pad." }
                       { value: "4", name: "port_ptme_enc", desc: "Connect port enc from port group ptme to this pad." }
                       { value: "5", name: "port_serial_link_i_6", desc: "Connect port i_6 from port group serial_link to this pad." }
@@ -1200,7 +1192,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_rxd_3", desc: "Connect port rxd_3 from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_12", desc: "Connect port io_12 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_12", desc: "Connect port io_v_12 from port group gpio to this pad." }
                       { value: "3", name: "port_pll_io_5", desc: "Connect port io_5 from port group pll to this pad." }
                       { value: "4", name: "port_ptme_sync", desc: "Connect port sync from port group ptme to this pad." }
                       { value: "5", name: "port_serial_link_i_7", desc: "Connect port i_7 from port group serial_link to this pad." }
@@ -1284,7 +1276,7 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_txck", desc: "Connect port txck from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_13", desc: "Connect port io_13 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_13", desc: "Connect port io_v_13 from port group gpio to this pad." }
                       { value: "3", name: "port_pll_io_6", desc: "Connect port io_6 from port group pll to this pad." }
                       { value: "4", name: "port_ptme_ext_clk", desc: "Connect port ext_clk from port group ptme to this pad." }
                       { value: "5", name: "port_serial_link_rcv_clk_o", desc: "Connect port rcv_clk_o from port group serial_link to this pad." }
@@ -1368,9 +1360,9 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_txctl", desc: "Connect port txctl from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_14", desc: "Connect port io_14 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_14", desc: "Connect port io_v_14 from port group gpio to this pad." }
                       { value: "3", name: "port_hpc_addr_0", desc: "Connect port addr_0 from port group hpc to this pad." }
-                      { value: "4", name: "port_serial_link_o_0", desc: "Connect port o_0 from port group serial_link to this pad." }
+                      { value: "4", name: "port_serial_link_o_v_0", desc: "Connect port o_v_0 from port group serial_link to this pad." }
                   ]
               }
           ]
@@ -1451,9 +1443,9 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_txd_0", desc: "Connect port txd_0 from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_15", desc: "Connect port io_15 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_15", desc: "Connect port io_v_15 from port group gpio to this pad." }
                       { value: "3", name: "port_hpc_addr_1", desc: "Connect port addr_1 from port group hpc to this pad." }
-                      { value: "4", name: "port_serial_link_o_1", desc: "Connect port o_1 from port group serial_link to this pad." }
+                      { value: "4", name: "port_serial_link_o_v_1", desc: "Connect port o_v_1 from port group serial_link to this pad." }
                   ]
               }
           ]
@@ -1534,9 +1526,9 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_txd_1", desc: "Connect port txd_1 from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_16", desc: "Connect port io_16 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_16", desc: "Connect port io_v_16 from port group gpio to this pad." }
                       { value: "3", name: "port_hpc_addr_2", desc: "Connect port addr_2 from port group hpc to this pad." }
-                      { value: "4", name: "port_serial_link_o_2", desc: "Connect port o_2 from port group serial_link to this pad." }
+                      { value: "4", name: "port_serial_link_o_v_2", desc: "Connect port o_v_2 from port group serial_link to this pad." }
                   ]
               }
           ]
@@ -1617,16 +1609,16 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_txd_2", desc: "Connect port txd_2 from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_17", desc: "Connect port io_17 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_v_17", desc: "Connect port io_v_17 from port group gpio to this pad." }
                       { value: "3", name: "port_hpc_cmd_en", desc: "Connect port cmd_en from port group hpc to this pad." }
-                      { value: "4", name: "port_serial_link_o_3", desc: "Connect port o_3 from port group serial_link to this pad." }
+                      { value: "4", name: "port_serial_link_o_v_3", desc: "Connect port o_v_3 from port group serial_link to this pad." }
                   ]
               }
           ]
       }
 
       {
-          name: MUXED_V_18_CFG
+          name: MUXED_H_00_CFG
           desc: '''
             Pad signal configuration.
           '''
@@ -1686,9 +1678,9 @@
       }
 
        {
-          name: MUXED_V_18_MUX_SEL
+          name: MUXED_H_00_MUX_SEL
           desc: '''
-              Pad signal port multiplex selection for pad muxed_v_18. The programmed value defines which port
+              Pad signal port multiplex selection for pad muxed_h_00. The programmed value defines which port
               is connected to the pad.
           '''
           swaccess: "rw"
@@ -1700,16 +1692,16 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_txd_3", desc: "Connect port txd_3 from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_18", desc: "Connect port io_18 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_h_0", desc: "Connect port io_h_0 from port group gpio to this pad." }
                       { value: "3", name: "port_hpc_sample", desc: "Connect port sample from port group hpc to this pad." }
-                      { value: "4", name: "port_serial_link_o_4", desc: "Connect port o_4 from port group serial_link to this pad." }
+                      { value: "4", name: "port_serial_link_o_h_0", desc: "Connect port o_h_0 from port group serial_link to this pad." }
                   ]
               }
           ]
       }
 
       {
-          name: MUXED_V_19_CFG
+          name: MUXED_H_01_CFG
           desc: '''
             Pad signal configuration.
           '''
@@ -1769,9 +1761,9 @@
       }
 
        {
-          name: MUXED_V_19_MUX_SEL
+          name: MUXED_H_01_MUX_SEL
           desc: '''
-              Pad signal port multiplex selection for pad muxed_v_19. The programmed value defines which port
+              Pad signal port multiplex selection for pad muxed_h_01. The programmed value defines which port
               is connected to the pad.
           '''
           swaccess: "rw"
@@ -1783,16 +1775,16 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_md", desc: "Connect port md from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_19", desc: "Connect port io_19 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_h_1", desc: "Connect port io_h_1 from port group gpio to this pad." }
                       { value: "3", name: "port_llc_line_0", desc: "Connect port line_0 from port group llc to this pad." }
-                      { value: "4", name: "port_serial_link_o_5", desc: "Connect port o_5 from port group serial_link to this pad." }
+                      { value: "4", name: "port_serial_link_o_h_1", desc: "Connect port o_h_1 from port group serial_link to this pad." }
                   ]
               }
           ]
       }
 
       {
-          name: MUXED_V_20_CFG
+          name: MUXED_H_02_CFG
           desc: '''
             Pad signal configuration.
           '''
@@ -1852,9 +1844,9 @@
       }
 
        {
-          name: MUXED_V_20_MUX_SEL
+          name: MUXED_H_02_MUX_SEL
           desc: '''
-              Pad signal port multiplex selection for pad muxed_v_20. The programmed value defines which port
+              Pad signal port multiplex selection for pad muxed_h_02. The programmed value defines which port
               is connected to the pad.
           '''
           swaccess: "rw"
@@ -1866,16 +1858,16 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_mdc", desc: "Connect port mdc from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_20", desc: "Connect port io_20 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_h_2", desc: "Connect port io_h_2 from port group gpio to this pad." }
                       { value: "3", name: "port_llc_line_1", desc: "Connect port line_1 from port group llc to this pad." }
-                      { value: "4", name: "port_serial_link_o_6", desc: "Connect port o_6 from port group serial_link to this pad." }
+                      { value: "4", name: "port_serial_link_o_h_2", desc: "Connect port o_h_2 from port group serial_link to this pad." }
                   ]
               }
           ]
       }
 
       {
-          name: MUXED_V_21_CFG
+          name: MUXED_H_03_CFG
           desc: '''
             Pad signal configuration.
           '''
@@ -1935,9 +1927,9 @@
       }
 
        {
-          name: MUXED_V_21_MUX_SEL
+          name: MUXED_H_03_MUX_SEL
           desc: '''
-              Pad signal port multiplex selection for pad muxed_v_21. The programmed value defines which port
+              Pad signal port multiplex selection for pad muxed_h_03. The programmed value defines which port
               is connected to the pad.
           '''
           swaccess: "rw"
@@ -1949,9 +1941,9 @@
                   enum: [
                       { value: "0", name: "register", desc: "Connects the Pad to the internal configuration register."}
                       { value: "1", name: "port_ethernet_rst_n", desc: "Connect port rst_n from port group ethernet to this pad." }
-                      { value: "2", name: "port_gpio_io_21", desc: "Connect port io_21 from port group gpio to this pad." }
+                      { value: "2", name: "port_gpio_io_h_3", desc: "Connect port io_h_3 from port group gpio to this pad." }
                       { value: "3", name: "port_obt_ext_clk", desc: "Connect port ext_clk from port group obt to this pad." }
-                      { value: "4", name: "port_serial_link_o_7", desc: "Connect port o_7 from port group serial_link to this pad." }
+                      { value: "4", name: "port_serial_link_o_h_3", desc: "Connect port o_h_3 from port group serial_link to this pad." }
                   ]
               }
           ]

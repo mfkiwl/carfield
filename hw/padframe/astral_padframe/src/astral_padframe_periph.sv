@@ -13,8 +13,7 @@ module astral_padframe_periph
   input pad_domain_periph_static_connection_signals_soc2pad_t static_connection_signals_soc2pad,
   output pad_domain_periph_ports_pad2soc_t port_signals_pad2soc_o,
   input pad_domain_periph_ports_soc2pad_t port_signals_soc2pad_i,
-  inout wire logic pad_ref_clk_pad_i,
-  inout wire logic pad_ref_clk_pad_o,
+  inout wire logic pad_ref_clk_pad,
   inout wire logic pad_fll_host_pad,
   inout wire logic pad_fll_periph_pad,
   inout wire logic pad_fll_alt_pad,
@@ -73,10 +72,10 @@ module astral_padframe_periph
   inout wire logic pad_muxed_v_15_pad,
   inout wire logic pad_muxed_v_16_pad,
   inout wire logic pad_muxed_v_17_pad,
-  inout wire logic pad_muxed_v_18_pad,
-  inout wire logic pad_muxed_v_19_pad,
-  inout wire logic pad_muxed_v_20_pad,
-  inout wire logic pad_muxed_v_21_pad,
+  inout wire logic pad_muxed_h_00_pad,
+  inout wire logic pad_muxed_h_01_pad,
+  inout wire logic pad_muxed_h_02_pad,
+  inout wire logic pad_muxed_h_03_pad,
   input req_t config_req_i,
   output resp_t config_rsp_o
 );
@@ -89,8 +88,7 @@ module astral_padframe_periph
      .static_connection_signals_soc2pad,
      .mux_to_pads_i(s_mux_to_pads),
      .pads_to_mux_o(s_pads_to_mux),
-     .pad_ref_clk_pad_i,
-     .pad_ref_clk_pad_o,
+     .pad_ref_clk_pad,
      .pad_fll_host_pad,
      .pad_fll_periph_pad,
      .pad_fll_alt_pad,
@@ -149,10 +147,10 @@ module astral_padframe_periph
      .pad_muxed_v_15_pad,
      .pad_muxed_v_16_pad,
      .pad_muxed_v_17_pad,
-     .pad_muxed_v_18_pad,
-     .pad_muxed_v_19_pad,
-     .pad_muxed_v_20_pad,
-     .pad_muxed_v_21_pad
+     .pad_muxed_h_00_pad,
+     .pad_muxed_h_01_pad,
+     .pad_muxed_h_02_pad,
+     .pad_muxed_h_03_pad
 
   );
 

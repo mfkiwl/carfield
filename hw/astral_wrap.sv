@@ -21,8 +21,7 @@ module astral_wrap
   parameter type           reg_req_t   = logic,
   parameter type           reg_rsp_t   = logic
 ) (
-  inout wire logic pad_periph_ref_clk_pad_i,
-  inout wire logic pad_periph_ref_clk_pad_o,
+  inout wire logic pad_periph_ref_clk_pad,
   inout wire logic pad_periph_fll_host_pad,
   inout wire logic pad_periph_fll_periph_pad,
   inout wire logic pad_periph_fll_alt_pad,
@@ -81,10 +80,10 @@ module astral_wrap
   inout wire logic pad_periph_muxed_v_15_pad,
   inout wire logic pad_periph_muxed_v_16_pad,
   inout wire logic pad_periph_muxed_v_17_pad,
-  inout wire logic pad_periph_muxed_v_18_pad,
-  inout wire logic pad_periph_muxed_v_19_pad,
-  inout wire logic pad_periph_muxed_v_20_pad,
-  inout wire logic pad_periph_muxed_v_21_pad
+  inout wire logic pad_periph_muxed_h_00_pad,
+  inout wire logic pad_periph_muxed_h_01_pad,
+  inout wire logic pad_periph_muxed_h_02_pad,
+  inout wire logic pad_periph_muxed_h_03_pad
 );
 
   ////////////////////////////
@@ -170,14 +169,14 @@ module astral_wrap
 
   // serial link
   logic [SlinkNumChan-1:0][SlinkNumLanes-1:0] serial_link_data_out_s;
-  assign soc2pad_port_signals.periph.serial_link.slink_0_o = serial_link_data_out_s[0][0];
-  assign soc2pad_port_signals.periph.serial_link.slink_1_o = serial_link_data_out_s[0][1];
-  assign soc2pad_port_signals.periph.serial_link.slink_2_o = serial_link_data_out_s[0][2];
-  assign soc2pad_port_signals.periph.serial_link.slink_3_o = serial_link_data_out_s[0][3];
-  assign soc2pad_port_signals.periph.serial_link.slink_4_o = serial_link_data_out_s[0][4];
-  assign soc2pad_port_signals.periph.serial_link.slink_5_o = serial_link_data_out_s[0][5];
-  assign soc2pad_port_signals.periph.serial_link.slink_6_o = serial_link_data_out_s[0][6];
-  assign soc2pad_port_signals.periph.serial_link.slink_7_o = serial_link_data_out_s[0][7];
+  assign soc2pad_port_signals.periph.serial_link.slink_v_0_o = serial_link_data_out_s[0][0];
+  assign soc2pad_port_signals.periph.serial_link.slink_v_1_o = serial_link_data_out_s[0][1];
+  assign soc2pad_port_signals.periph.serial_link.slink_v_2_o = serial_link_data_out_s[0][2];
+  assign soc2pad_port_signals.periph.serial_link.slink_v_3_o = serial_link_data_out_s[0][3];
+  assign soc2pad_port_signals.periph.serial_link.slink_h_0_o = serial_link_data_out_s[0][4];
+  assign soc2pad_port_signals.periph.serial_link.slink_h_1_o = serial_link_data_out_s[0][5];
+  assign soc2pad_port_signals.periph.serial_link.slink_h_2_o = serial_link_data_out_s[0][6];
+  assign soc2pad_port_signals.periph.serial_link.slink_h_3_o = serial_link_data_out_s[0][7];
   //hyperbus
   logic [HypNumPhys-1:0]                  hyperbus_rwds_out_s;
   logic [HypNumPhys-1:0]                  hyperbus_rwds_oe_s;
@@ -239,74 +238,74 @@ module astral_wrap
   logic [31:0]              gpio_out_s;
   logic [31:0]              gpio_tx_en_s;
   logic [31:0]              gpio_in_s;
-  assign soc2pad_port_signals.periph.gpio.gpio_0_o = gpio_out_s[0];
-  assign soc2pad_port_signals.periph.gpio.gpio_1_o = gpio_out_s[1];
-  assign soc2pad_port_signals.periph.gpio.gpio_2_o = gpio_out_s[2];
-  assign soc2pad_port_signals.periph.gpio.gpio_3_o = gpio_out_s[3];
-  assign soc2pad_port_signals.periph.gpio.gpio_4_o = gpio_out_s[4];
-  assign soc2pad_port_signals.periph.gpio.gpio_5_o = gpio_out_s[5];
-  assign soc2pad_port_signals.periph.gpio.gpio_6_o = gpio_out_s[6];
-  assign soc2pad_port_signals.periph.gpio.gpio_7_o = gpio_out_s[7];
-  assign soc2pad_port_signals.periph.gpio.gpio_8_o = gpio_out_s[8];
-  assign soc2pad_port_signals.periph.gpio.gpio_9_o = gpio_out_s[9];
-  assign soc2pad_port_signals.periph.gpio.gpio_10_o = gpio_out_s[10];
-  assign soc2pad_port_signals.periph.gpio.gpio_11_o = gpio_out_s[11];
-  assign soc2pad_port_signals.periph.gpio.gpio_12_o = gpio_out_s[12];
-  assign soc2pad_port_signals.periph.gpio.gpio_13_o = gpio_out_s[13];
-  assign soc2pad_port_signals.periph.gpio.gpio_14_o = gpio_out_s[14];
-  assign soc2pad_port_signals.periph.gpio.gpio_15_o = gpio_out_s[15];
-  assign soc2pad_port_signals.periph.gpio.gpio_16_o = gpio_out_s[16];
-  assign soc2pad_port_signals.periph.gpio.gpio_17_o = gpio_out_s[17];
-  assign soc2pad_port_signals.periph.gpio.gpio_18_o = gpio_out_s[18];
-  assign soc2pad_port_signals.periph.gpio.gpio_19_o = gpio_out_s[19];
-  assign soc2pad_port_signals.periph.gpio.gpio_20_o = gpio_out_s[20];
-  assign soc2pad_port_signals.periph.gpio.gpio_21_o = gpio_out_s[21];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_0_o = gpio_out_s[0];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_1_o = gpio_out_s[1];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_2_o = gpio_out_s[2];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_3_o = gpio_out_s[3];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_4_o = gpio_out_s[4];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_5_o = gpio_out_s[5];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_6_o = gpio_out_s[6];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_7_o = gpio_out_s[7];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_8_o = gpio_out_s[8];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_9_o = gpio_out_s[9];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_10_o = gpio_out_s[10];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_11_o = gpio_out_s[11];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_12_o = gpio_out_s[12];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_13_o = gpio_out_s[13];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_14_o = gpio_out_s[14];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_15_o = gpio_out_s[15];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_16_o = gpio_out_s[16];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_17_o = gpio_out_s[17];
+  assign soc2pad_port_signals.periph.gpio.gpio_h_0_o = gpio_out_s[18];
+  assign soc2pad_port_signals.periph.gpio.gpio_h_1_o = gpio_out_s[19];
+  assign soc2pad_port_signals.periph.gpio.gpio_h_2_o = gpio_out_s[20];
+  assign soc2pad_port_signals.periph.gpio.gpio_h_3_o = gpio_out_s[21];
   // GPIO 22-31 remain unconnected
-  assign soc2pad_port_signals.periph.gpio.gpio_0_oen_i = gpio_tx_en_s[0];
-  assign soc2pad_port_signals.periph.gpio.gpio_1_oen_i = gpio_tx_en_s[1];
-  assign soc2pad_port_signals.periph.gpio.gpio_2_oen_i = gpio_tx_en_s[2];
-  assign soc2pad_port_signals.periph.gpio.gpio_3_oen_i = gpio_tx_en_s[3];
-  assign soc2pad_port_signals.periph.gpio.gpio_4_oen_i = gpio_tx_en_s[4];
-  assign soc2pad_port_signals.periph.gpio.gpio_5_oen_i = gpio_tx_en_s[5];
-  assign soc2pad_port_signals.periph.gpio.gpio_6_oen_i = gpio_tx_en_s[6];
-  assign soc2pad_port_signals.periph.gpio.gpio_7_oen_i = gpio_tx_en_s[7];
-  assign soc2pad_port_signals.periph.gpio.gpio_8_oen_i = gpio_tx_en_s[8];
-  assign soc2pad_port_signals.periph.gpio.gpio_9_oen_i = gpio_tx_en_s[9];
-  assign soc2pad_port_signals.periph.gpio.gpio_10_oen_i = gpio_tx_en_s[10];
-  assign soc2pad_port_signals.periph.gpio.gpio_11_oen_i = gpio_tx_en_s[11];
-  assign soc2pad_port_signals.periph.gpio.gpio_12_oen_i = gpio_tx_en_s[12];
-  assign soc2pad_port_signals.periph.gpio.gpio_13_oen_i = gpio_tx_en_s[13];
-  assign soc2pad_port_signals.periph.gpio.gpio_14_oen_i = gpio_tx_en_s[14];
-  assign soc2pad_port_signals.periph.gpio.gpio_15_oen_i = gpio_tx_en_s[15];
-  assign soc2pad_port_signals.periph.gpio.gpio_16_oen_i = gpio_tx_en_s[16];
-  assign soc2pad_port_signals.periph.gpio.gpio_17_oen_i = gpio_tx_en_s[17];
-  assign soc2pad_port_signals.periph.gpio.gpio_18_oen_i = gpio_tx_en_s[18];
-  assign soc2pad_port_signals.periph.gpio.gpio_19_oen_i = gpio_tx_en_s[19];
-  assign soc2pad_port_signals.periph.gpio.gpio_20_oen_i = gpio_tx_en_s[20];
-  assign soc2pad_port_signals.periph.gpio.gpio_21_oen_i = gpio_tx_en_s[21];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_0_oen_i = gpio_tx_en_s[0];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_1_oen_i = gpio_tx_en_s[1];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_2_oen_i = gpio_tx_en_s[2];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_3_oen_i = gpio_tx_en_s[3];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_4_oen_i = gpio_tx_en_s[4];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_5_oen_i = gpio_tx_en_s[5];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_6_oen_i = gpio_tx_en_s[6];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_7_oen_i = gpio_tx_en_s[7];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_8_oen_i = gpio_tx_en_s[8];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_9_oen_i = gpio_tx_en_s[9];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_10_oen_i = gpio_tx_en_s[10];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_11_oen_i = gpio_tx_en_s[11];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_12_oen_i = gpio_tx_en_s[12];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_13_oen_i = gpio_tx_en_s[13];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_14_oen_i = gpio_tx_en_s[14];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_15_oen_i = gpio_tx_en_s[15];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_16_oen_i = gpio_tx_en_s[16];
+  assign soc2pad_port_signals.periph.gpio.gpio_v_17_oen_i = gpio_tx_en_s[17];
+  assign soc2pad_port_signals.periph.gpio.gpio_h_0_oen_i = gpio_tx_en_s[18];
+  assign soc2pad_port_signals.periph.gpio.gpio_h_1_oen_i = gpio_tx_en_s[19];
+  assign soc2pad_port_signals.periph.gpio.gpio_h_2_oen_i = gpio_tx_en_s[20];
+  assign soc2pad_port_signals.periph.gpio.gpio_h_3_oen_i = gpio_tx_en_s[21];
   // GPIO 22-31 remain unconnected
-  assign gpio_in_s[0]  = pad2soc_port_signals.periph.gpio.gpio_0_i;
-  assign gpio_in_s[1]  = pad2soc_port_signals.periph.gpio.gpio_1_i;
-  assign gpio_in_s[2]  = pad2soc_port_signals.periph.gpio.gpio_2_i;
-  assign gpio_in_s[3]  = pad2soc_port_signals.periph.gpio.gpio_3_i;
-  assign gpio_in_s[4]  = pad2soc_port_signals.periph.gpio.gpio_4_i;
-  assign gpio_in_s[5]  = pad2soc_port_signals.periph.gpio.gpio_5_i;
-  assign gpio_in_s[6]  = pad2soc_port_signals.periph.gpio.gpio_6_i;
-  assign gpio_in_s[7]  = pad2soc_port_signals.periph.gpio.gpio_7_i;
-  assign gpio_in_s[8]  = pad2soc_port_signals.periph.gpio.gpio_8_i;
-  assign gpio_in_s[9]  = pad2soc_port_signals.periph.gpio.gpio_9_i;
-  assign gpio_in_s[10] = pad2soc_port_signals.periph.gpio.gpio_10_i;
-  assign gpio_in_s[11] = pad2soc_port_signals.periph.gpio.gpio_11_i;
-  assign gpio_in_s[12] = pad2soc_port_signals.periph.gpio.gpio_12_i;
-  assign gpio_in_s[13] = pad2soc_port_signals.periph.gpio.gpio_13_i;
-  assign gpio_in_s[14] = pad2soc_port_signals.periph.gpio.gpio_14_i;
-  assign gpio_in_s[15] = pad2soc_port_signals.periph.gpio.gpio_15_i;
-  assign gpio_in_s[16] = pad2soc_port_signals.periph.gpio.gpio_16_i;
-  assign gpio_in_s[17] = pad2soc_port_signals.periph.gpio.gpio_17_i;
-  assign gpio_in_s[18] = pad2soc_port_signals.periph.gpio.gpio_18_i;
-  assign gpio_in_s[19] = pad2soc_port_signals.periph.gpio.gpio_19_i;
-  assign gpio_in_s[20] = pad2soc_port_signals.periph.gpio.gpio_20_i;
-  assign gpio_in_s[21] = pad2soc_port_signals.periph.gpio.gpio_21_i;
+  assign gpio_in_s[0]  = pad2soc_port_signals.periph.gpio.gpio_v_0_i;
+  assign gpio_in_s[1]  = pad2soc_port_signals.periph.gpio.gpio_v_1_i;
+  assign gpio_in_s[2]  = pad2soc_port_signals.periph.gpio.gpio_v_2_i;
+  assign gpio_in_s[3]  = pad2soc_port_signals.periph.gpio.gpio_v_3_i;
+  assign gpio_in_s[4]  = pad2soc_port_signals.periph.gpio.gpio_v_4_i;
+  assign gpio_in_s[5]  = pad2soc_port_signals.periph.gpio.gpio_v_5_i;
+  assign gpio_in_s[6]  = pad2soc_port_signals.periph.gpio.gpio_v_6_i;
+  assign gpio_in_s[7]  = pad2soc_port_signals.periph.gpio.gpio_v_7_i;
+  assign gpio_in_s[8]  = pad2soc_port_signals.periph.gpio.gpio_v_8_i;
+  assign gpio_in_s[9]  = pad2soc_port_signals.periph.gpio.gpio_v_9_i;
+  assign gpio_in_s[10] = pad2soc_port_signals.periph.gpio.gpio_v_10_i;
+  assign gpio_in_s[11] = pad2soc_port_signals.periph.gpio.gpio_v_11_i;
+  assign gpio_in_s[12] = pad2soc_port_signals.periph.gpio.gpio_v_12_i;
+  assign gpio_in_s[13] = pad2soc_port_signals.periph.gpio.gpio_v_13_i;
+  assign gpio_in_s[14] = pad2soc_port_signals.periph.gpio.gpio_v_14_i;
+  assign gpio_in_s[15] = pad2soc_port_signals.periph.gpio.gpio_v_15_i;
+  assign gpio_in_s[16] = pad2soc_port_signals.periph.gpio.gpio_v_16_i;
+  assign gpio_in_s[17] = pad2soc_port_signals.periph.gpio.gpio_v_17_i;
+  assign gpio_in_s[18] = pad2soc_port_signals.periph.gpio.gpio_h_0_i;
+  assign gpio_in_s[19] = pad2soc_port_signals.periph.gpio.gpio_h_1_i;
+  assign gpio_in_s[20] = pad2soc_port_signals.periph.gpio.gpio_h_2_i;
+  assign gpio_in_s[21] = pad2soc_port_signals.periph.gpio.gpio_h_3_i;
   // GPI0 22-31 remain unconnected
   assign gpio_in_s[31:22] = '0;
 
@@ -650,8 +649,7 @@ module astral_wrap
     .port_signals_pad2soc ( pad2soc_port_signals ),
     .port_signals_soc2pad ( soc2pad_port_signals ),
     // Landing Pads
-    .pad_periph_ref_clk_pad_i,
-    .pad_periph_ref_clk_pad_o,
+    .pad_periph_ref_clk_pad,
     .pad_periph_fll_host_pad,
     .pad_periph_fll_periph_pad,
     .pad_periph_fll_alt_pad,
@@ -710,10 +708,10 @@ module astral_wrap
     .pad_periph_muxed_v_15_pad,
     .pad_periph_muxed_v_16_pad,
     .pad_periph_muxed_v_17_pad,
-    .pad_periph_muxed_v_18_pad,
-    .pad_periph_muxed_v_19_pad,
-    .pad_periph_muxed_v_20_pad,
-    .pad_periph_muxed_v_21_pad,
+    .pad_periph_muxed_h_00_pad,
+    .pad_periph_muxed_h_01_pad,
+    .pad_periph_muxed_h_02_pad,
+    .pad_periph_muxed_h_03_pad,
     // Config Interface
     .config_req_i ( padframe_refclk_cfg_reg_req ),
     .config_rsp_o ( padframe_refclk_cfg_reg_rsp )
