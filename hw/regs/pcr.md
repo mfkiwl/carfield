@@ -150,25 +150,9 @@ Spatz CLuster sha256 commit
 |:------:|:------:|:-------:|:---------|:--------------|
 |  31:0  |   ro   |   0x0   | VERSION4 |               |
 
-## VERSION5
-Ethernet sha256 commit
-- Offset: `0x14`
-- Reset default: `0x0`
-- Reset mask: `0xffffffff`
-
-### Fields
-
-```wavejson
-{"reg": [{"name": "VERSION5", "bits": 32, "attr": ["ro"], "rotate": 0}], "config": {"lanes": 1, "fontsize": 10, "vspace": 80}}
-```
-
-|  Bits  |  Type  |  Reset  | Name     | Description   |
-|:------:|:------:|:-------:|:---------|:--------------|
-|  31:0  |   ro   |   0x0   | VERSION5 |               |
-
 ## JEDEC_IDCODE
 JEDEC ID CODE -TODO assign-
-- Offset: `0x18`
+- Offset: `0x14`
 - Reset default: `0x0`
 - Reset mask: `0xffffffff`
 
@@ -184,7 +168,7 @@ JEDEC ID CODE -TODO assign-
 
 ## GENERIC_SCRATCH0
 Scratch
-- Offset: `0x1c`
+- Offset: `0x18`
 - Reset default: `0x0`
 - Reset mask: `0xffffffff`
 
@@ -200,7 +184,7 @@ Scratch
 
 ## GENERIC_SCRATCH1
 Scratch
-- Offset: `0x20`
+- Offset: `0x1c`
 - Reset default: `0x0`
 - Reset mask: `0xffffffff`
 
@@ -216,7 +200,7 @@ Scratch
 
 ## HOST_RST
 Host Domain reset -active high, inverted in HW-
-- Offset: `0x24`
+- Offset: `0x20`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -233,7 +217,7 @@ Host Domain reset -active high, inverted in HW-
 
 ## PERIPH_RST
 Periph Domain reset -active high, inverted in HW-
-- Offset: `0x28`
+- Offset: `0x24`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -250,7 +234,7 @@ Periph Domain reset -active high, inverted in HW-
 
 ## SAFETY_ISLAND_RST
 Safety Island reset -active high, inverted in HW-
-- Offset: `0x2c`
+- Offset: `0x28`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -267,7 +251,7 @@ Safety Island reset -active high, inverted in HW-
 
 ## SECURITY_ISLAND_RST
 Security Island reset -active high, inverted in HW-
-- Offset: `0x30`
+- Offset: `0x2c`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -284,7 +268,7 @@ Security Island reset -active high, inverted in HW-
 
 ## PULP_CLUSTER_RST
 PULP Cluster reset -active high, inverted in HW-
-- Offset: `0x34`
+- Offset: `0x30`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -301,7 +285,7 @@ PULP Cluster reset -active high, inverted in HW-
 
 ## SPATZ_CLUSTER_RST
 Spatz Cluster reset -active high, inverted in HW-
-- Offset: `0x38`
+- Offset: `0x34`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -318,7 +302,7 @@ Spatz Cluster reset -active high, inverted in HW-
 
 ## L2_RST
 L2 reset -active high, inverted in HW-
-- Offset: `0x3c`
+- Offset: `0x38`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -333,26 +317,9 @@ L2 reset -active high, inverted in HW-
 |  31:1  |        |         |        | Reserved      |
 |   0    |   rw   |   0x0   | L2_RST |               |
 
-## ETHERNET_RST
-Ethernet reset -active high, inverted in HW-
-- Offset: `0x40`
-- Reset default: `0x0`
-- Reset mask: `0x1`
-
-### Fields
-
-```wavejson
-{"reg": [{"name": "ETHERNET_RST", "bits": 1, "attr": ["rw"], "rotate": -90}, {"bits": 31}], "config": {"lanes": 1, "fontsize": 10, "vspace": 140}}
-```
-
-|  Bits  |  Type  |  Reset  | Name         | Description   |
-|:------:|:------:|:-------:|:-------------|:--------------|
-|  31:1  |        |         |              | Reserved      |
-|   0    |   rw   |   0x0   | ETHERNET_RST |               |
-
 ## PERIPH_ISOLATE
 Periph Domain  AXI isolate
-- Offset: `0x44`
+- Offset: `0x3c`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -369,7 +336,7 @@ Periph Domain  AXI isolate
 
 ## SAFETY_ISLAND_ISOLATE
 Safety Island AXI isolate
-- Offset: `0x48`
+- Offset: `0x40`
 - Reset default: `0x1`
 - Reset mask: `0x1`
 
@@ -386,7 +353,7 @@ Safety Island AXI isolate
 
 ## SECURITY_ISLAND_ISOLATE
 Security Island AXI isolate
-- Offset: `0x4c`
+- Offset: `0x44`
 - Reset default: `0x1`
 - Reset mask: `0x1`
 
@@ -403,7 +370,7 @@ Security Island AXI isolate
 
 ## PULP_CLUSTER_ISOLATE
 PULP Cluster AXI isolate
-- Offset: `0x50`
+- Offset: `0x48`
 - Reset default: `0x1`
 - Reset mask: `0x1`
 
@@ -420,7 +387,7 @@ PULP Cluster AXI isolate
 
 ## SPATZ_CLUSTER_ISOLATE
 Spatz Cluster AXI isolate
-- Offset: `0x54`
+- Offset: `0x4c`
 - Reset default: `0x1`
 - Reset mask: `0x1`
 
@@ -435,26 +402,9 @@ Spatz Cluster AXI isolate
 |  31:1  |        |         |                       | Reserved      |
 |   0    |   rw   |   0x1   | SPATZ_CLUSTER_ISOLATE |               |
 
-## ETHERNET_ISOLATE
-Ethernet AXI isolate
-- Offset: `0x58`
-- Reset default: `0x1`
-- Reset mask: `0x1`
-
-### Fields
-
-```wavejson
-{"reg": [{"name": "ETHERNET_ISOLATE", "bits": 1, "attr": ["rw"], "rotate": -90}, {"bits": 31}], "config": {"lanes": 1, "fontsize": 10, "vspace": 180}}
-```
-
-|  Bits  |  Type  |  Reset  | Name             | Description   |
-|:------:|:------:|:-------:|:-----------------|:--------------|
-|  31:1  |        |         |                  | Reserved      |
-|   0    |   rw   |   0x1   | ETHERNET_ISOLATE |               |
-
 ## L2_ISOLATE
 L2 AXI isolate
-- Offset: `0x5c`
+- Offset: `0x50`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -471,7 +421,7 @@ L2 AXI isolate
 
 ## PERIPH_ISOLATE_STATUS
 Periph Domain AXI isolate status
-- Offset: `0x60`
+- Offset: `0x54`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -488,7 +438,7 @@ Periph Domain AXI isolate status
 
 ## SAFETY_ISLAND_ISOLATE_STATUS
 Safety Island AXI isolate status
-- Offset: `0x64`
+- Offset: `0x58`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -505,7 +455,7 @@ Safety Island AXI isolate status
 
 ## SECURITY_ISLAND_ISOLATE_STATUS
 Security Island AXI isolate status
-- Offset: `0x68`
+- Offset: `0x5c`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -522,7 +472,7 @@ Security Island AXI isolate status
 
 ## PULP_CLUSTER_ISOLATE_STATUS
 PULP Cluster AXI isolate status
-- Offset: `0x6c`
+- Offset: `0x60`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -539,7 +489,7 @@ PULP Cluster AXI isolate status
 
 ## SPATZ_CLUSTER_ISOLATE_STATUS
 Spatz Cluster AXI isolate status
-- Offset: `0x70`
+- Offset: `0x64`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -554,26 +504,9 @@ Spatz Cluster AXI isolate status
 |  31:1  |        |         |                              | Reserved      |
 |   0    |   rw   |   0x0   | SPATZ_CLUSTER_ISOLATE_STATUS |               |
 
-## ETHERNET_ISOLATE_STATUS
-Ethernet AXI isolate status
-- Offset: `0x74`
-- Reset default: `0x0`
-- Reset mask: `0x1`
-
-### Fields
-
-```wavejson
-{"reg": [{"name": "ETHERNET_ISOLATE_STATUS", "bits": 1, "attr": ["rw"], "rotate": -90}, {"bits": 31}], "config": {"lanes": 1, "fontsize": 10, "vspace": 250}}
-```
-
-|  Bits  |  Type  |  Reset  | Name                    | Description   |
-|:------:|:------:|:-------:|:------------------------|:--------------|
-|  31:1  |        |         |                         | Reserved      |
-|   0    |   rw   |   0x0   | ETHERNET_ISOLATE_STATUS |               |
-
 ## L2_ISOLATE_STATUS
 L2 AXI isolate status
-- Offset: `0x78`
+- Offset: `0x68`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -590,7 +523,7 @@ L2 AXI isolate status
 
 ## PERIPH_CLK_EN
 Periph Domain clk gate enable
-- Offset: `0x7c`
+- Offset: `0x6c`
 - Reset default: `0x1`
 - Reset mask: `0x1`
 
@@ -607,7 +540,7 @@ Periph Domain clk gate enable
 
 ## SAFETY_ISLAND_CLK_EN
 Safety Island clk gate enable
-- Offset: `0x80`
+- Offset: `0x70`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -624,7 +557,7 @@ Safety Island clk gate enable
 
 ## SECURITY_ISLAND_CLK_EN
 Security Island clk gate enable
-- Offset: `0x84`
+- Offset: `0x74`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -641,7 +574,7 @@ Security Island clk gate enable
 
 ## PULP_CLUSTER_CLK_EN
 PULP Cluster clk gate enable
-- Offset: `0x88`
+- Offset: `0x78`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -658,7 +591,7 @@ PULP Cluster clk gate enable
 
 ## SPATZ_CLUSTER_CLK_EN
 Spatz Cluster clk gate enable
-- Offset: `0x8c`
+- Offset: `0x7c`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -673,26 +606,9 @@ Spatz Cluster clk gate enable
 |  31:1  |        |         |                      | Reserved      |
 |   0    |   rw   |   0x0   | SPATZ_CLUSTER_CLK_EN |               |
 
-## ETHERNET_CLK_EN
-Ethernet clk gate enable
-- Offset: `0x90`
-- Reset default: `0x0`
-- Reset mask: `0x1`
-
-### Fields
-
-```wavejson
-{"reg": [{"name": "ETHERNET_CLK_EN", "bits": 1, "attr": ["rw"], "rotate": -90}, {"bits": 31}], "config": {"lanes": 1, "fontsize": 10, "vspace": 170}}
-```
-
-|  Bits  |  Type  |  Reset  | Name            | Description   |
-|:------:|:------:|:-------:|:----------------|:--------------|
-|  31:1  |        |         |                 | Reserved      |
-|   0    |   rw   |   0x0   | ETHERNET_CLK_EN |               |
-
 ## L2_CLK_EN
 Shared L2 memory clk gate enable
-- Offset: `0x94`
+- Offset: `0x80`
 - Reset default: `0x1`
 - Reset mask: `0x1`
 
@@ -709,7 +625,7 @@ Shared L2 memory clk gate enable
 
 ## PERIPH_CLK_SEL
 Periph Domain pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
-- Offset: `0x98`
+- Offset: `0x84`
 - Reset default: `0x2`
 - Reset mask: `0x3`
 
@@ -726,7 +642,7 @@ Periph Domain pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
 
 ## SAFETY_ISLAND_CLK_SEL
 Safety Island pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
-- Offset: `0x9c`
+- Offset: `0x88`
 - Reset default: `0x1`
 - Reset mask: `0x3`
 
@@ -743,7 +659,7 @@ Safety Island pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
 
 ## SECURITY_ISLAND_CLK_SEL
 Security Island pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
-- Offset: `0xa0`
+- Offset: `0x8c`
 - Reset default: `0x1`
 - Reset mask: `0x3`
 
@@ -760,7 +676,7 @@ Security Island pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
 
 ## PULP_CLUSTER_CLK_SEL
 PULP Cluster pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
-- Offset: `0xa4`
+- Offset: `0x90`
 - Reset default: `0x1`
 - Reset mask: `0x3`
 
@@ -777,7 +693,7 @@ PULP Cluster pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
 
 ## SPATZ_CLUSTER_CLK_SEL
 Spatz Cluster pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
-- Offset: `0xa8`
+- Offset: `0x94`
 - Reset default: `0x1`
 - Reset mask: `0x3`
 
@@ -792,26 +708,9 @@ Spatz Cluster pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
 |  31:2  |        |         |                       | Reserved      |
 |  1:0   |   rw   |   0x1   | SPATZ_CLUSTER_CLK_SEL |               |
 
-## Ethernet_CLK_SEL
-Ethernet pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
-- Offset: `0xac`
-- Reset default: `0x1`
-- Reset mask: `0x3`
-
-### Fields
-
-```wavejson
-{"reg": [{"name": "Ethernet_CLK_SEL", "bits": 2, "attr": ["rw"], "rotate": -90}, {"bits": 30}], "config": {"lanes": 1, "fontsize": 10, "vspace": 180}}
-```
-
-|  Bits  |  Type  |  Reset  | Name             | Description   |
-|:------:|:------:|:-------:|:-----------------|:--------------|
-|  31:2  |        |         |                  | Reserved      |
-|  1:0   |   rw   |   0x1   | Ethernet_CLK_SEL |               |
-
 ## L2_CLK_SEL
 L2 Memory pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
-- Offset: `0xb0`
+- Offset: `0x98`
 - Reset default: `0x1`
 - Reset mask: `0x3`
 
@@ -828,7 +727,7 @@ L2 Memory pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
 
 ## PERIPH_CLK_DIV_VALUE
 Periph Domain clk divider value
-- Offset: `0xb4`
+- Offset: `0x9c`
 - Reset default: `0x1`
 - Reset mask: `0xffffff`
 
@@ -845,7 +744,7 @@ Periph Domain clk divider value
 
 ## SAFETY_ISLAND_CLK_DIV_VALUE
 Safety Island clk divider value
-- Offset: `0xb8`
+- Offset: `0xa0`
 - Reset default: `0x1`
 - Reset mask: `0xffffff`
 
@@ -862,7 +761,7 @@ Safety Island clk divider value
 
 ## SECURITY_ISLAND_CLK_DIV_VALUE
 Security Island clk divider value
-- Offset: `0xbc`
+- Offset: `0xa4`
 - Reset default: `0x1`
 - Reset mask: `0xffffff`
 
@@ -879,7 +778,7 @@ Security Island clk divider value
 
 ## PULP_CLUSTER_CLK_DIV_VALUE
 PULP Cluster clk divider value
-- Offset: `0xc0`
+- Offset: `0xa8`
 - Reset default: `0x1`
 - Reset mask: `0xffffff`
 
@@ -896,7 +795,7 @@ PULP Cluster clk divider value
 
 ## SPATZ_CLUSTER_CLK_DIV_VALUE
 Spatz Cluster clk divider value
-- Offset: `0xc4`
+- Offset: `0xac`
 - Reset default: `0x1`
 - Reset mask: `0xffffff`
 
@@ -911,26 +810,9 @@ Spatz Cluster clk divider value
 | 31:24  |        |         |                             | Reserved      |
 |  23:0  |   rw   |   0x1   | SPATZ_CLUSTER_CLK_DIV_VALUE |               |
 
-## ETHERNET_CLK_DIV_VALUE
-Ethernet clk divider value
-- Offset: `0xc8`
-- Reset default: `0x1`
-- Reset mask: `0xffffff`
-
-### Fields
-
-```wavejson
-{"reg": [{"name": "ETHERNET_CLK_DIV_VALUE", "bits": 24, "attr": ["rw"], "rotate": 0}, {"bits": 8}], "config": {"lanes": 1, "fontsize": 10, "vspace": 80}}
-```
-
-|  Bits  |  Type  |  Reset  | Name                   | Description   |
-|:------:|:------:|:-------:|:-----------------------|:--------------|
-| 31:24  |        |         |                        | Reserved      |
-|  23:0  |   rw   |   0x1   | ETHERNET_CLK_DIV_VALUE |               |
-
 ## L2_CLK_DIV_VALUE
 L2 Memory clk divider value
-- Offset: `0xcc`
+- Offset: `0xb0`
 - Reset default: `0x1`
 - Reset mask: `0xffffff`
 
@@ -947,7 +829,7 @@ L2 Memory clk divider value
 
 ## HOST_FETCH_ENABLE
 Host Domain fetch enable
-- Offset: `0xd0`
+- Offset: `0xb4`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -964,7 +846,7 @@ Host Domain fetch enable
 
 ## SAFETY_ISLAND_FETCH_ENABLE
 Safety Island fetch enable
-- Offset: `0xd4`
+- Offset: `0xb8`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -981,7 +863,7 @@ Safety Island fetch enable
 
 ## SECURITY_ISLAND_FETCH_ENABLE
 Security Island fetch enable
-- Offset: `0xd8`
+- Offset: `0xbc`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -998,7 +880,7 @@ Security Island fetch enable
 
 ## PULP_CLUSTER_FETCH_ENABLE
 PULP Cluster fetch enable
-- Offset: `0xdc`
+- Offset: `0xc0`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -1013,26 +895,9 @@ PULP Cluster fetch enable
 |  31:1  |        |         |                           | Reserved      |
 |   0    |   rw   |   0x0   | PULP_CLUSTER_FETCH_ENABLE |               |
 
-## ETHERNET_FETCH_ENABLE
-Ethernet fetch enable
-- Offset: `0xe0`
-- Reset default: `0x0`
-- Reset mask: `0x1`
-
-### Fields
-
-```wavejson
-{"reg": [{"name": "ETHERNET_FETCH_ENABLE", "bits": 1, "attr": ["rw"], "rotate": -90}, {"bits": 31}], "config": {"lanes": 1, "fontsize": 10, "vspace": 230}}
-```
-
-|  Bits  |  Type  |  Reset  | Name                  | Description   |
-|:------:|:------:|:-------:|:----------------------|:--------------|
-|  31:1  |        |         |                       | Reserved      |
-|   0    |   rw   |   0x0   | ETHERNET_FETCH_ENABLE |               |
-
 ## SPATZ_CLUSTER_DEBUG_REQ
 Spatz Cluster debug req
-- Offset: `0xe4`
+- Offset: `0xc4`
 - Reset default: `0x0`
 - Reset mask: `0x3`
 
@@ -1049,7 +914,7 @@ Spatz Cluster debug req
 
 ## HOST_BOOT_ADDR
 Host boot address
-- Offset: `0xe8`
+- Offset: `0xc8`
 - Reset default: `0x1000`
 - Reset mask: `0xffffffff`
 
@@ -1065,7 +930,7 @@ Host boot address
 
 ## SAFETY_ISLAND_BOOT_ADDR
 Safety Island boot address
-- Offset: `0xec`
+- Offset: `0xcc`
 - Reset default: `0x70000000`
 - Reset mask: `0xffffffff`
 
@@ -1081,7 +946,7 @@ Safety Island boot address
 
 ## SECURITY_ISLAND_BOOT_ADDR
 Security Island boot address
-- Offset: `0xf0`
+- Offset: `0xd0`
 - Reset default: `0x70000000`
 - Reset mask: `0xffffffff`
 
@@ -1097,7 +962,7 @@ Security Island boot address
 
 ## PULP_CLUSTER_BOOT_ADDR
 PULP Cluster boot address
-- Offset: `0xf4`
+- Offset: `0xd4`
 - Reset default: `0x70000000`
 - Reset mask: `0xffffffff`
 
@@ -1113,7 +978,7 @@ PULP Cluster boot address
 
 ## SPATZ_CLUSTER_BOOT_ADDR
 Spatz Cluster boot address
-- Offset: `0xf8`
+- Offset: `0xd8`
 - Reset default: `0x70000000`
 - Reset mask: `0xffffffff`
 
@@ -1129,7 +994,7 @@ Spatz Cluster boot address
 
 ## PULP_CLUSTER_BOOT_ENABLE
 PULP Cluster boot enable
-- Offset: `0xfc`
+- Offset: `0xdc`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -1146,7 +1011,7 @@ PULP Cluster boot enable
 
 ## SPATZ_CLUSTER_BUSY
 Spatz Cluster busy
-- Offset: `0x100`
+- Offset: `0xe0`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -1163,7 +1028,7 @@ Spatz Cluster busy
 
 ## PULP_CLUSTER_BUSY
 PULP Cluster busy
-- Offset: `0x104`
+- Offset: `0xe4`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 
@@ -1180,7 +1045,7 @@ PULP Cluster busy
 
 ## PULP_CLUSTER_EOC
 PULP Cluster end of computation
-- Offset: `0x108`
+- Offset: `0xe8`
 - Reset default: `0x0`
 - Reset mask: `0x1`
 

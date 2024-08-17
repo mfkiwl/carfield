@@ -2477,6 +2477,38 @@ module carfield_reg_top #(
         reg_rdata_next[31:0] = host_boot_addr_qs;
       end
 
+      addr_hit[51]: begin
+        reg_rdata_next[31:0] = safety_island_boot_addr_qs;
+      end
+
+      addr_hit[52]: begin
+        reg_rdata_next[31:0] = security_island_boot_addr_qs;
+      end
+
+      addr_hit[53]: begin
+        reg_rdata_next[31:0] = pulp_cluster_boot_addr_qs;
+      end
+
+      addr_hit[54]: begin
+        reg_rdata_next[31:0] = spatz_cluster_boot_addr_qs;
+      end
+
+      addr_hit[55]: begin
+        reg_rdata_next[0] = pulp_cluster_boot_enable_qs;
+      end
+
+      addr_hit[56]: begin
+        reg_rdata_next[0] = spatz_cluster_busy_qs;
+      end
+
+      addr_hit[57]: begin
+        reg_rdata_next[0] = pulp_cluster_busy_qs;
+      end
+
+      addr_hit[58]: begin
+        reg_rdata_next[0] = pulp_cluster_eoc_qs;
+      end
+
       addr_hit[59]: begin
         reg_rdata_next[0] = eth_clk_div_en_qs;
       end
