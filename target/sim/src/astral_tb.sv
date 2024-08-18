@@ -122,16 +122,21 @@ module tb_astral;
         $display("[TB] INFO: Randomizing LLC memory not supported for RTL sim. Use +initmem");
 `endif
       end
-
-      // Configure Serial link padframe
-      fix.configure_sl_pad(jtag_check_write);
-
-      -> pad_configured;
       
       // Writing max burst length in Hyperbus configuration registers to
       // prevent the Verification IPs from triggering timing checks.
-      $display("[TB] INFO: Configuring Hyperbus through serial link.");
-      fix.chs_vip.slink_write_32(HyperbusTburstMax, 32'd128);
+      if (preload_mode == 1) begin: gen_slink_hyperbus_cfg
+        // Configure Serial link padframe
+        fix.configure_sl_pad(jtag_check_write);
+
+        -> pad_configured;
+        $display("[TB] INFO: Configuring Hyperbus through serial link.");
+        fix.chs_vip.slink_write_32(HyperbusTburstMax, 32'd128);
+      end else begin: gen_jtag_hyperbus_cfg
+        fix.chs_vip.jtag_init();
+        $display("[TB] INFO: Configuring Hyperbus through JTAG.");
+        fix.chs_vip.jtag_write_reg32(HyperbusTburstMax, 32'd128, 1);
+      end
 
       // When Cheshire is offloading to safety island, the latter should be set in passive preloaded
       // bootmode
@@ -154,7 +159,6 @@ module tb_astral;
                 #10ns;
 `endif
             end
-            fix.chs_vip.jtag_init();
             $display("[TB] %t - Loading '%s' through JTAG", $realtime, chs_preload_elf);
             fix.chs_vip.jtag_elf_run(chs_preload_elf);
             fix.chs_vip.jtag_wait_for_eoc(exit_code);
