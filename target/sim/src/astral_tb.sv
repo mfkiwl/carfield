@@ -86,7 +86,7 @@ module tb_astral;
     if (!$value$plusargs("CHS_MEM_RAND=%d", chs_mem_rand))    chs_mem_rand    = 0;
 
     // PLL bypass
-    //fix.set_bypass_pll (bypass_pll);
+    fix.bypass_pll = bypass_pll;
 
     // Set boot mode and preload boot image if there is one
     fix.set_secure_boot(secure_boot);
