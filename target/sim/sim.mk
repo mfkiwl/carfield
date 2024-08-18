@@ -130,6 +130,7 @@ car-vsim-sim-run:
 	$(eval SPATZD_BINARY_ABS := $(realpath $(SPATZD_BINARY)))
 	cd $(CAR_VSIM_DIR); $(QUESTA) vsim $(VSIM_FLAGS) -do \
 		"set HYP_USER_PRELOAD $(HYP_USER_PRELOAD); \
+		 set BYPASS_PLL $(BYPASS_PLL); \
 		 set SECURE_BOOT $(SECURE_BOOT); \
 		 set CHS_BOOTMODE $(CHS_BOOTMODE); \
 		 set CHS_PRELMODE $(CHS_PRELMODE); \

@@ -108,6 +108,9 @@ STREAMER_ROOT ?= $(shell $(BENDER) path streamer)
 # SpaceWire IP
 SPACEWIRE_ROOT ?= $(shell $(BENDER) path spacewire)
 
+# PLL/FLL bypass
+BYPASS_PLL ?= 0
+
 ###########################
 # System HW configuration #
 ###########################
