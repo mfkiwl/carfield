@@ -231,7 +231,7 @@ module tb_astral;
       if (!$value$plusargs("SAFED_BINARY=%s",   safed_preload_elf)) safed_preload_elf = "";
       
       // PLL bypass
-      //fix.set_bypass_pll(bypass_pll);
+      fix.bypass_pll = bypass_pll;
 
       // set secure boot mode
       fix.set_secure_boot(secure_boot);
@@ -294,7 +294,7 @@ module tb_astral;
       if (!$value$plusargs("SECD_BOOTMODE=%d", secd_boot_mode))   secd_boot_mode   = 0;
 
       // PLL bypass
-      //fix.set_bypass_pll(bypass_pll);
+      fix.bypass_pll = bypass_pll;
 
       // set secure boot mode
       fix.set_secure_boot(secure_boot);
@@ -372,7 +372,7 @@ module tb_astral;
       if (!$value$plusargs("HYP_USER_PRELOAD=%s",   hyp_user_preload))   hyp_user_preload  = 0;
 
       // PLL bypass
-      //fix.set_bypass_pll(bypass_pll);
+      fix.bypass_pll = bypass_pll;
 
       // Wait for reset
       fix.chs_vip.wait_for_reset();
@@ -525,7 +525,7 @@ module tb_astral;
       if (!$value$plusargs("SPATZD_BINARY=%s",   spatzd_preload_elf)) spatzd_preload_elf = "";
 
       // PLL bypass
-      //fix.set_bypass_pll(bypass_pll);
+      fix.bypass_pll = bypass_pll;
 
       // set secure boot mode
       fix.set_secure_boot(secure_boot);
