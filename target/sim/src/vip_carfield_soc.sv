@@ -141,14 +141,6 @@ module vip_carfield_soc
       .clk_i(periph_clk)
     );
 
-    clk_rst_gen #(
-      .ClkPeriod    ( ClkPeriodPeriph ),
-      .RstClkCycles ( RstCycles    )
-    ) i_clk_rst_eth (
-      .clk_o  ( eth_clk   ),
-      .rst_no (           )
-    );
-    
     reg_bus_drv_t reg_drv_rx  = new(reg_bus_rx);
 
     reg_req_t reg_bus_rx_req;
@@ -240,27 +232,54 @@ module vip_carfield_soc
       @(posedge periph_clk);
     end
 
-    reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_ADDR_OFFSET, 32'h0, 'hf, reg_error ); // SRC_ADDR
-    @(posedge periph_clk);
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_ADDR_OFFSET, 32'h0, 'hf, reg_error ); // SRC_ADDR
+      @(posedge periph_clk);
 
-    reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DST_ADDR_OFFSET, 32'h0, 'hf, reg_error); // DST_ADDR
-    @(posedge periph_clk);
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DST_ADDR_OFFSET, 32'h0, 'hf, reg_error); // DST_ADDR
+      @(posedge periph_clk);
 
     reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_PROTOCOL_OFFSET, 32'h5, 'hf , reg_error); // src protocol
     @(posedge periph_clk);
 
-    reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DST_PROTOCOL_OFFSET, 32'h0,'hf , reg_error); // dst protocol
-    @(posedge periph_clk);
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DST_PROTOCOL_OFFSET, 32'h0,'hf , reg_error); // dst protocol
+      @(posedge periph_clk);
 
-    reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_REQ_VALID_OFFSET, 'h1, 'hf , reg_error);   // req valid
-    @(posedge periph_clk);
-    
-    //wait till all data written into rx_axi_sim_mem
-    while(1) begin
-      reg_drv_rx.send_read( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_RSP_VALID_OFFSET, rx_rsp_valid, reg_error);
-      if( rx_rsp_valid ) begin
-        break;
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_REQ_VALID_OFFSET, 'h1, 'hf , reg_error);   // req valid
+      @(posedge periph_clk);
+
+      //wait till all data written into rx_axi_sim_mem
+      while(1) begin
+        reg_drv_rx.send_read( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_RSP_VALID_OFFSET, rx_rsp_valid, reg_error);
+        if( rx_rsp_valid ) begin
+          break;
+        end
+        @(posedge periph_clk);
       end
+
+      // Tx test starts here: external back to core
+      @(posedge periph_clk);
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_MACLO_ADDR_OFFSET, 32'h98001032, 'hf, reg_error); //lower 32bits of MAC address
+      @(posedge periph_clk);
+
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_MACHI_MDIO_OFFSET, 32'h00002070, 'hf, reg_error); //upper 16bits of MAC address + other configuration set to false/0
+      @(posedge periph_clk);
+
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_ADDR_OFFSET, 32'h0, 'hf, reg_error ); // SRC_ADDR
+      @(posedge periph_clk);
+
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DST_ADDR_OFFSET, 32'h0, 'hf, reg_error); // DST_ADDR
+      @(posedge periph_clk);
+
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_LENGTH_OFFSET, 32'h40,'hf , reg_error); // Size in bytes
+      @(posedge periph_clk);
+
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_PROTOCOL_OFFSET, 32'h0, 'hf , reg_error); // src protocol
+      @(posedge periph_clk);
+
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DST_PROTOCOL_OFFSET, 32'h5,'hf , reg_error); // dst protocol
+      @(posedge periph_clk);
+
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_REQ_VALID_OFFSET, 'h1, 'hf , reg_error);   // req valid
       @(posedge periph_clk);
     end
 
@@ -290,7 +309,6 @@ module vip_carfield_soc
     reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_REQ_VALID_OFFSET, 'h1, 'hf , reg_error);   // req valid
     @(posedge periph_clk);
   end
-end
 
   //////////////
   // Hyperbus //
