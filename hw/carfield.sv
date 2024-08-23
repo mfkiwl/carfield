@@ -523,8 +523,8 @@ end
 
 // Clock Multiplexing for each sub block
 localparam int unsigned DomainClkDivValueWidth = 24;
-localparam int unsigned ClkMuxNumInputs = carfield_pkg::NumFll-1; // One FLL is for the RT clock which
-                                                                  // does not go through the MUX.
+// One FLL is for the RT clock which does not go through the MUX.
+localparam int unsigned ClkMuxNumInputs = carfield_pkg::NumFll-1;
 typedef logic [DomainClkDivValueWidth-1:0] domain_clk_div_value_t;
 logic [NumDomains-1:0] domain_clk;
 logic [NumDomains-1:0] domain_clk_en;
