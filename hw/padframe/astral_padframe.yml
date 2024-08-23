@@ -466,7 +466,7 @@ pad_domains:
           pull_sel: 1'b0
 
 ########################################
-# BOOT MODE
+# CHESHIRE BOOT MODE
 ########################################
 
       - name: boot_mode_{i}
@@ -477,6 +477,22 @@ pad_domains:
         connections:
           chip2pad: 1'b0
           pad2chip: boot_mode_{i}_i
+          input_en: 1'b1
+          output_en: 1'b0
+          pull_en: 1'b0
+          pull_sel: 1'b0
+
+########################################
+# OPENTITAN BOOT MODE
+########################################
+
+      - name: ot_boot_mode
+        description: "Opentitan boot mode in"
+        pad_type: PBIDIR_18_18_NT_DR_H
+        is_static: true
+        connections:
+          chip2pad: 1'b0
+          pad2chip: ot_boot_mode_i
           input_en: 1'b1
           output_en: 1'b0
           pull_en: 1'b0

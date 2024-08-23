@@ -411,6 +411,7 @@ module astral_fixture;
     .pad_periph_test_mode_pad       ( pd_testmode_net ),
     .pad_periph_boot_mode_0_pad     ( w_bootmode_hostd[0] ),
     .pad_periph_boot_mode_1_pad     ( w_bootmode_hostd[1] ),
+    .pad_periph_ot_boot_mode_pad    ( bootmode_secd[0] ),
     .pad_periph_secure_boot_pad     ( w_secure_boot ),
     // JTAG
     .pad_periph_jtag_tclk_pad       ( w_jtag_hostd_tck ),

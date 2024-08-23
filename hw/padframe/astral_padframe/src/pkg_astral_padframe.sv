@@ -54,6 +54,7 @@ package pkg_astral_padframe;
       logic        jtag_tdi_i;
       logic        jtag_tms_i;
       logic        jtag_trst_ni;
+      logic        ot_boot_mode_i;
       logic        pwr_on_rst_ni;
       logic        ref_clk_i;
       logic        secure_boot_i;

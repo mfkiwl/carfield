@@ -26,6 +26,7 @@ module astral_padframe_periph_pads
   inout wire logic pad_test_mode_pad,
   inout wire logic pad_boot_mode_0_pad,
   inout wire logic pad_boot_mode_1_pad,
+  inout wire logic pad_ot_boot_mode_pad,
   inout wire logic pad_jtag_ot_tclk_pad,
   inout wire logic pad_jtag_ot_trst_ni_pad,
   inout wire logic pad_jtag_ot_tms_pad,
@@ -397,6 +398,24 @@ module astral_padframe_periph_pads
     .PO  (  ),
     .Y   ( static_connection_signals_pad2soc.boot_mode_1_i ),
     .PAD ( pad_boot_mode_1_pad ),
+    .A   ( 1'b0 ),
+    .DS0 ( 1'b0 ),
+    .DS1 ( 1'b0 ),
+    .IE  ( 1'b1 ),
+    .IS  ( 1'b0 ),
+    .OE  ( 1'b0 ),
+    .PE  ( 1'b0 ),
+    .POE ( 1'b0 ),
+    .PS  ( 1'b0 ),
+    .RTO ( io_pads_rto ),
+    .SNS ( io_pads_sns ),
+    .SR  ( 1'b0 )
+  );
+   (* dont_touch *)
+  PBIDIR_18_18_NT_DR_H i_ot_boot_mode (
+    .PO  (  ),
+    .Y   ( static_connection_signals_pad2soc.ot_boot_mode_i ),
+    .PAD ( pad_ot_boot_mode_pad ),
     .A   ( 1'b0 ),
     .DS0 ( 1'b0 ),
     .DS1 ( 1'b0 ),

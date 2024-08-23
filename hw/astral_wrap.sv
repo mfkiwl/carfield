@@ -31,6 +31,7 @@ module astral_wrap
   inout wire logic pad_periph_test_mode_pad,
   inout wire logic pad_periph_boot_mode_0_pad,
   inout wire logic pad_periph_boot_mode_1_pad,
+  input wire logic pad_periph_ot_boot_mode_pad,
   inout wire logic pad_periph_secure_boot_pad,
   inout wire logic pad_periph_jtag_tclk_pad,
   inout wire logic pad_periph_jtag_trst_n_pad,
@@ -135,7 +136,7 @@ module astral_wrap
   assign bootmode_safe_isln_s[1] = 1'b0;
   // secd bootmodes
   logic [1:0] bootmode_sec_isln_s;
-  assign bootmode_sec_isln_s[0] = st_pad2soc_signals.periph.secure_boot_i;
+  assign bootmode_sec_isln_s[0] = st_pad2soc_signals.periph.ot_boot_mode_i;
   assign bootmode_sec_isln_s[1] = 1'b0;
   // hostd bootmodes
   logic [1:0] bootmode_host_s;
@@ -659,6 +660,7 @@ module astral_wrap
     .pad_periph_test_mode_pad,
     .pad_periph_boot_mode_0_pad,
     .pad_periph_boot_mode_1_pad,
+    .pad_periph_ot_boot_mode_pad,
     .pad_periph_secure_boot_pad,
     .pad_periph_jtag_tclk_pad,
     .pad_periph_jtag_trst_n_pad,
