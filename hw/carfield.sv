@@ -43,6 +43,8 @@ module carfield
   input   logic                                       periph_clk_i,
   // accelerator and island clock
   input   logic                                       alt_clk_i,
+  // secure domain clock
+  input   logic                                       secd_clk_i,
   // external reference clock for timers (CLINT, islands)
   input   logic                                       rt_clk_i,
 
@@ -521,11 +523,13 @@ end
 
 // Clock Multiplexing for each sub block
 localparam int unsigned DomainClkDivValueWidth = 24;
+localparam int unsigned ClkMuxNumInputs = carfield_pkg::NumFll-1; // One FLL is for the RT clock which
+                                                                  // does not go through the MUX.
 typedef logic [DomainClkDivValueWidth-1:0] domain_clk_div_value_t;
 logic [NumDomains-1:0] domain_clk;
 logic [NumDomains-1:0] domain_clk_en;
 logic [NumDomains-1:0] domain_clk_gated;
-logic [NumDomains-1:0][1:0] domain_clk_sel;
+logic [NumDomains-1:0][$clog2(ClkMuxNumInputs)-1:0] domain_clk_sel;
 
 logic [NumDomains-1:0] domain_clk_div_changed;
 logic [NumDomains-1:0] domain_clk_div_decoupled_valid, domain_clk_div_decoupled_ready;
@@ -553,14 +557,14 @@ logic [NumDomains-1:0] rsts_n;
 
 for (genvar i = 0; i < NumDomains; i++) begin : gen_domain_clock_mux
   clk_mux_glitch_free #(
-    .NUM_INPUTS(3)
+    .NUM_INPUTS(carfield_pkg::NumFll-1)
   ) i_clk_mux (
-    .clks_i       ( {periph_clk_i, alt_clk_i, host_clk_i} ),
-    .test_clk_i   ( 1'b0                                  ),
-    .test_en_i    ( 1'b0                                  ),
-    .async_rstn_i ( host_pwr_on_rst_n                     ),
-    .async_sel_i  ( domain_clk_sel[i]                     ),
-    .clk_o        ( domain_clk[i]                         )
+    .clks_i       ( {secd_clk_i, periph_clk_i, alt_clk_i, host_clk_i} ),
+    .test_clk_i   ( 1'b0                                              ),
+    .test_en_i    ( 1'b0                                              ),
+    .async_rstn_i ( host_pwr_on_rst_n                                 ),
+    .async_sel_i  ( domain_clk_sel[i]                                 ),
+    .clk_o        ( domain_clk[i]                                     )
   );
 
   // The register file does not support back pressure directly. I.e the hardware side cannot tell

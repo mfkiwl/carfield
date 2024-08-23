@@ -374,18 +374,16 @@ module astral_wrap
   // Clock generation //
   //////////////////////
 
-  localparam int unsigned NumFll = 4;
-
-  logic[NumFll-1:0] clk_fll_out;
-  logic[NumFll-1:0] clk_fll_e;
-  logic[NumFll-1:0] fll_lock;
-  logic[NumFll-1:0] fll_pwd;
-  logic[NumFll-1:0] fll_test_mode;
-  logic[NumFll-1:0] fll_scan_e;
-  logic[NumFll-1:0] fll_scan_in;
-  logic[NumFll-1:0] fll_scan_out;
-  logic[NumFll-1:0] fll_scan_jtag_in;
-  logic[NumFll-1:0] fll_scan_jtag_out;
+  logic[carfield_pkg::NumFll-1:0] clk_fll_out;
+  logic[carfield_pkg::NumFll-1:0] clk_fll_e;
+  logic[carfield_pkg::NumFll-1:0] fll_lock;
+  logic[carfield_pkg::NumFll-1:0] fll_pwd;
+  logic[carfield_pkg::NumFll-1:0] fll_test_mode;
+  logic[carfield_pkg::NumFll-1:0] fll_scan_e;
+  logic[carfield_pkg::NumFll-1:0] fll_scan_in;
+  logic[carfield_pkg::NumFll-1:0] fll_scan_out;
+  logic[carfield_pkg::NumFll-1:0] fll_scan_jtag_in;
+  logic[carfield_pkg::NumFll-1:0] fll_scan_jtag_out;
 
   // ref_clk
   assign ref_clk      = st_pad2soc_signals.periph.ref_clk_i;
@@ -395,6 +393,7 @@ module astral_wrap
   assign host_clk    = clk_fll_out[0];
   assign periph_clk  = clk_fll_out[1];
   assign alt_clk     = clk_fll_out[2];
+  assign secd_clk    = clk_fll_out[3];
   assign clk_fll_e   = '{default: 1'b1};
 
   clk_int_div_static #(
@@ -425,11 +424,11 @@ module astral_wrap
 
 `ifdef GF12_FLL
   gf12_fll_wrap #(
-    .NUM_FLL        ( NumFll             ),
+    .NUM_FLL        ( carfield_pkg::NumFll ),
     // Addresses are double-word aligned (0x2002_0000, 0x2002_0008, ...)
-    .FLL_REG_OFFSET ( 3                  ),
-    .reg_req_t      ( carfield_reg_req_t ),
-    .reg_rsp_t      ( carfield_reg_rsp_t )
+    .FLL_REG_OFFSET ( 3                    ),
+    .reg_req_t      ( carfield_reg_req_t   ),
+    .reg_rsp_t      ( carfield_reg_rsp_t   )
   ) i_fll_wrap (
     .clk_ref_i           ( ref_clk                                ),
     .rst_n_i             ( ref_clk_pwr_on_rst_n                   ),
@@ -504,6 +503,7 @@ module astral_wrap
     .host_clk_i                 ( host_clk                                          ),
     .periph_clk_i               ( periph_clk                                        ),
     .alt_clk_i                  ( alt_clk                                           ),
+    .secd_clk_i                 ( secd_clk                                          ),
     .rt_clk_i                   ( rt_clk                                            ),
     .pwr_on_rst_ni              ( pwr_on_rst_n                                      ),
     .test_mode_i                ( '0                                                ),

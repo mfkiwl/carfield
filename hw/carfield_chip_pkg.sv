@@ -16,7 +16,8 @@ package carfield_chip_pkg;
 typedef enum int {
   HostDomainClkIdx   = 'd0,
   PeriphDomainClkIdx = 'd1,
-  AltDomainClkIdx    = 'd2
+  AltDomainClkIdx    = 'd2,
+  SecureDomainClkIdx = 'd3
 } carfield_clocks_e;
 
 // PULP Platform manufacturer and default Carfield Pll part number

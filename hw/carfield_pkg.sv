@@ -323,6 +323,17 @@ function automatic int unsigned gen_carfield_domains(islands_cfg_t island_cfg);
   return ret;
 endfunction
 
+// Generate number of clock sources
+function automatic int unsigned gen_carfield_clock_srcs(islands_cfg_t island_cfg);
+  int unsigned ret = 2; // Number of clock sources starts from 2 (Host + rt clock)
+  if (island_cfg.safed.enable   ) begin ret++; end
+  if (island_cfg.periph.enable  ) begin ret++; end
+  if (island_cfg.spatz.enable   ) begin ret++; end
+  if (island_cfg.pulp.enable    ) begin ret++; end
+  if (island_cfg.secured.enable ) begin ret++; end
+  return ret;
+endfunction
+
 localparam islands_cfg_t CarfieldIslandsCfg = '{
   l2_port0:      '{L2Port0Enable, L2Port0Base, L2Port0Size},
   l2_port1:      '{L2Port1Enable, L2Port1Base, L2Port1Size},
@@ -353,7 +364,7 @@ localparam regbus_struct_t CarfieldRegBusMap = carfield_gen_regbus_map(NumTotalR
 
 localparam int unsigned CarfieldNumDomains = gen_carfield_domains(CarfieldIslandsCfg);
 
-localparam int unsigned NumPlls = 3;
+localparam int unsigned NumFll = gen_carfield_clock_srcs(CarfieldIslandsCfg);
 
 typedef struct {
   int unsigned clock_div_value[CarfieldNumDomains];
