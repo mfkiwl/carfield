@@ -292,10 +292,10 @@ module astral_fixture;
 
   // Clock
   assign w_ref_clk          = ref_clk;
-  // PLL bypass
-  assign w_bypass_pll       = bypass_pll;
   // External clock
   assign w_ext_clk          = ext_clk;
+  // PLL/FLL bypass
+  assign w_bypass_pll = bypass_pll;
   // POR
 `ifndef BYPASS_PLL
   assign w_pwr_on_rst_n = pwr_on_rst_n;
@@ -866,6 +866,10 @@ module astral_fixture;
       wait (i_dut.i_dut.gen_secure_subsystem.i_security_island.u_RoT.u_rv_core_ibex.fetch_enable == lc_ctrl_pkg::On);
     end
 `endif
+  endtask
+
+  task set_bypass_pll(input logic bypass);
+    bypass_pll = bypass;
   endtask
 
   task set_secure_boot(input logic sb);
