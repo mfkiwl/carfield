@@ -9,8 +9,7 @@
 #ifndef __FLL_H
 #define __FLL_H
 
-#include "io.h"
-#include "car_memory_map.h"
+#include "car_util.h"
 
 #define FLL_DCO_CODE_MASK (0x03FF0000)
 #define FLL_CLK_DIV_MASK  (0x3C000000)

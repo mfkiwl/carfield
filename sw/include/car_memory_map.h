@@ -189,14 +189,13 @@ extern void *__base_l2;
 #define TCTM_STREAMER_APB_TX_BUFFER_BASE  CAR_STREAMER_APB_BASE_ADDR + TCTM_STREAMER_TX_BUFFER_OFFS
 
 // FLL
-#define FLL_BASE_ADDRESS     0x21003000
 #define FLL_ADDR_SPACE       0x20
 #define FLL_HOST_ID          0x0
 #define FLL_PERIPH_ID        0x1
 #define FLL_ALT_ID           0x2
 #define FLL_SECD_ID          0x3
 #define FLL_RT_ID            0x4
-#define FLL_BASE_ADDRESS(id) (FLL_BASE_ADDRESS + (id)*FLL_ADDR_SPACE)
+#define FLL_BASE_ADDRESS(id) (fll + (id)*FLL_ADDR_SPACE)
 
 #define FLL_STATUS_REG_I     0x00    
 #define FLL_CONFIG_REG_I     0x08    
@@ -204,7 +203,7 @@ extern void *__base_l2;
 #define FLL_INTEGR_REG       0x18    
 
 // Padframe
-#define PADFRAME_BASE_ADDRESS                         0x21000000
+#define PADFRAME_BASE_ADDRESS padframe
 
 #define PADFRAME_CONFIG_INFO                          0x0
 #define PADFRAME_CONFIG_MUXED_V_00_CFG                0x4
