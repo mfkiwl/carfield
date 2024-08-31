@@ -102,6 +102,9 @@ module tb_astral;
       // Wait for FLL lock
       fix.wait_fll_lock();
 
+      // Initialize JTAG at first
+      fix.chs_vip.jtag_init();
+
       // We need to initialize memories after the reset due to limitations of the memory models.
       if (chs_mem_rand) begin
 `ifdef CHS_NETLIST
@@ -133,7 +136,6 @@ module tb_astral;
         $display("[TB] INFO: Configuring Hyperbus through serial link.");
         fix.chs_vip.slink_write_32(HyperbusTburstMax, 32'd128);
       end else begin: gen_jtag_hyperbus_cfg
-        fix.chs_vip.jtag_init();
         $display("[TB] INFO: Configuring Hyperbus through JTAG.");
         fix.chs_vip.jtag_write_reg32(HyperbusTburstMax, 32'd128, 1);
       end
@@ -184,14 +186,12 @@ module tb_astral;
         fix.configure_spi_pad(jtag_check_write);
         // Autonomous boot: Only poll return code
         $display("[TB] %t - Entering autonomous boot mode", $realtime);
-        fix.chs_vip.jtag_init();
         fix.chs_vip.jtag_wait_for_eoc(exit_code);
       end else begin
         // Configure I2C padframe
         fix.configure_i2c_pad(jtag_check_write);
         // Autonomous boot: Only poll return code
         $display("[TB] %t - Entering autonomous boot mode", $realtime);
-        fix.chs_vip.jtag_init();
         fix.chs_vip.jtag_wait_for_eoc(exit_code);
       end
 
