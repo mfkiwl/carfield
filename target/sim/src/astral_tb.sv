@@ -371,29 +371,28 @@ module tb_astral;
       if (!$value$plusargs("PULPD_BINARY=%s",       pulpd_preload_elf))  pulpd_preload_elf = "";
       if (!$value$plusargs("HYP_USER_PRELOAD=%s",   hyp_user_preload))   hyp_user_preload  = 0;
 
-      // Wait for system reset from Cheshire VIP
-      fix.chs_vip.wait_for_reset();
-
-      // Wait for FLL lock
-      fix.wait_fll_lock();
-
-      // Configure padframe for Serial Link usage depending
-      // on the selected preload-mode
-      if (pulpd_boot_mode == 1) begin: gen_pulpd_slink_cfg
-        // Configure Serial link padframe
-        fix.configure_sl_pad(jtag_check_write);
-
-        -> pad_configured;
-      end else begin: pulpd_jtag_init
-        $display("[JTAG PULPD] Init ");
-        fix.chs_vip.jtag_init();
-      end
-
-      // PLL bypass
-      fix.set_bypass_pll(bypass_pll);
-      $display("0");
-
       if (pulpd_preload_elf != "") begin
+
+        // Wait for system reset from Cheshire VIP
+        fix.chs_vip.wait_for_reset();
+
+        // PLL bypass
+        fix.set_bypass_pll(bypass_pll);
+
+        // Wait for FLL lock
+        fix.wait_fll_lock();
+
+        // Configure padframe for Serial Link usage depending
+        // on the selected preload-mode
+        if (pulpd_boot_mode == 1) begin: gen_pulpd_slink_cfg
+          // Configure Serial link padframe
+          fix.configure_sl_pad(jtag_check_write);
+
+          -> pad_configured;
+        end else begin: pulpd_jtag_init
+          $display("[JTAG PULPD] Init ");
+          fix.chs_vip.jtag_init();
+        end
         
         $display("[TB] %t - Enabling PULP cluster clock for stand-alone tests ", $realtime);
         // Clock island after PoR
@@ -458,7 +457,7 @@ module tb_astral;
 
         $finish;
       end else begin
-        $error("[PULP TB] No binary preloaded.");
+        $display("[PULP TB] No binary preloaded.");
       end
 
       // Fast preload of hyperram
