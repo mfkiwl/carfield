@@ -371,18 +371,29 @@ module tb_astral;
       if (!$value$plusargs("PULPD_BINARY=%s",       pulpd_preload_elf))  pulpd_preload_elf = "";
       if (!$value$plusargs("HYP_USER_PRELOAD=%s",   hyp_user_preload))   hyp_user_preload  = 0;
 
-      // PLL bypass
-      fix.set_bypass_pll(bypass_pll);
-
-      // Wait for reset
+      // Wait for system reset from Cheshire VIP
       fix.chs_vip.wait_for_reset();
 
       // Wait for FLL lock
       fix.wait_fll_lock();
 
-      if (pulpd_preload_elf != "") begin
+      // Configure padframe for Serial Link usage depending
+      // on the selected preload-mode
+      if (pulpd_boot_mode == 1) begin: gen_pulpd_slink_cfg
+        // Configure Serial link padframe
+        fix.configure_sl_pad(jtag_check_write);
 
-        wait (pad_configured.triggered);
+        -> pad_configured;
+      end else begin: pulpd_jtag_init
+        $display("[JTAG PULPD] Init ");
+        fix.chs_vip.jtag_init();
+      end
+
+      // PLL bypass
+      fix.set_bypass_pll(bypass_pll);
+      $display("0");
+
+      if (pulpd_preload_elf != "") begin
         
         $display("[TB] %t - Enabling PULP cluster clock for stand-alone tests ", $realtime);
         // Clock island after PoR
@@ -393,9 +404,6 @@ module tb_astral;
 
         case (pulpd_boot_mode)
           0: begin
-            // JTAG
-            $display("[JTAG PULPD] Init ");
-            fix.chs_vip.jtag_init();
             $display("[JTAG PULPD] Halt the core and load the binary to L2 ");
             fix.chs_vip.jtag_elf_halt_load(pulpd_preload_elf, pulpd_binary_entry );
 
@@ -419,9 +427,7 @@ module tb_astral;
             else $display("[JTAG PULP] SUCCESS");
           end
 
-          1: begin
-            // serial link
-
+          1: begin // -> Serial Link
             // preload
             $display("[SLINK PULPD] Preload the binary to L2 ");
             fix.chs_vip.slink_elf_preload(pulpd_preload_elf, pulpd_binary_entry);
@@ -451,6 +457,8 @@ module tb_astral;
         endcase
 
         $finish;
+      end else begin
+        $error("[PULP TB] No binary preloaded.");
       end
 
       // Fast preload of hyperram
