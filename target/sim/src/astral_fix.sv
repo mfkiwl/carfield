@@ -488,6 +488,11 @@ module astral_fixture;
   tranif1 tran_spih_sd_1 (w_muxed_v_04, w_spi_hostd_sd[1], mux_0_spih_sd_1);
   tranif1 tran_spih_sd_2 (w_muxed_v_05, w_spi_hostd_sd[2], mux_0_spih_sd_2);
   tranif1 tran_spih_sd_3 (w_muxed_v_06, w_spi_hostd_sd[3], mux_0_spih_sd_3);
+  pullup (w_spi_hostd_sck);
+  pullup (w_spi_hostd_sd[0]);
+  pullup (w_spi_hostd_sd[1]);
+  pullup (w_spi_hostd_sd[2]);
+  pullup (w_spi_hostd_sd[3]);
   // Ethernet
   assign mux_0_eth_rxck = (`PAD_MUX_REG_PATH.muxed_v_07_mux_sel.q == PAD_MUX_GROUP_MUXED_V_07_SEL_ETHERNET_RXCK);
   assign mux_0_eth_rxctl = (`PAD_MUX_REG_PATH.muxed_v_08_mux_sel.q == PAD_MUX_GROUP_MUXED_V_08_SEL_ETHERNET_RXCTL);
@@ -566,6 +571,8 @@ module astral_fixture;
   assign mux_2_i2c_scl = (`PAD_MUX_REG_PATH.muxed_v_01_mux_sel.q == PAD_MUX_GROUP_MUXED_V_01_SEL_I2C_SCL);
   tranif1 tran_i2c_sda (w_muxed_v_00, w_i2c_hostd_sda, mux_2_i2c_sda);
   tranif1 tran_i2c_scl (w_muxed_v_01, w_i2c_hostd_scl, mux_2_i2c_scl);
+  pullup (w_i2c_hostd_sda);
+  pullup (w_i2c_hostd_scl);
   // TC - TODO
   // PTME - TODO
   // HPC - TODO
