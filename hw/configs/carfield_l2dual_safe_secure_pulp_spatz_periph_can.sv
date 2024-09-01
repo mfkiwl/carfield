@@ -65,6 +65,18 @@ localparam doub_bt SystemWatchdogSize = 'h00001000;
 // Hyperbus Config
 localparam doub_bt HyperBusBase = 'h20009000;
 localparam doub_bt HyperBusSize = 'h00001000;
+// Streamer
+localparam bit StreamerEnable = 0;
+localparam doub_bt StreamerCfgBase = 'h20009000;
+localparam doub_bt StreamerCfgSize = 'h00008000;
+localparam doub_bt StreamerApbBase = StreamerCfgBase + StreamerCfgSize;
+localparam doub_bt StreamerApbSize = 'h00008000;
+// SpaceWire
+localparam bit SpaceWireEnable = 0;
+localparam doub_bt SpaceWireRegBase = 'h20019000;
+localparam doub_bt SpaceWireRegSize = 'h00000100;
+localparam doub_bt SpaceWireApbBase = SpaceWireRegBase + SpaceWireRegSize;
+localparam doub_bt SpaceWireApbSize = 'h00000F00;
 /************************
  * RegBus Configuration *
  ***********************/
