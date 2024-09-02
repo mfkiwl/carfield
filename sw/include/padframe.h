@@ -24,7 +24,7 @@ void write_padframe_pen(uint8_t cfg_reg_offset, uint8_t pen){
 
 void write_padframe_psel(uint8_t cfg_reg_offset, uint8_t psel){
   uint32_t config_reg = readw(PADFRAME_BASE_ADDRESS + cfg_reg_offset);
-  config_reg = (config_reg & ~0x10 ) | ((pen & 0x1) << 4);
+  config_reg = (config_reg & ~0x10 ) | ((psel & 0x1) << 4);
   writew(config_reg, PADFRAME_BASE_ADDRESS + cfg_reg_offset);
 }
 
