@@ -52,6 +52,9 @@ void set_fll_dco_code(uint32_t dco_code, uint8_t fll_id){
   write_fll_bitfield(dco_code, fll_id, FLL_CONFIG_REG_I, FLL_DCO_CODE_MASK, FLL_DCO_CODE_OFFSET);
 }
 
+// When programmed in normal mode, the FLL computes the final frequency as:
+// freq = (clk_mul + 1)/clk_div. For example, to set up the FLL for 500 MHz, one option is to
+// set clk_mul = 999, and clk_div = 2.
 void set_fll_clk_div(uint32_t clk_div, uint8_t fll_id){
   write_fll_bitfield(clk_div, fll_id, FLL_CONFIG_REG_I, FLL_CLK_DIV_MASK, FLL_CLK_DIV_OFFSET);
 }
@@ -60,13 +63,12 @@ void set_fll_clk_mul(uint32_t clk_mul, uint8_t fll_id){
   write_fll_bitfield(clk_mul, fll_id, FLL_CONFIG_REG_I, FLL_CLK_MUL_MASK, FLL_CLK_MUL_OFFSET);
 }
 
-void set_periph_fll(){
-  // Configuring FLL
+// The following API uses a default divider by 2 to program the peripheral FLL
+void set_periph_fll_div2(uint32_t clk_freq){
+  unsigned int divdier = 2;
   fll_normal(FLL_PERIPH_ID);
-  // What is the meaning of 0x3E7?
-  set_fll_clk_mul(0x3E7, FLL_PERIPH_ID);
-  // What is the meaning of 0x2?
-  set_fll_clk_div(0x2, FLL_PERIPH_ID);
+  set_fll_clk_mul((divdier*clk_freq) - 1, FLL_PERIPH_ID);
+  set_fll_clk_div(divdier, FLL_PERIPH_ID);
 }
 
 #endif /*__FLL_H*/

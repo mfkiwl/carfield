@@ -59,8 +59,8 @@ int main(void) {
   // Configure padframe for ethernet use.
   padframe_ethernet_cfg();
 
-  // Setup the peripheral FLL.
-  set_periph_fll();
+  // Setup the peripheral FLL to work at 500 MHz
+  set_periph_fll_div2(500 /* MHz */);
 
   // Wait for FLL clk out to stabilize
   for (int i = 0; i < FLL_WAIT_CYCLES; i++)
