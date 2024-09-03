@@ -841,7 +841,7 @@ module astral_fixture;
 
   if (CarfieldIslandsCfg.safed.enable) begin : gen_safed_vip
     // We assume 50 MHz for Safety Island JTAG
-    localparam time ClkPeriodSafedJtag = 20 ns;
+    localparam time ClkPeriodSafedJtag = 20ns;
 
     localparam axi_in_t AxiIn = gen_axi_in(DutCfg);
     localparam int unsigned AxiSlvIdWidth = DutCfg.AxiMstIdWidth + $clog2(AxiIn.num_in);
@@ -908,7 +908,7 @@ module astral_fixture;
 
   if (CarfieldIslandsCfg.secured.enable) begin: gen_secured_vip
     // We assume 50 MHz for OpenTitan JTAG
-    localparam time ClkPeriodSecdJtag = 20 ns;
+    localparam time ClkPeriodSecdJtag = 20ns;
 
     // VIP
     vip_security_island_soc #(
