@@ -60,4 +60,13 @@ void set_fll_clk_mul(uint32_t clk_mul, uint8_t fll_id){
   write_fll_bitfield(clk_mul, fll_id, FLL_CONFIG_REG_I, FLL_CLK_MUL_MASK, FLL_CLK_MUL_OFFSET);
 }
 
+void set_periph_fll(){
+  // Configuring FLL
+  fll_normal(FLL_PERIPH_ID);
+  // What is the meaning of 0x3E7?
+  set_fll_clk_mul(0x3E7, FLL_PERIPH_ID);
+  // What is the meaning of 0x2?
+  set_fll_clk_div(0x2, FLL_PERIPH_ID);
+}
+
 #endif /*__FLL_H*/
