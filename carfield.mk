@@ -422,7 +422,7 @@ car-check-litmus-tests: $(LITMUS_WORK_DIR)/litmus.log
 ##############
 tech-repo := git@iis-git.ee.ethz.ch:Astral/gf12.git
 # no commit by default, change during development
-tech-commit := 183a9cde1130f2558b359619377c0afa06a7c571 # branch: yt/thales
+tech-commit := a19cf025f2c2d4ca6e529adca2ea3bca6897933b # branch: yt/thales
 
 tech-clone:
 	git clone $(tech-repo) tech
