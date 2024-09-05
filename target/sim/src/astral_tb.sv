@@ -342,7 +342,6 @@ module tb_astral;
     // Useful register addresses
     localparam int unsigned CarL2StartAddr                      = carfield_configuration::L2Port0Base;
     localparam int unsigned CarDramStartAddr                    = 32'h8000_0000;
-    localparam int unsigned PulpdNumCores                       = 12;
     localparam int unsigned PulpdBootAddrL2                     = CarL2StartAddr + 32'h8080;
     localparam int unsigned PulpdBootAddrDram                   = CarDramStartAddr + 32'h8080;
     localparam int unsigned PulpdBootAddr                       = carfield_configuration::PulpClusterBase + 32'h00200040;
@@ -387,27 +386,32 @@ module tb_astral;
           fix.configure_sl_pad(jtag_check_write);
 
           -> pad_configured;
+          $display("[TB] %t - Enabling PULP cluster clock for stand-alone tests ", $realtime);
+          // Clock island after PoR
+          fix.chs_vip.slink_write_32(CarSocCtrlPulpdClkEnRegAddr, 32'h1);
+          $display("[TB] %t - De-isolate PULP cluster for stand-alone tests ", $realtime);
+          // De-isolate island after PoR
+          fix.chs_vip.slink_write_32(CarSocCtrlPulpdIsolateRegAddr, 32'h0);
         end else begin: pulpd_jtag_init
           $display("[JTAG PULPD] Init ");
           fix.chs_vip.jtag_init();
+          $display("[TB] %t - Enabling PULP cluster clock for stand-alone tests ", $realtime);
+          // Clock island after PoR
+          fix.chs_vip.jtag_write_reg32(CarSocCtrlPulpdClkEnRegAddr, 32'h1, jtag_check_write);
+          $display("[TB] %t - De-isolate PULP cluster for stand-alone tests ", $realtime);
+          // De-isolate island after PoR
+          fix.chs_vip.jtag_write_reg32(CarSocCtrlPulpdIsolateRegAddr, 32'h0, jtag_check_write);
         end
-        
-        $display("[TB] %t - Enabling PULP cluster clock for stand-alone tests ", $realtime);
-        // Clock island after PoR
-        fix.chs_vip.slink_write_32(CarSocCtrlPulpdClkEnRegAddr, 32'h1);
-        $display("[TB] %t - De-isolate PULP cluster for stand-alone tests ", $realtime);
-        // De-isolate island after PoR
-        fix.chs_vip.slink_write_32(CarSocCtrlPulpdIsolateRegAddr, 32'h0);
 
         case (pulpd_boot_mode)
           0: begin
             $display("[JTAG PULPD] Halt the core and load the binary to L2 ");
-            fix.chs_vip.jtag_elf_halt_load(pulpd_preload_elf, pulpd_binary_entry );
+            fix.chs_vip.jtag_elf_preload(pulpd_preload_elf, pulpd_binary_entry );
 
             // boot
             // Write bootaddress to each core
             $display("[JTAG PULPD] Write PULP cluster boot address for each core");
-            for (int c = 0; c < PulpdNumCores; c++) begin
+            for (int c = 0; c < carfield_pkg::IntClusterNumCores; c++) begin
               fix.chs_vip.jtag_write_reg32(PulpdBootAddr + c*32'h4, PulpdBootAddrL2, jtag_check_write);
             end
             // Write boot enable
@@ -432,7 +436,7 @@ module tb_astral;
             // boot
             // Write bootaddress to each core
             $display("[SLINK PULPD] Write PULP cluster boot address for each core");
-            for (int c = 0; c < PulpdNumCores; c++) begin
+            for (int c = 0; c < carfield_pkg::IntClusterNumCores; c++) begin
               fix.chs_vip.slink_write_32(PulpdBootAddr + c*32'h4, PulpdBootAddrL2);
             end
             // Write boot enable
