@@ -52,6 +52,8 @@ module carfield
 
   // testmode pin
   input   logic                                       test_mode_i,
+  // FLL lock input
+  input logic   [carfield_pkg::NumFll-1:0]            fll_lock_i,
   // Cheshire BOOT pins (3 pins)
   input   logic [1:0]                                 boot_mode_i,
   // Cheshire JTAG Interface
@@ -711,6 +713,9 @@ carfield_reg_top #(
   .hw2reg (car_regs_hw2reg),
   .devmode_i (1'b1)
 );
+
+assign car_regs_hw2reg.fll_lock.de = 1'b1;
+assign car_regs_hw2reg.fll_lock.d = fll_lock_i;
 
 // hyperbus reg req/rsp
 carfield_a32_d32_reg_req_t reg_hyper_req;
@@ -1437,7 +1442,7 @@ localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
    .Cfg( PulpClusterCfg )
   ) i_integer_cluster               (
 `else
-  int_cluster i_integer_cluster     (
+  pulp_cluster i_integer_cluster     (
 `endif
     .clk_i                       ( pulp_clk                                  ),
     .rst_ni                      ( pulp_rst_n                                ),
