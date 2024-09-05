@@ -492,7 +492,7 @@ module tb_astral;
 
         // Write bootaddress to each core
         $display("[SLINK PULPD] Write PULP cluster boot address for each core");
-        for (int c = 0; c < PulpdNumCores; c++) begin
+        for (int c = 0; c < carfield_pkg::IntClusterNumCores; c++) begin
           fix.chs_vip.slink_write_32(PulpdBootAddr + c*32'h4, PulpdBootAddrDram);
         end
         // Write boot enable
