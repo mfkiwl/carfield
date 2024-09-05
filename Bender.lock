@@ -74,7 +74,7 @@ packages:
     - common_cells
     - obi
   axi_riscv_atomics:
-    revision: 46d567cad5a614a82778702d48b3a789aed7711b
+    revision: 062bc36cbcca25629384e7f12efa6693273b3e07
     version: null
     source:
       Git: https://github.com/pulp-platform/axi_riscv_atomics.git
@@ -121,7 +121,7 @@ packages:
       Git: https://github.com/AlSaqr-platform/can_bus.git
     dependencies: []
   cheshire:
-    revision: 3cc33a21e382a0ae4c9974c178c899a4649066bf
+    revision: 2a141413e9ed1c85b41ffe03297633a394be6a42
     version: null
     source:
       Git: https://github.com/pulp-platform/cheshire.git
