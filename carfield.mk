@@ -127,7 +127,7 @@ PLIC_NUM_INTRS := 89
 SERIAL_LINK_NUM_BITS := 16
 
 # AXI Real-Time unit configuration in Carfield
-AXIRT_NUM_MGRS := 10
+AXIRT_NUM_MGRS := 9
 AXIRT_NUM_SUBS := 2
 
 ##########################################
