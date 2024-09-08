@@ -169,18 +169,13 @@ module astral_fixture;
   wire                                w_eth_rst;
   wire                                w_eth_txck;
   wire                                w_eth_txctl;
-  wire                                w_eth_txd0;
-  wire                                w_eth_txd1;
-  wire                                w_eth_txd2;
-  wire                                w_eth_txd3;
+  wire [3:0]                          w_eth_txd;
   wire                                w_eth_mdc;
   wire                                w_eth_md;
   wire                                w_eth_rxck;
   wire                                w_eth_rxctl;
-  wire                                w_eth_rxd0;
-  wire                                w_eth_rxd1;
-  wire                                w_eth_rxd2;
-  wire                                w_eth_rxd3;
+  wire [3:0]                          w_eth_rxd;
+  logic                               eth_clk;
   // SpaceWier
   wire                                w_spw_data_in;
   wire                                w_spw_data_out;
@@ -541,19 +536,20 @@ module astral_fixture;
   assign mux_0_eth_rst_n = (`PAD_MUX_REG_PATH.muxed_h_03_mux_sel.q == PAD_MUX_GROUP_MUXED_H_03_SEL_ETHERNET_RST_N);
   tranif1 tran_eth_rxck (w_muxed_v_07, w_eth_rxck, mux_0_eth_rxck);
   tranif1 tran_eth_rxctl (w_muxed_v_08, w_eth_rxctl, mux_0_eth_rxctl);
-  tranif1 tran_eth_rxd_0 (w_muxed_v_09, w_eth_rxd0, mux_0_eth_rxd_0);
-  tranif1 tran_eth_rxd_1 (w_muxed_v_10, w_eth_rxd1, mux_0_eth_rxd_1);
-  tranif1 tran_eth_rxd_2 (w_muxed_v_11, w_eth_rxd2, mux_0_eth_rxd_2);
-  tranif1 tran_eth_rxd_3 (w_muxed_v_12, w_eth_rxd3, mux_0_eth_rxd_3);
+  tranif1 tran_eth_rxd_0 (w_muxed_v_09, w_eth_rxd[0], mux_0_eth_rxd_0);
+  tranif1 tran_eth_rxd_1 (w_muxed_v_10, w_eth_rxd[1], mux_0_eth_rxd_1);
+  tranif1 tran_eth_rxd_2 (w_muxed_v_11, w_eth_rxd[2], mux_0_eth_rxd_2);
+  tranif1 tran_eth_rxd_3 (w_muxed_v_12, w_eth_rxd[3], mux_0_eth_rxd_3);
   tranif1 tran_eth_txck (w_muxed_v_13, w_eth_txck, mux_0_eth_txck);
   tranif1 tran_eth_txctl (w_muxed_v_14, w_eth_txctl, mux_0_eth_txctl);
-  tranif1 tran_eth_txd_0 (w_muxed_v_15, w_eth_txd0, mux_0_eth_txd_0);
-  tranif1 tran_eth_txd_1 (w_muxed_v_16, w_eth_txd1, mux_0_eth_txd_1);
-  tranif1 tran_eth_txd_2 (w_muxed_v_17, w_eth_txd2, mux_0_eth_txd_2);
-  tranif1 tran_eth_txd_3 (w_muxed_h_00, w_eth_txd3, mux_0_eth_txd_3);
+  tranif1 tran_eth_txd_0 (w_muxed_v_15, w_eth_txd[0], mux_0_eth_txd_0);
+  tranif1 tran_eth_txd_1 (w_muxed_v_16, w_eth_txd[1], mux_0_eth_txd_1);
+  tranif1 tran_eth_txd_2 (w_muxed_v_17, w_eth_txd[2], mux_0_eth_txd_2);
+  tranif1 tran_eth_txd_3 (w_muxed_h_00, w_eth_txd[3], mux_0_eth_txd_3);
   tranif1 tran_eth_md (w_muxed_h_01, w_eth_md, mux_0_eth_md);
   tranif1 tran_eth_mdc (w_muxed_h_02, w_eth_mdc, mux_0_eth_mdc);
   tranif1 tran_eth_rst_n (w_muxed_h_03, w_eth_rst, mux_0_eth_rst_n);
+  assign eth_clk = i_dut.i_dut.eth_clk;
   // CAN
   assign mux_1_can_rx = (`PAD_MUX_REG_PATH.muxed_v_00_mux_sel.q == PAD_MUX_GROUP_MUXED_V_00_SEL_CAN_RX);
   assign mux_1_can_tx = (`PAD_MUX_REG_PATH.muxed_v_01_mux_sel.q == PAD_MUX_GROUP_MUXED_V_01_SEL_CAN_TX);
@@ -776,7 +772,17 @@ module astral_fixture;
     .llc_line_i    ( llc_line      ),
     .tc_active     ( tc_active     ),
     .tc_clk        ( tc_clock      ),
-    .tc_data       ( tc_data       )
+    .tc_data       ( tc_data       ),
+    .eth_clk       ( eth_clk       ),
+    .eth_txd       ( w_eth_txd     ),
+    .eth_rxd       ( w_eth_rxd     ),
+    .eth_txck      ( w_eth_txck    ),
+    .eth_rxck      ( w_eth_rxck    ),
+    .eth_txctl     ( w_eth_rxctl   ),
+    .eth_rxctl     ( w_eth_rxctl   ),
+    .eth_rstn      ( w_eth_rst     ),
+    .eth_mdio      ( w_eth_md      ),
+    .eth_mdc       ( w_eth_mdc     )
   );
 
   //////////////////
