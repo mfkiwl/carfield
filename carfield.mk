@@ -267,27 +267,15 @@ $(CAR_HW_DIR)/regs/pcr.md: $(CAR_ROOT)/hw/regs/carfield_regs.hjson | venv
 
 ## @section Carfield padframe generation
 .PHONY: regenerate_padframe
-regenerate_padframe: $(CAR_HW_DIR)/padframe/astral_padframe
+regenerate_padframe: $(CAR_HW_DIR)/padframe/astral_padframe $(CAR_SW_DIR)/include/regs/padframe_regs.h
 
 $(CAR_HW_DIR)/padframe/astral_padframe: $(CAR_HW_DIR)/padframe/astral_padframe.yml
 	$(PADRICK) generate rtl $< -o $@
 	sed -i.original '/i_pad_vss_core_v_2/d' $@/src/astral_padframe_periph_pads.sv
 
-.PHONY: $(CAR_ROOT)/hw/regs/carfield_regs.hjson
-$(CAR_ROOT)/hw/regs/carfield_regs.hjson: hw/regs/carfield_regs.csv | venv
-	$(VENV)/$(PYTHON) ./scripts/csv_to_json.py --input $< --output $@
-
-.PHONY: $(CAR_ROOT)/hw/regs/carfield_reg_pkg.sv hw/regs/carfield_reg_top.sv
-$(CAR_ROOT)/hw/regs/carfield_reg_pkg.sv $(CAR_ROOT)/hw/regs/carfield_reg_top.sv: $(CAR_ROOT)/hw/regs/carfield_regs.hjson | venv
-	$(VENV)/$(PYTHON) utils/reggen/regtool.py -r $< --outdir $(dir $@)
-
-.PHONY: $(CAR_SW_DIR)/include/regs/soc_ctrl.h
-$(CAR_SW_DIR)/include/regs/soc_ctrl.h: $(CAR_ROOT)/hw/regs/carfield_regs.hjson | venv
+.PHONY: $(CAR_SW_DIR)/include/regs/padframe_regs.h
+$(CAR_SW_DIR)/include/regs/padframe_regs.h: $(CAR_ROOT)/hw/padframe/astral_padframe/src/astral_padframe_periph_regs.hjson | venv
 	$(VENV)/$(PYTHON) utils/reggen/regtool.py -D $<  > $@
-
-.PHONY: $(CAR_SW_DIR)/hw/regs/pcr.md
-$(CAR_HW_DIR)/regs/pcr.md: $(CAR_ROOT)/hw/regs/carfield_regs.hjson | venv
-	$(VENV)/$(PYTHON) utils/reggen/regtool.py -d $<  > $@
 
 ## Update host domain PLIC and CLINT interrupt controllers configuration. The default configuration
 ## in cheshire allows for one interruptible hart. When the number of external interruptible harts is
