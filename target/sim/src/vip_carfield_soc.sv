@@ -220,17 +220,20 @@ module vip_carfield_soc
     reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_LOW_ADDR_OFFSET, 32'h89000123, 'hf, reg_error); //lower 32bits of MAC address
     @(posedge periph_clk);
 
-    reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_MACHI_OFFSET, 32'h00800207, 'hf, reg_error); //upper 16bits of MAC address + other configuration set to false/0
-    @(posedge periph_clk);
+      @(posedge periph_clk);
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_LOW_ADDR_OFFSET, 32'h00890702, 'hf, reg_error); //lower 32bits of MAC address
+      @(posedge periph_clk);
 
-    @(posedge eth_rx_irq);
-
-    while(1) begin
-      reg_drv_rx.send_read( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DMA_RX_EN_OFFSET, dma_rx_en, reg_error);   // req ready 
-      if( dma_rx_en )
-        break;
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_MACHI_OFFSET, 32'h00002301, 'hf, reg_error); //upper 16bits of MAC address + other configuration set to false/0
       @(posedge periph_clk);
     end
+
+      while(1) begin
+        reg_drv_rx.send_read( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DMA_RX_EN_OFFSET, dma_rx_en, reg_error);   // req ready 
+        if( dma_rx_en )
+          break;
+        @(posedge periph_clk);
+      end
 
       reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_ADDR_OFFSET, 32'h0, 'hf, reg_error ); // SRC_ADDR
       @(posedge periph_clk);
@@ -238,8 +241,8 @@ module vip_carfield_soc
       reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DST_ADDR_OFFSET, 32'h0, 'hf, reg_error); // DST_ADDR
       @(posedge periph_clk);
 
-    reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_PROTOCOL_OFFSET, 32'h5, 'hf , reg_error); // src protocol
-    @(posedge periph_clk);
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_PROTOCOL_OFFSET, 32'h5, 'hf , reg_error); // src protocol
+      @(posedge periph_clk);
 
       reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_DST_PROTOCOL_OFFSET, 32'h0,'hf , reg_error); // dst protocol
       @(posedge periph_clk);
@@ -258,10 +261,10 @@ module vip_carfield_soc
 
       // Tx test starts here: external back to core
       @(posedge periph_clk);
-      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_MACLO_ADDR_OFFSET, 32'h98001032, 'hf, reg_error); //lower 32bits of MAC address
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_LOW_ADDR_OFFSET, 32'h00890702, 'hf, reg_error); //lower 32bits of MAC address
       @(posedge periph_clk);
 
-      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_MACHI_MDIO_OFFSET, 32'h00002070, 'hf, reg_error); //upper 16bits of MAC address + other configuration set to false/0
+      reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_MACHI_OFFSET, 32'h00002301, 'hf, reg_error); //upper 16bits of MAC address + other configuration set to false/0
       @(posedge periph_clk);
 
       reg_drv_rx.send_write( CarfieldIslandsCfg.ethernet.base + eth_idma_reg_pkg::ETH_IDMA_SRC_ADDR_OFFSET, 32'h0, 'hf, reg_error ); // SRC_ADDR
