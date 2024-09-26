@@ -21,16 +21,16 @@ static dif_rv_plic_t plic0;
 
 #define MACLO_OFFSET                 0x0
 #define MACHI_OFFSET                 0x4
-#define IRQ_OFFSET                   0x10
-#define IDMA_SRC_ADDR_OFFSET         0x14
-#define IDMA_DST_ADDR_OFFSET         0x18
-#define IDMA_LENGTH_OFFSET           0x1c
-#define IDMA_SRC_PROTO_OFFSET        0x20
-#define IDMA_DST_PROTO_OFFSET        0x24
-#define IDMA_REQ_VALID_OFFSET        0x3c
-#define IDMA_REQ_READY_OFFSET        0x40
-#define IDMA_RSP_READY_OFFSET        0x44
-#define IDMA_RSP_VALID_OFFSET        0x48
+#define IDMA_SRC_ADDR_OFFSET         0x1c
+#define IDMA_DST_ADDR_OFFSET         0x20
+#define IDMA_LENGTH_OFFSET           0x24
+#define IDMA_SRC_PROTO_OFFSET        0x28
+#define IDMA_DST_PROTO_OFFSET        0x2c
+#define IDMA_REQ_VALID_OFFSET        0x44
+#define IDMA_REQ_READY_OFFSET        0x48
+#define IDMA_RSP_READY_OFFSET        0x4c
+#define IDMA_RSP_VALID_OFFSET        0x50
+#define IDMA_RX_EN_OFFSET            0x54
 
 #define RV_PLIC_PRIO87_REG_OFFSET    0x15c
 #define RV_PLIC_IE0_2_REG_OFFSET     0x2008
@@ -67,14 +67,14 @@ int main(void) {
   t = dif_rv_plic_irq_set_enabled(&plic0, IRQID, 0, kDifToggleEnabled);
 
   volatile uint64_t data_to_write[DATA_CHUNK] = {
-        0x1032207098001032,
-        0x3210E20020709800,
-        0x1716151413121110,
-        0x2726252423222120,
-        0x3736353433323130,
-        0x4746454443424140,
-        0x5756555453525150,
-        0x6766656463626160
+        0x1032230100890702, 
+        0x3210400020709800,
+        0x35ED077D93FC89BA, 
+        0x56BE7F8D79A46B8C,
+        0xAEB3F2D1446FE19E, 
+        0x7D21C83EFF976DB8,
+        0x940D2024EB89AC07, 
+        0x2B9EBCDC4561DA5C
   };
 
   // load data into mem
@@ -84,11 +84,11 @@ int main(void) {
   }
 
   fencei();
-  //// TX test
+  // TX test
   // Low 32 bit MAC Address
-  *reg32(CAR_ETHERNET_BASE_ADDR, MACLO_OFFSET)          = 0x98001032;
-  // High 16 bit Mac Address
-  *reg32(CAR_ETHERNET_BASE_ADDR, MACHI_OFFSET)          = 0x00002070;
+  *reg32(CAR_ETHERNET_BASE_ADDR, MACLO_OFFSET)          = 0x89000123;
+  // High 16 bit Mac Address and enable interrupt
+  *reg32(CAR_ETHERNET_BASE_ADDR, MACHI_OFFSET)          = 0x00800207;
   // DMA Source Address
   *reg32(CAR_ETHERNET_BASE_ADDR, IDMA_SRC_ADDR_OFFSET)  = L2_TX_BASE;
   // DMA Destination Address
@@ -103,19 +103,18 @@ int main(void) {
   // Validate Request to DMA
   *reg32(CAR_ETHERNET_BASE_ADDR, IDMA_REQ_VALID_OFFSET) = 0x1;
   
-  wfi();  // rx irq
-
   // RX test
-   // Low 32 bit MAC Address
-  *reg32(CAR_ETHERNET_BASE_ADDR, MACLO_OFFSET)          = 0x98001032;
-  // High 16 bit Mac Address
-  *reg32(CAR_ETHERNET_BASE_ADDR, MACHI_OFFSET)          = 0x00002070;
+  // Low 32 bit MAC Address
+  *reg32(CAR_ETHERNET_BASE_ADDR, MACLO_OFFSET)          = 0x89000123;
+  // High 16 bit Mac Address and enable interrupt
+  *reg32(CAR_ETHERNET_BASE_ADDR, MACHI_OFFSET)          = 0x00800207;
+  wfi();  // rx irq
+  // dma length ready, dma can be configured now
+  while (!(*reg32(CAR_ETHERNET_BASE_ADDR,IDMA_RX_EN_OFFSET)));
   // DMA Source Address
   *reg32(CAR_ETHERNET_BASE_ADDR, IDMA_SRC_ADDR_OFFSET)  = 0x0;
   // DMA Destination Address
   *reg32(CAR_ETHERNET_BASE_ADDR, IDMA_DST_ADDR_OFFSET)  = L2_RX_BASE;
-  // Data length
-  *reg32(CAR_ETHERNET_BASE_ADDR, IDMA_LENGTH_OFFSET)    = DATA_CHUNK*BYTE_SIZE;
   // Source Protocol
   *reg32(CAR_ETHERNET_BASE_ADDR, IDMA_SRC_PROTO_OFFSET) = 0x5;
   // Destination Protocol
