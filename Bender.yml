@@ -13,9 +13,15 @@ package:
 dependencies:
   register_interface: { git: https://github.com/pulp-platform/register_interface.git,   version: 0.4.3                                }
   axi:                { git: https://github.com/pulp-platform/axi.git,                  version: 0.39.1                               }
+<<<<<<< Updated upstream
   cheshire:           { git: https://github.com/pulp-platform/cheshire.git,             rev: 2a141413e9ed1c85b41ffe03297633a394be6a42 } # branch: astral-v0
   hyperbus:           { git: https://github.com/pulp-platform/hyperbus.git,             rev: f039e601c8b6590181734e6d26ff8b77aa380412 } # branch: chi/add_fsm_with_Tcsh
   dyn_mem:            { git: https://github.com/pulp-platform/dyn_spm.git,              rev: 6753d2046da6dfc8efbef5e6f22053a621f111d9 } # branch: astral
+=======
+  cheshire:           { git: https://github.com/pulp-platform/cheshire.git,             rev: ac8b56958ca89e7ce5ebece004ea19844dd4b8ef } # branch: astral-v0
+  hyperbus:           { git: https://github.com/pulp-platform/hyperbus.git,             version: 0.0.9}
+  dyn_mem:            { git: https://github.com/pulp-platform/dyn_spm.git,              rev: 480590062742230dc9bd4050358a15b4747bdf34 } # branch: main
+>>>>>>> Stashed changes
   safety_island:      { git: https://github.com/pulp-platform/safety_island.git,        rev: aaef55c798ab53560faaf451a86668fa1e6d0f3b } # branch: carfield
   pulp_cluster:       { git: https://github.com/pulp-platform/pulp_cluster.git,         rev: 07988cd01c359a81804820135927bc04da3c25cd } # branch: astral
   opentitan:          { git: https://github.com/pulp-platform/opentitan.git,            rev: 42df2697ad3d07608df942cb7e1928c05558af26 } # branch: mc/astral

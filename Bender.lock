@@ -21,16 +21,18 @@ packages:
     dependencies:
     - tech_cells_generic
   apb_uart:
-    revision: 6c7dde3d749ac8274377745c105da8c8b8cd27c6
-    version: 0.2.1
+    revision: 8182a85d234417db46fe833533f8536644d3bee3
+    version: 0.2.3
     source:
       Git: https://github.com/pulp-platform/apb_uart.git
     dependencies:
     - apb
+    - obi
+    - obi_peripherals
     - register_interface
   axi:
-    revision: 587355b77b8ce94dcd600efbd5d5bd118ff913a7
-    version: 0.39.4
+    revision: 78831b6feba265d5ee2683bbf42b4150f8a35c43
+    version: 0.39.8
     source:
       Git: https://github.com/pulp-platform/axi.git
     dependencies:
@@ -190,16 +192,16 @@ packages:
     dependencies:
     - hci
   common_cells:
-    revision: c27bce39ebb2e6bae52f60960814a2afca7bd4cb
-    version: 1.37.0
+    revision: 9afda9abb565971649c2aa0985639c096f351171
+    version: 1.38.0
     source:
       Git: https://github.com/pulp-platform/common_cells.git
     dependencies:
     - common_verification
     - tech_cells_generic
   common_verification:
-    revision: 9c07fa860593b2caabd9b5681740c25fac04b878
-    version: 0.2.3
+    revision: fb1885f48ea46164a10568aeff51884389f67ae3
+    version: 0.2.5
     source:
       Git: https://github.com/pulp-platform/common_verification.git
     dependencies: []
@@ -260,8 +262,8 @@ packages:
     dependencies:
     - common_cells
   hci:
-    revision: 38fc2a7eea7978df52434e66ee04a40788fd86b7
-    version: null
+    revision: 90d55999bf357df6af153d20fc2786fc35167c59
+    version: 2.1.2
     source:
       Git: https://github.com/pulp-platform/hci.git
     dependencies:
@@ -291,15 +293,15 @@ packages:
     dependencies:
     - tech_cells_generic
   hwpe-stream:
-    revision: 65c99a4a2f37a79acee800ab0151f67dfb1edef1
-    version: 1.8.0
+    revision: c1e25094bf9f2fee754611ef7491b7a1144e11b9
+    version: 1.9.1
     source:
       Git: https://github.com/pulp-platform/hwpe-stream.git
     dependencies:
     - tech_cells_generic
   hyperbus:
-    revision: f039e601c8b6590181734e6d26ff8b77aa380412
-    version: null
+    revision: 2a14bd8f9a985b488ee23d240764f52f129f7729
+    version: 0.0.9
     source:
       Git: https://github.com/pulp-platform/hyperbus.git
     dependencies:
@@ -321,8 +323,8 @@ packages:
       Git: https://github.com/pulp-platform/icache-intc.git
     dependencies: []
   idma:
-    revision: c12caf59bb482fe44b27361f6924ad346b2d22fe
-    version: 0.6.3
+    revision: 28a36e5e07705549e59fc33db96ab681bc1ca88e
+    version: 0.6.5
     source:
       Git: https://github.com/pulp-platform/idma.git
     dependencies:
@@ -375,13 +377,21 @@ packages:
     - register_interface
     - zeroriscy
   obi:
-    revision: 5321106817e177d6c16ecc4daa922b96b1bc946b
-    version: 0.1.5
+    revision: 0155fc34e900c7c884e081c0a1114a247937ff69
+    version: 0.1.7
     source:
       Git: https://github.com/pulp-platform/obi.git
     dependencies:
     - common_cells
     - common_verification
+  obi_peripherals:
+    revision: 079894a6cbd4e544c477643d184a4c340bd4e391
+    version: 0.1.1
+    source:
+      Git: https://github.com/pulp-platform/obi_peripherals.git
+    dependencies:
+    - common_cells
+    - obi
   opentitan:
     revision: 42df2697ad3d07608df942cb7e1928c05558af26
     version: null
@@ -475,8 +485,8 @@ packages:
     - register_interface
     - tech_cells_generic
   register_interface:
-    revision: 5daa85d164cf6b54ad061ea1e4c6f3624556e467
-    version: 0.4.5
+    revision: 8e8c209ea559d3b54f45cf30fcce95ce70ff5e49
+    version: 0.4.6
     source:
       Git: https://github.com/pulp-platform/register_interface.git
     dependencies:
@@ -547,8 +557,8 @@ packages:
     - common_cells
     - register_interface
   softex:
-    revision: 23faeccaf204817bc9e6649e469072e5726be561
-    version: 1.0.0
+    revision: 77f219db2d0591afd18c191e5f4c6b112d7aac0c
+    version: 1.1.0
     source:
       Git: https://github.com/belanoa/softex.git
     dependencies:
