@@ -102,12 +102,6 @@ SPATZD_MAKEDIR  := $(SPATZD_ROOT)/hw/system/spatz_cluster
 SPATZD_BINARY   ?=
 SPATZD_BOOTMODE ?= 0 # default jtag bootmode
 
-# Streamer, implementing telecommand and telemetry protocols
-STREAMER_ROOT ?= $(shell $(BENDER) path streamer)
-
-# SpaceWire IP
-SPACEWIRE_ROOT ?= $(shell $(BENDER) path spacewire)
-
 # PLL/FLL bypass
 BYPASS_PLL ?= 0
 

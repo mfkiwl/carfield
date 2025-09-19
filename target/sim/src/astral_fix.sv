@@ -177,23 +177,23 @@ module astral_fixture;
   wire [3:0]                          w_eth_rxd;
   logic                               eth_clk;
   // SpaceWier
-  wire                                w_spw_data_in;
-  wire                                w_spw_data_out;
-  wire                                w_spw_strobe_in;
-  wire                                w_spw_strobe_out;
+  // wire                                w_spw_data_in;
+  // wire                                w_spw_data_out;
+  // wire                                w_spw_strobe_in;
+  // wire                                w_spw_strobe_out;
   // Telecommand
-  wire                                w_tc_active;
-  wire                                w_tc_clock;
-  wire                                w_tc_data;
-  wire                                w_ptme_clk;
-  wire                                w_ptme_enc;
-  wire                                w_ptme_sync;
-  wire                                w_ptme_ext_clk;
-  wire [2:0]                          w_hpc_addr;
-  wire                                w_hpc_cmd_en;
-  wire                                w_hpc_smp;
-  wire [1:0]                          w_llc_line;
-  wire                                w_obt_ext_clk;
+  // wire                                w_tc_active;
+  // wire                                w_tc_clock;
+  // wire                                w_tc_data;
+  // wire                                w_ptme_clk;
+  // wire                                w_ptme_enc;
+  // wire                                w_ptme_sync;
+  // wire                                w_ptme_ext_clk;
+  // wire [2:0]                          w_hpc_addr;
+  // wire                                w_hpc_cmd_en;
+  // wire                                w_hpc_smp;
+  // wire [1:0]                          w_llc_line;
+  // wire                                w_obt_ext_clk;
   // Debug signals
   wire [2:0]                          debug_signals;
 
@@ -450,10 +450,10 @@ module astral_fixture;
     .pad_periph_hyper_dq_7_pad      ( w_hyper_dq[0][7] ),
     .pad_periph_hyper_reset_n_pad   ( w_hyper_resetn[0] ),
     // SPW
-    .pad_periph_spw_data_in_pad     ( w_spw_data_in    ),
-    .pad_periph_spw_strb_in_pad     ( w_spw_strobe_in  ),
-    .pad_periph_spw_data_out_pad    ( w_spw_data_out   ),
-    .pad_periph_spw_strb_out_pad    ( w_spw_strobe_out ),
+    // .pad_periph_spw_data_in_pad     ( w_spw_data_in    ),
+    // .pad_periph_spw_strb_in_pad     ( w_spw_strobe_in  ),
+    // .pad_periph_spw_data_out_pad    ( w_spw_data_out   ),
+    // .pad_periph_spw_strb_out_pad    ( w_spw_strobe_out ),
     // UART
     .pad_periph_uart_tx_out_pad     ( w_uart_hostd_tx ),
     .pad_periph_uart_rx_in_pad      ( w_uart_hostd_rx ),
@@ -592,40 +592,40 @@ module astral_fixture;
   pullup (w_i2c_hostd_sda);
   pullup (w_i2c_hostd_scl);
   // Telecommand
-  assign mux_2_tc_active = (`PAD_MUX_REG_PATH.muxed_v_07_mux_sel.q == PAD_MUX_GROUP_MUXED_V_07_SEL_TC_ACTIVE);
-  assign mux_2_tc_clk = (`PAD_MUX_REG_PATH.muxed_v_08_mux_sel.q == PAD_MUX_GROUP_MUXED_V_08_SEL_TC_CLK);
-  assign mux_2_tc_data = (`PAD_MUX_REG_PATH.muxed_v_09_mux_sel.q == PAD_MUX_GROUP_MUXED_V_09_SEL_TC_DATA);
-  tranif1 tran_tc_active (w_muxed_v_07, w_tc_active, mux_2_tc_active);
-  tranif1 tran_tc_clk (w_muxed_v_08, w_tc_clock, mux_2_tc_clk);
-  tranif1 tran_tc_data (w_muxed_v_09, w_tc_data, mux_2_tc_data);
+  // assign mux_2_tc_active = (`PAD_MUX_REG_PATH.muxed_v_07_mux_sel.q == PAD_MUX_GROUP_MUXED_V_07_SEL_TC_ACTIVE);
+  // assign mux_2_tc_clk = (`PAD_MUX_REG_PATH.muxed_v_08_mux_sel.q == PAD_MUX_GROUP_MUXED_V_08_SEL_TC_CLK);
+  // assign mux_2_tc_data = (`PAD_MUX_REG_PATH.muxed_v_09_mux_sel.q == PAD_MUX_GROUP_MUXED_V_09_SEL_TC_DATA);
+  // tranif1 tran_tc_active (w_muxed_v_07, w_tc_active, mux_2_tc_active);
+  // tranif1 tran_tc_clk (w_muxed_v_08, w_tc_clock, mux_2_tc_clk);
+  // tranif1 tran_tc_data (w_muxed_v_09, w_tc_data, mux_2_tc_data);
   // PTME
-  assign mux_2_ptme_clk = (`PAD_MUX_REG_PATH.muxed_v_10_mux_sel.q == PAD_MUX_GROUP_MUXED_V_10_SEL_PTME_CLK);
-  assign mux_2_ptme_enc = (`PAD_MUX_REG_PATH.muxed_v_11_mux_sel.q == PAD_MUX_GROUP_MUXED_V_11_SEL_PTME_ENC);
-  assign mux_2_ptme_sync = (`PAD_MUX_REG_PATH.muxed_v_12_mux_sel.q == PAD_MUX_GROUP_MUXED_V_12_SEL_PTME_SYNC);
-  assign mux_2_ptme_ext_clk = (`PAD_MUX_REG_PATH.muxed_v_13_mux_sel.q == PAD_MUX_GROUP_MUXED_V_13_SEL_PTME_EXT_CLK);
-  tranif1 tran_ptme_active (w_muxed_v_10, w_ptme_clk, mux_2_ptme_clk);
-  tranif1 tran_ptme_clk (w_muxed_v_11, w_ptme_enc, mux_2_ptme_enc);
-  tranif1 tran_ptme_data (w_muxed_v_12, w_ptme_sync, mux_2_ptme_sync);
-  tranif1 tran_ptme_ext_clk (w_muxed_v_13, w_ptme_ext_clk, mux_2_ptme_ext_clk);
+  // assign mux_2_ptme_clk = (`PAD_MUX_REG_PATH.muxed_v_10_mux_sel.q == PAD_MUX_GROUP_MUXED_V_10_SEL_PTME_CLK);
+  // assign mux_2_ptme_enc = (`PAD_MUX_REG_PATH.muxed_v_11_mux_sel.q == PAD_MUX_GROUP_MUXED_V_11_SEL_PTME_ENC);
+  // assign mux_2_ptme_sync = (`PAD_MUX_REG_PATH.muxed_v_12_mux_sel.q == PAD_MUX_GROUP_MUXED_V_12_SEL_PTME_SYNC);
+  // assign mux_2_ptme_ext_clk = (`PAD_MUX_REG_PATH.muxed_v_13_mux_sel.q == PAD_MUX_GROUP_MUXED_V_13_SEL_PTME_EXT_CLK);
+  // tranif1 tran_ptme_active (w_muxed_v_10, w_ptme_clk, mux_2_ptme_clk);
+  // tranif1 tran_ptme_clk (w_muxed_v_11, w_ptme_enc, mux_2_ptme_enc);
+  // tranif1 tran_ptme_data (w_muxed_v_12, w_ptme_sync, mux_2_ptme_sync);
+  // tranif1 tran_ptme_ext_clk (w_muxed_v_13, w_ptme_ext_clk, mux_2_ptme_ext_clk);
   // HPC
-  assign mux_2_hpc_addr[0] = (`PAD_MUX_REG_PATH.muxed_v_14_mux_sel.q == PAD_MUX_GROUP_MUXED_V_14_SEL_HPC_ADDR_0);
-  assign mux_2_hpc_addr[1] = (`PAD_MUX_REG_PATH.muxed_v_15_mux_sel.q == PAD_MUX_GROUP_MUXED_V_15_SEL_HPC_ADDR_1);
-  assign mux_2_hpc_addr[2] = (`PAD_MUX_REG_PATH.muxed_v_16_mux_sel.q == PAD_MUX_GROUP_MUXED_V_16_SEL_HPC_ADDR_2);
-  assign mux_2_hpc_cmd_en = (`PAD_MUX_REG_PATH.muxed_v_17_mux_sel.q == PAD_MUX_GROUP_MUXED_V_17_SEL_HPC_CMD_EN);
-  assign mux_2_hpc_smp = (`PAD_MUX_REG_PATH.muxed_h_00_mux_sel.q == PAD_MUX_GROUP_MUXED_H_00_SEL_HPC_SAMPLE);
-  tranif1 tran_hpc_addr_0 (w_muxed_v_14, w_hpc_addr[0], mux_2_hpc_addr[0]);
-  tranif1 tran_hpc_addr_1 (w_muxed_v_15, w_hpc_addr[1], mux_2_hpc_addr[1]);
-  tranif1 tran_hpc_addr_2 (w_muxed_v_16, w_hpc_addr[2], mux_2_hpc_addr[2]);
-  tranif1 tran_hpc_cmd_en (w_muxed_v_17, w_hpc_cmd_en, mux_2_hpc_cmd_en);
-  tranif1 tran_hpc_smp (w_muxed_h_00, w_hpc_smp, mux_2_hpc_smp);
+  // assign mux_2_hpc_addr[0] = (`PAD_MUX_REG_PATH.muxed_v_14_mux_sel.q == PAD_MUX_GROUP_MUXED_V_14_SEL_HPC_ADDR_0);
+  // assign mux_2_hpc_addr[1] = (`PAD_MUX_REG_PATH.muxed_v_15_mux_sel.q == PAD_MUX_GROUP_MUXED_V_15_SEL_HPC_ADDR_1);
+  // assign mux_2_hpc_addr[2] = (`PAD_MUX_REG_PATH.muxed_v_16_mux_sel.q == PAD_MUX_GROUP_MUXED_V_16_SEL_HPC_ADDR_2);
+  // assign mux_2_hpc_cmd_en = (`PAD_MUX_REG_PATH.muxed_v_17_mux_sel.q == PAD_MUX_GROUP_MUXED_V_17_SEL_HPC_CMD_EN);
+  // assign mux_2_hpc_smp = (`PAD_MUX_REG_PATH.muxed_h_00_mux_sel.q == PAD_MUX_GROUP_MUXED_H_00_SEL_HPC_SAMPLE);
+  // tranif1 tran_hpc_addr_0 (w_muxed_v_14, w_hpc_addr[0], mux_2_hpc_addr[0]);
+  // tranif1 tran_hpc_addr_1 (w_muxed_v_15, w_hpc_addr[1], mux_2_hpc_addr[1]);
+  // tranif1 tran_hpc_addr_2 (w_muxed_v_16, w_hpc_addr[2], mux_2_hpc_addr[2]);
+  // tranif1 tran_hpc_cmd_en (w_muxed_v_17, w_hpc_cmd_en, mux_2_hpc_cmd_en);
+  // tranif1 tran_hpc_smp (w_muxed_h_00, w_hpc_smp, mux_2_hpc_smp);
   // LLC LINE
-  assign mux_2_llc_line[0] = (`PAD_MUX_REG_PATH.muxed_h_01_mux_sel.q == PAD_MUX_GROUP_MUXED_H_01_SEL_LLC_LINE_0);
-  assign mux_2_llc_line[1] = (`PAD_MUX_REG_PATH.muxed_h_02_mux_sel.q == PAD_MUX_GROUP_MUXED_H_02_SEL_LLC_LINE_1);
-  tranif1 tran_llc_line_0 (w_muxed_h_01, w_llc_line[0], mux_2_llc_line[0]);
-  tranif1 tran_llc_line_1 (w_muxed_h_02, w_llc_line[1], mux_2_llc_line[1]);
+  // assign mux_2_llc_line[0] = (`PAD_MUX_REG_PATH.muxed_h_01_mux_sel.q == PAD_MUX_GROUP_MUXED_H_01_SEL_LLC_LINE_0);
+  // assign mux_2_llc_line[1] = (`PAD_MUX_REG_PATH.muxed_h_02_mux_sel.q == PAD_MUX_GROUP_MUXED_H_02_SEL_LLC_LINE_1);
+  // tranif1 tran_llc_line_0 (w_muxed_h_01, w_llc_line[0], mux_2_llc_line[0]);
+  // tranif1 tran_llc_line_1 (w_muxed_h_02, w_llc_line[1], mux_2_llc_line[1]);
   // OBT
-  assign mux_2_obt_ext_clk = (`PAD_MUX_REG_PATH.muxed_h_03_mux_sel.q == PAD_MUX_GROUP_MUXED_H_03_SEL_OBT_EXT_CLK);
-  tranif1 tran_obt_ext_cl (w_muxed_h_03, w_obt_ext_clk, mux_2_obt_ext_clk);
+  // assign mux_2_obt_ext_clk = (`PAD_MUX_REG_PATH.muxed_h_03_mux_sel.q == PAD_MUX_GROUP_MUXED_H_03_SEL_OBT_EXT_CLK);
+  // tranif1 tran_obt_ext_cl (w_muxed_h_03, w_obt_ext_clk, mux_2_obt_ext_clk);
   // SPI OT
   assign mux_3_spih_ot_sck = (`PAD_MUX_REG_PATH.muxed_v_00_mux_sel.q == PAD_MUX_GROUP_MUXED_V_00_SEL_SPI_OT_SCK);
   assign mux_3_spih_ot_csb = (`PAD_MUX_REG_PATH.muxed_v_01_mux_sel.q == PAD_MUX_GROUP_MUXED_V_01_SEL_SPI_OT_CSB);
@@ -749,32 +749,7 @@ module astral_fixture;
     .axi_slvs_req ( ext_to_vip_req ),
     .axi_slvs_rsp ( ext_to_vip_rsp ),
     .axi_muxed_req ( axi_muxed_req ),
-    .axi_muxed_rsp ( axi_muxed_rsp ),
-    // SpaceWire interface
-    .spw_din ( w_spw_data_in ),
-    .spw_sin ( w_spw_strobe_in ),
-    .spw_dout ( w_spw_data_out ),
-    .spw_sout ( w_spw_strobe_out ),
-    // Telecommand interface
-    .ptme_clk_i    ( ptme_clk      ),
-    .ptme_enc_i    ( ptme_enc      ),
-    .hpc_addr_i    ( hpc_addr      ),
-    .hpc_cmd_en_i  ( hpc_cmd_en    ),
-    .hpc_smp_i     ( hpc_smp       ),
-    .llc_line_i    ( llc_line      ),
-    .tc_active     ( tc_active     ),
-    .tc_clk        ( tc_clock      ),
-    .tc_data       ( tc_data       ),
-    .eth_clk       ( eth_clk       ),
-    .eth_txd       ( w_eth_txd     ),
-    .eth_rxd       ( w_eth_rxd     ),
-    .eth_txck      ( w_eth_txck    ),
-    .eth_rxck      ( w_eth_rxck    ),
-    .eth_txctl     ( w_eth_txctl   ),
-    .eth_rxctl     ( w_eth_rxctl   ),
-    .eth_rstn      ( w_eth_rst     ),
-    .eth_mdio      ( w_eth_md      ),
-    .eth_mdc       ( w_eth_mdc     )
+    .axi_muxed_rsp ( axi_muxed_rsp )
   );
 
   //////////////////

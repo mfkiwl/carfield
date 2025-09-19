@@ -778,9 +778,7 @@ typedef enum int {
   AdvancedTimerIdx = 'd1,
   SystemWdtIdx     = 'd2,
   CanIdx           = 'd3,
-  HyperBusIdx      = 'd4,
-  StreamerIdx      = 'd5,
-  SpaceWireIdx     = 'd6
+  HyperBusIdx      = 'd4
 } carfield_peripherals_e;
 
 // Address map of peripheral system
@@ -805,13 +803,7 @@ localparam carfield_addr_map_rule_t [NumApbMst-1:0] PeriphApbAddrMapRule = '{
                             end_addr: CanBase + CanSize },
   // 4: Hyperbus
   '{ idx: HyperBusIdx,      start_addr: HyperBusBase,
-                            end_addr: HyperBusBase + HyperBusSize },
-  // 5: Streamer
-  '{ idx: StreamerIdx,   start_addr: StreamerCfgBase,
-                         end_addr: StreamerApbBase + StreamerApbSize },
-  // 6: SpW
-  '{ idx: SpaceWireIdx,  start_addr: SpaceWireRegBase,
-                         end_addr:  SpaceWireApbBase + SpaceWireApbSize }
+                            end_addr: HyperBusBase + HyperBusSize }
 };
 
 // Narrow reg types

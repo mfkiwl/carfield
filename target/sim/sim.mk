@@ -27,9 +27,6 @@ RUNTIME_DEFINES := +define+HYP_USER_PRELOAD="$(HYP_USER_PRELOAD)"
 RUNTIME_DEFINES += +define+HYP0_PRELOAD_MEM_FILE=\"$(HYP0_PRELOAD_MEM_FILE)\"
 RUNTIME_DEFINES += +define+HYP1_PRELOAD_MEM_FILE=\"$(HYP1_PRELOAD_MEM_FILE)\"
 
-TASI_LIB += vlib $ROOT/working_dir/streamer/TASI_generic_Lib
-TASI_LIB += vmap TASI_generic_Lib $ROOT/working_dir/streamer/TASI_generic_Lib
-
 #############
 # Questasim #
 #############
@@ -67,12 +64,6 @@ endif
 .PHONY: $(CAR_VSIM_DIR)/compile.carfield_soc.tcl
 $(CAR_VSIM_DIR)/compile.carfield_soc.tcl:
 	$(BENDER) script vsim $(common_targs) $(sim_targs) $(sim_defs) $(common_defs) $(safed_defs) --vlog-arg="$(RUNTIME_DEFINES)" --compilation-mode separate > $@
-	sed -i '2a\
-	set VsimDir "$(CAR_VSIM_DIR)"\
-	set TCTMPATH "$(STREAMER_ROOT)"\
-	set SPWPATH "$(SPACEWIRE_ROOT)"\
-	source $(STREAMER_ROOT)/astral.compile.tcl \
-	source $(SPACEWIRE_ROOT)/astr_compile.tcl' $@
 	echo 'vlog "$(CHS_ROOT)/target/sim/src/elfloader.cpp" -ccflags "-std=c++11"' >> $@
 	echo 'vopt $(VOPT_FLAGS) $(TBENCH) -o $(TBENCH)_opt' >> $@
 
