@@ -705,50 +705,6 @@
       ],
     }
 
-    { name: "STREAMER_CLK_DIV_ENABLE",
-      desc: "Streamer clock divider enable",
-      swaccess: "rw",
-      hwaccess: "hro",
-      resval: "0",
-      hwqe: "1",
-      fields: [
-        { bits: "0:0" }
-      ],
-    }
-
-    { name: "STREAMER_CLK_DIV_VALUE",
-      desc: "Streamer clock divider value",
-      swaccess: "rw",
-      hwaccess: "hro",
-      resval: "1",
-      hwqe: "1",
-      fields: [
-        { bits: "5:0" }
-      ],
-    }
-
-    { name: "STREAMER_GENERAL_IRQ",
-      desc: "Streamer general interrupt",
-      swaccess: "rw",
-      hwaccess: "hwo",
-      resval: "0",
-      hwqe: "1",
-      fields: [
-        { bits: "0:0" }
-      ],
-    }
-
-    { name: "SPW_GENERAL_IRQ",
-      desc: "SpaceWire general interrupt",
-      swaccess: "rw",
-      hwaccess: "hwo",
-      resval: "0",
-      hwqe: "1",
-      fields: [
-        { bits: "0:0" }
-      ],
-    }
-
     { name: "FLL_LOCK",
       desc: "FLL lock status",
       swaccess: "ro",

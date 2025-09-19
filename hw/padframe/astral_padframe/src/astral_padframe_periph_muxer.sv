@@ -389,13 +389,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_07.pull_en = s_reg2hw.muxed_v_07_cfg.pull_en.q;
           mux_to_pads_o.muxed_v_07.pull_sel = s_reg2hw.muxed_v_07_cfg.pull_sel.q;
        end
-       PAD_MUX_GROUP_MUXED_V_07_SEL_TC_ACTIVE: begin
-          mux_to_pads_o.muxed_v_07.chip2pad = s_reg2hw.muxed_v_07_cfg.chip2pad.q;
-          mux_to_pads_o.muxed_v_07.input_en = 1'b1;
-          mux_to_pads_o.muxed_v_07.output_en = 1'b0;
-          mux_to_pads_o.muxed_v_07.pull_en = s_reg2hw.muxed_v_07_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_07.pull_sel = s_reg2hw.muxed_v_07_cfg.pull_sel.q;
-       end
        PAD_MUX_GROUP_MUXED_V_07_SEL_PLL_IO_0: begin
           mux_to_pads_o.muxed_v_07.chip2pad = port_signals_soc2pad_i.pll.pll_0_o;
           mux_to_pads_o.muxed_v_07.input_en = ~port_signals_soc2pad_i.pll.pll_0_oen_i;
@@ -438,13 +431,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_08.pull_sel = s_reg2hw.muxed_v_08_cfg.pull_sel.q;
        end
        PAD_MUX_GROUP_MUXED_V_08_SEL_SERIAL_LINK_I_3: begin
-          mux_to_pads_o.muxed_v_08.chip2pad = s_reg2hw.muxed_v_08_cfg.chip2pad.q;
-          mux_to_pads_o.muxed_v_08.input_en = 1'b1;
-          mux_to_pads_o.muxed_v_08.output_en = 1'b0;
-          mux_to_pads_o.muxed_v_08.pull_en = s_reg2hw.muxed_v_08_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_08.pull_sel = s_reg2hw.muxed_v_08_cfg.pull_sel.q;
-       end
-       PAD_MUX_GROUP_MUXED_V_08_SEL_TC_CLK: begin
           mux_to_pads_o.muxed_v_08.chip2pad = s_reg2hw.muxed_v_08_cfg.chip2pad.q;
           mux_to_pads_o.muxed_v_08.input_en = 1'b1;
           mux_to_pads_o.muxed_v_08.output_en = 1'b0;
@@ -499,13 +485,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_09.pull_en = s_reg2hw.muxed_v_09_cfg.pull_en.q;
           mux_to_pads_o.muxed_v_09.pull_sel = s_reg2hw.muxed_v_09_cfg.pull_sel.q;
        end
-       PAD_MUX_GROUP_MUXED_V_09_SEL_TC_DATA: begin
-          mux_to_pads_o.muxed_v_09.chip2pad = s_reg2hw.muxed_v_09_cfg.chip2pad.q;
-          mux_to_pads_o.muxed_v_09.input_en = 1'b1;
-          mux_to_pads_o.muxed_v_09.output_en = 1'b0;
-          mux_to_pads_o.muxed_v_09.pull_en = s_reg2hw.muxed_v_09_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_09.pull_sel = s_reg2hw.muxed_v_09_cfg.pull_sel.q;
-       end
        PAD_MUX_GROUP_MUXED_V_09_SEL_PLL_IO_2: begin
           mux_to_pads_o.muxed_v_09.chip2pad = port_signals_soc2pad_i.pll.pll_2_o;
           mux_to_pads_o.muxed_v_09.input_en = ~port_signals_soc2pad_i.pll.pll_2_oen_i;
@@ -551,13 +530,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_10.chip2pad = s_reg2hw.muxed_v_10_cfg.chip2pad.q;
           mux_to_pads_o.muxed_v_10.input_en = 1'b1;
           mux_to_pads_o.muxed_v_10.output_en = 1'b0;
-          mux_to_pads_o.muxed_v_10.pull_en = s_reg2hw.muxed_v_10_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_10.pull_sel = s_reg2hw.muxed_v_10_cfg.pull_sel.q;
-       end
-       PAD_MUX_GROUP_MUXED_V_10_SEL_PTME_CLK: begin
-          mux_to_pads_o.muxed_v_10.chip2pad = port_signals_soc2pad_i.ptme.ptme_clk_o;
-          mux_to_pads_o.muxed_v_10.input_en = 1'b0;
-          mux_to_pads_o.muxed_v_10.output_en = 1'b1;
           mux_to_pads_o.muxed_v_10.pull_en = s_reg2hw.muxed_v_10_cfg.pull_en.q;
           mux_to_pads_o.muxed_v_10.pull_sel = s_reg2hw.muxed_v_10_cfg.pull_sel.q;
        end
@@ -609,13 +581,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_11.pull_en = s_reg2hw.muxed_v_11_cfg.pull_en.q;
           mux_to_pads_o.muxed_v_11.pull_sel = s_reg2hw.muxed_v_11_cfg.pull_sel.q;
        end
-       PAD_MUX_GROUP_MUXED_V_11_SEL_PTME_ENC: begin
-          mux_to_pads_o.muxed_v_11.chip2pad = port_signals_soc2pad_i.ptme.ptme_enc_o;
-          mux_to_pads_o.muxed_v_11.input_en = 1'b0;
-          mux_to_pads_o.muxed_v_11.output_en = 1'b1;
-          mux_to_pads_o.muxed_v_11.pull_en = s_reg2hw.muxed_v_11_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_11.pull_sel = s_reg2hw.muxed_v_11_cfg.pull_sel.q;
-       end
        PAD_MUX_GROUP_MUXED_V_11_SEL_PLL_IO_4: begin
           mux_to_pads_o.muxed_v_11.chip2pad = port_signals_soc2pad_i.pll.pll_4_o;
           mux_to_pads_o.muxed_v_11.input_en = ~port_signals_soc2pad_i.pll.pll_4_oen_i;
@@ -661,13 +626,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_12.chip2pad = s_reg2hw.muxed_v_12_cfg.chip2pad.q;
           mux_to_pads_o.muxed_v_12.input_en = 1'b1;
           mux_to_pads_o.muxed_v_12.output_en = 1'b0;
-          mux_to_pads_o.muxed_v_12.pull_en = s_reg2hw.muxed_v_12_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_12.pull_sel = s_reg2hw.muxed_v_12_cfg.pull_sel.q;
-       end
-       PAD_MUX_GROUP_MUXED_V_12_SEL_PTME_SYNC: begin
-          mux_to_pads_o.muxed_v_12.chip2pad = port_signals_soc2pad_i.ptme.ptme_sync_o;
-          mux_to_pads_o.muxed_v_12.input_en = 1'b0;
-          mux_to_pads_o.muxed_v_12.output_en = 1'b1;
           mux_to_pads_o.muxed_v_12.pull_en = s_reg2hw.muxed_v_12_cfg.pull_en.q;
           mux_to_pads_o.muxed_v_12.pull_sel = s_reg2hw.muxed_v_12_cfg.pull_sel.q;
        end
@@ -719,13 +677,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_13.pull_en = s_reg2hw.muxed_v_13_cfg.pull_en.q;
           mux_to_pads_o.muxed_v_13.pull_sel = s_reg2hw.muxed_v_13_cfg.pull_sel.q;
        end
-       PAD_MUX_GROUP_MUXED_V_13_SEL_PTME_EXT_CLK: begin
-          mux_to_pads_o.muxed_v_13.chip2pad = s_reg2hw.muxed_v_13_cfg.chip2pad.q;
-          mux_to_pads_o.muxed_v_13.input_en = 1'b1;
-          mux_to_pads_o.muxed_v_13.output_en = 1'b0;
-          mux_to_pads_o.muxed_v_13.pull_en = s_reg2hw.muxed_v_13_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_13.pull_sel = s_reg2hw.muxed_v_13_cfg.pull_sel.q;
-       end
        PAD_MUX_GROUP_MUXED_V_13_SEL_PLL_IO_6: begin
           mux_to_pads_o.muxed_v_13.chip2pad = port_signals_soc2pad_i.pll.pll_6_o;
           mux_to_pads_o.muxed_v_13.input_en = ~port_signals_soc2pad_i.pll.pll_6_oen_i;
@@ -774,13 +725,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_14.pull_en = s_reg2hw.muxed_v_14_cfg.pull_en.q;
           mux_to_pads_o.muxed_v_14.pull_sel = s_reg2hw.muxed_v_14_cfg.pull_sel.q;
        end
-       PAD_MUX_GROUP_MUXED_V_14_SEL_HPC_ADDR_0: begin
-          mux_to_pads_o.muxed_v_14.chip2pad = port_signals_soc2pad_i.hpc.hpc_addr_0_o;
-          mux_to_pads_o.muxed_v_14.input_en = 1'b0;
-          mux_to_pads_o.muxed_v_14.output_en = 1'b1;
-          mux_to_pads_o.muxed_v_14.pull_en = s_reg2hw.muxed_v_14_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_14.pull_sel = s_reg2hw.muxed_v_14_cfg.pull_sel.q;
-       end
        PAD_MUX_GROUP_MUXED_V_14_SEL_GPIO_IO_V_14: begin
           mux_to_pads_o.muxed_v_14.chip2pad = port_signals_soc2pad_i.gpio.gpio_v_14_o;
           mux_to_pads_o.muxed_v_14.input_en = ~port_signals_soc2pad_i.gpio.gpio_v_14_oen_i;
@@ -817,13 +761,6 @@ module astral_padframe_periph_muxer
        end
        PAD_MUX_GROUP_MUXED_V_15_SEL_SERIAL_LINK_O_V_1: begin
           mux_to_pads_o.muxed_v_15.chip2pad = port_signals_soc2pad_i.serial_link.slink_v_1_o;
-          mux_to_pads_o.muxed_v_15.input_en = 1'b0;
-          mux_to_pads_o.muxed_v_15.output_en = 1'b1;
-          mux_to_pads_o.muxed_v_15.pull_en = s_reg2hw.muxed_v_15_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_15.pull_sel = s_reg2hw.muxed_v_15_cfg.pull_sel.q;
-       end
-       PAD_MUX_GROUP_MUXED_V_15_SEL_HPC_ADDR_1: begin
-          mux_to_pads_o.muxed_v_15.chip2pad = port_signals_soc2pad_i.hpc.hpc_addr_1_o;
           mux_to_pads_o.muxed_v_15.input_en = 1'b0;
           mux_to_pads_o.muxed_v_15.output_en = 1'b1;
           mux_to_pads_o.muxed_v_15.pull_en = s_reg2hw.muxed_v_15_cfg.pull_en.q;
@@ -870,13 +807,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_v_16.pull_en = s_reg2hw.muxed_v_16_cfg.pull_en.q;
           mux_to_pads_o.muxed_v_16.pull_sel = s_reg2hw.muxed_v_16_cfg.pull_sel.q;
        end
-       PAD_MUX_GROUP_MUXED_V_16_SEL_HPC_ADDR_2: begin
-          mux_to_pads_o.muxed_v_16.chip2pad = port_signals_soc2pad_i.hpc.hpc_addr_2_o;
-          mux_to_pads_o.muxed_v_16.input_en = 1'b0;
-          mux_to_pads_o.muxed_v_16.output_en = 1'b1;
-          mux_to_pads_o.muxed_v_16.pull_en = s_reg2hw.muxed_v_16_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_16.pull_sel = s_reg2hw.muxed_v_16_cfg.pull_sel.q;
-       end
        PAD_MUX_GROUP_MUXED_V_16_SEL_GPIO_IO_V_16: begin
           mux_to_pads_o.muxed_v_16.chip2pad = port_signals_soc2pad_i.gpio.gpio_v_16_o;
           mux_to_pads_o.muxed_v_16.input_en = ~port_signals_soc2pad_i.gpio.gpio_v_16_oen_i;
@@ -913,13 +843,6 @@ module astral_padframe_periph_muxer
        end
        PAD_MUX_GROUP_MUXED_V_17_SEL_SERIAL_LINK_O_V_3: begin
           mux_to_pads_o.muxed_v_17.chip2pad = port_signals_soc2pad_i.serial_link.slink_v_3_o;
-          mux_to_pads_o.muxed_v_17.input_en = 1'b0;
-          mux_to_pads_o.muxed_v_17.output_en = 1'b1;
-          mux_to_pads_o.muxed_v_17.pull_en = s_reg2hw.muxed_v_17_cfg.pull_en.q;
-          mux_to_pads_o.muxed_v_17.pull_sel = s_reg2hw.muxed_v_17_cfg.pull_sel.q;
-       end
-       PAD_MUX_GROUP_MUXED_V_17_SEL_HPC_CMD_EN: begin
-          mux_to_pads_o.muxed_v_17.chip2pad = port_signals_soc2pad_i.hpc.hpc_cmd_en_o;
           mux_to_pads_o.muxed_v_17.input_en = 1'b0;
           mux_to_pads_o.muxed_v_17.output_en = 1'b1;
           mux_to_pads_o.muxed_v_17.pull_en = s_reg2hw.muxed_v_17_cfg.pull_en.q;
@@ -966,13 +889,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_h_00.pull_en = s_reg2hw.muxed_h_00_cfg.pull_en.q;
           mux_to_pads_o.muxed_h_00.pull_sel = s_reg2hw.muxed_h_00_cfg.pull_sel.q;
        end
-       PAD_MUX_GROUP_MUXED_H_00_SEL_HPC_SAMPLE: begin
-          mux_to_pads_o.muxed_h_00.chip2pad = port_signals_soc2pad_i.hpc.hpc_sample_o;
-          mux_to_pads_o.muxed_h_00.input_en = 1'b0;
-          mux_to_pads_o.muxed_h_00.output_en = 1'b1;
-          mux_to_pads_o.muxed_h_00.pull_en = s_reg2hw.muxed_h_00_cfg.pull_en.q;
-          mux_to_pads_o.muxed_h_00.pull_sel = s_reg2hw.muxed_h_00_cfg.pull_sel.q;
-       end
        PAD_MUX_GROUP_MUXED_H_00_SEL_GPIO_IO_H_0: begin
           mux_to_pads_o.muxed_h_00.chip2pad = port_signals_soc2pad_i.gpio.gpio_h_0_o;
           mux_to_pads_o.muxed_h_00.input_en = ~port_signals_soc2pad_i.gpio.gpio_h_0_oen_i;
@@ -1009,13 +925,6 @@ module astral_padframe_periph_muxer
        end
        PAD_MUX_GROUP_MUXED_H_01_SEL_SERIAL_LINK_O_H_1: begin
           mux_to_pads_o.muxed_h_01.chip2pad = port_signals_soc2pad_i.serial_link.slink_h_1_o;
-          mux_to_pads_o.muxed_h_01.input_en = 1'b0;
-          mux_to_pads_o.muxed_h_01.output_en = 1'b1;
-          mux_to_pads_o.muxed_h_01.pull_en = s_reg2hw.muxed_h_01_cfg.pull_en.q;
-          mux_to_pads_o.muxed_h_01.pull_sel = s_reg2hw.muxed_h_01_cfg.pull_sel.q;
-       end
-       PAD_MUX_GROUP_MUXED_H_01_SEL_LLC_LINE_0: begin
-          mux_to_pads_o.muxed_h_01.chip2pad = port_signals_soc2pad_i.llc.llc_line_0_o;
           mux_to_pads_o.muxed_h_01.input_en = 1'b0;
           mux_to_pads_o.muxed_h_01.output_en = 1'b1;
           mux_to_pads_o.muxed_h_01.pull_en = s_reg2hw.muxed_h_01_cfg.pull_en.q;
@@ -1062,13 +971,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_h_02.pull_en = s_reg2hw.muxed_h_02_cfg.pull_en.q;
           mux_to_pads_o.muxed_h_02.pull_sel = s_reg2hw.muxed_h_02_cfg.pull_sel.q;
        end
-       PAD_MUX_GROUP_MUXED_H_02_SEL_LLC_LINE_1: begin
-          mux_to_pads_o.muxed_h_02.chip2pad = port_signals_soc2pad_i.llc.llc_line_1_o;
-          mux_to_pads_o.muxed_h_02.input_en = 1'b0;
-          mux_to_pads_o.muxed_h_02.output_en = 1'b1;
-          mux_to_pads_o.muxed_h_02.pull_en = s_reg2hw.muxed_h_02_cfg.pull_en.q;
-          mux_to_pads_o.muxed_h_02.pull_sel = s_reg2hw.muxed_h_02_cfg.pull_sel.q;
-       end
        PAD_MUX_GROUP_MUXED_H_02_SEL_GPIO_IO_H_2: begin
           mux_to_pads_o.muxed_h_02.chip2pad = port_signals_soc2pad_i.gpio.gpio_h_2_o;
           mux_to_pads_o.muxed_h_02.input_en = ~port_signals_soc2pad_i.gpio.gpio_h_2_oen_i;
@@ -1107,13 +1009,6 @@ module astral_padframe_periph_muxer
           mux_to_pads_o.muxed_h_03.chip2pad = port_signals_soc2pad_i.serial_link.slink_h_3_o;
           mux_to_pads_o.muxed_h_03.input_en = 1'b0;
           mux_to_pads_o.muxed_h_03.output_en = 1'b1;
-          mux_to_pads_o.muxed_h_03.pull_en = s_reg2hw.muxed_h_03_cfg.pull_en.q;
-          mux_to_pads_o.muxed_h_03.pull_sel = s_reg2hw.muxed_h_03_cfg.pull_sel.q;
-       end
-       PAD_MUX_GROUP_MUXED_H_03_SEL_OBT_EXT_CLK: begin
-          mux_to_pads_o.muxed_h_03.chip2pad = s_reg2hw.muxed_h_03_cfg.chip2pad.q;
-          mux_to_pads_o.muxed_h_03.input_en = 1'b1;
-          mux_to_pads_o.muxed_h_03.output_en = 1'b0;
           mux_to_pads_o.muxed_h_03.pull_en = s_reg2hw.muxed_h_03_cfg.pull_en.q;
           mux_to_pads_o.muxed_h_03.pull_sel = s_reg2hw.muxed_h_03_cfg.pull_sel.q;
        end
@@ -1893,172 +1788,6 @@ module astral_padframe_periph_muxer
           end
           default: begin
             port_signals_pad2soc_o.i2c.i2c_scl_i = 1'b0;
-          end
-       endcase
-     end
-   end
-
-  // Port Group tc
-
-  // Port Signal tc_active_i
-  logic [0:0] port_mux_sel_tc_tc_active_i_req;
-  logic [PORT_MUX_GROUP_MUXED_V_07_SEL_WIDTH-1:0] port_mux_sel_tc_tc_active_i_arbitrated;
-  logic port_mux_sel_tc_tc_active_i_no_connection;
-
-   assign port_mux_sel_tc_tc_active_i_req[PORT_MUX_GROUP_MUXED_V_07_SEL_MUXED_V_07] = s_reg2hw.muxed_v_07_mux_sel.q == PAD_MUX_GROUP_MUXED_V_07_SEL_TC_ACTIVE ? 1'b1 : 1'b0;
-
-   lzc #(
-     .WIDTH(1),
-     .MODE(1'b0)
-   ) i_port_muxsel_tc_tc_active_i_arbiter (
-     .in_i(port_mux_sel_tc_tc_active_i_req),
-     .cnt_o(port_mux_sel_tc_tc_active_i_arbitrated),
-     .empty_o(port_mux_sel_tc_tc_active_i_no_connection)
-   );
-
-   always_comb begin
-     if (port_mux_sel_tc_tc_active_i_no_connection) begin
-        port_signals_pad2soc_o.tc.tc_active_i = 1'b0;
-     end else begin
-        unique case (port_mux_sel_tc_tc_active_i_arbitrated)
-          PORT_MUX_GROUP_MUXED_V_07_SEL_MUXED_V_07: begin
-            port_signals_pad2soc_o.tc.tc_active_i = pads_to_mux_i.muxed_v_07.pad2chip;
-          end
-          default: begin
-            port_signals_pad2soc_o.tc.tc_active_i = 1'b0;
-          end
-       endcase
-     end
-   end
-
-
-  // Port Signal tc_clk_i
-  logic [0:0] port_mux_sel_tc_tc_clk_i_req;
-  logic [PORT_MUX_GROUP_MUXED_V_08_SEL_WIDTH-1:0] port_mux_sel_tc_tc_clk_i_arbitrated;
-  logic port_mux_sel_tc_tc_clk_i_no_connection;
-
-   assign port_mux_sel_tc_tc_clk_i_req[PORT_MUX_GROUP_MUXED_V_08_SEL_MUXED_V_08] = s_reg2hw.muxed_v_08_mux_sel.q == PAD_MUX_GROUP_MUXED_V_08_SEL_TC_CLK ? 1'b1 : 1'b0;
-
-   lzc #(
-     .WIDTH(1),
-     .MODE(1'b0)
-   ) i_port_muxsel_tc_tc_clk_i_arbiter (
-     .in_i(port_mux_sel_tc_tc_clk_i_req),
-     .cnt_o(port_mux_sel_tc_tc_clk_i_arbitrated),
-     .empty_o(port_mux_sel_tc_tc_clk_i_no_connection)
-   );
-
-   always_comb begin
-     if (port_mux_sel_tc_tc_clk_i_no_connection) begin
-        port_signals_pad2soc_o.tc.tc_clk_i = 1'b0;
-     end else begin
-        unique case (port_mux_sel_tc_tc_clk_i_arbitrated)
-          PORT_MUX_GROUP_MUXED_V_08_SEL_MUXED_V_08: begin
-            port_signals_pad2soc_o.tc.tc_clk_i = pads_to_mux_i.muxed_v_08.pad2chip;
-          end
-          default: begin
-            port_signals_pad2soc_o.tc.tc_clk_i = 1'b0;
-          end
-       endcase
-     end
-   end
-
-
-  // Port Signal tc_data_i
-  logic [0:0] port_mux_sel_tc_tc_data_i_req;
-  logic [PORT_MUX_GROUP_MUXED_V_09_SEL_WIDTH-1:0] port_mux_sel_tc_tc_data_i_arbitrated;
-  logic port_mux_sel_tc_tc_data_i_no_connection;
-
-   assign port_mux_sel_tc_tc_data_i_req[PORT_MUX_GROUP_MUXED_V_09_SEL_MUXED_V_09] = s_reg2hw.muxed_v_09_mux_sel.q == PAD_MUX_GROUP_MUXED_V_09_SEL_TC_DATA ? 1'b1 : 1'b0;
-
-   lzc #(
-     .WIDTH(1),
-     .MODE(1'b0)
-   ) i_port_muxsel_tc_tc_data_i_arbiter (
-     .in_i(port_mux_sel_tc_tc_data_i_req),
-     .cnt_o(port_mux_sel_tc_tc_data_i_arbitrated),
-     .empty_o(port_mux_sel_tc_tc_data_i_no_connection)
-   );
-
-   always_comb begin
-     if (port_mux_sel_tc_tc_data_i_no_connection) begin
-        port_signals_pad2soc_o.tc.tc_data_i = 1'b0;
-     end else begin
-        unique case (port_mux_sel_tc_tc_data_i_arbitrated)
-          PORT_MUX_GROUP_MUXED_V_09_SEL_MUXED_V_09: begin
-            port_signals_pad2soc_o.tc.tc_data_i = pads_to_mux_i.muxed_v_09.pad2chip;
-          end
-          default: begin
-            port_signals_pad2soc_o.tc.tc_data_i = 1'b0;
-          end
-       endcase
-     end
-   end
-
-  // Port Group ptme
-
-
-
-
-  // Port Signal ptme_ext_clk_i
-  logic [0:0] port_mux_sel_ptme_ptme_ext_clk_i_req;
-  logic [PORT_MUX_GROUP_MUXED_V_13_SEL_WIDTH-1:0] port_mux_sel_ptme_ptme_ext_clk_i_arbitrated;
-  logic port_mux_sel_ptme_ptme_ext_clk_i_no_connection;
-
-   assign port_mux_sel_ptme_ptme_ext_clk_i_req[PORT_MUX_GROUP_MUXED_V_13_SEL_MUXED_V_13] = s_reg2hw.muxed_v_13_mux_sel.q == PAD_MUX_GROUP_MUXED_V_13_SEL_PTME_EXT_CLK ? 1'b1 : 1'b0;
-
-   lzc #(
-     .WIDTH(1),
-     .MODE(1'b0)
-   ) i_port_muxsel_ptme_ptme_ext_clk_i_arbiter (
-     .in_i(port_mux_sel_ptme_ptme_ext_clk_i_req),
-     .cnt_o(port_mux_sel_ptme_ptme_ext_clk_i_arbitrated),
-     .empty_o(port_mux_sel_ptme_ptme_ext_clk_i_no_connection)
-   );
-
-   always_comb begin
-     if (port_mux_sel_ptme_ptme_ext_clk_i_no_connection) begin
-        port_signals_pad2soc_o.ptme.ptme_ext_clk_i = 1'b0;
-     end else begin
-        unique case (port_mux_sel_ptme_ptme_ext_clk_i_arbitrated)
-          PORT_MUX_GROUP_MUXED_V_13_SEL_MUXED_V_13: begin
-            port_signals_pad2soc_o.ptme.ptme_ext_clk_i = pads_to_mux_i.muxed_v_13.pad2chip;
-          end
-          default: begin
-            port_signals_pad2soc_o.ptme.ptme_ext_clk_i = 1'b0;
-          end
-       endcase
-     end
-   end
-
-  // Port Group obt
-
-  // Port Signal obt_ext_clk_i
-  logic [0:0] port_mux_sel_obt_obt_ext_clk_i_req;
-  logic [PORT_MUX_GROUP_MUXED_H_03_SEL_WIDTH-1:0] port_mux_sel_obt_obt_ext_clk_i_arbitrated;
-  logic port_mux_sel_obt_obt_ext_clk_i_no_connection;
-
-   assign port_mux_sel_obt_obt_ext_clk_i_req[PORT_MUX_GROUP_MUXED_H_03_SEL_MUXED_H_03] = s_reg2hw.muxed_h_03_mux_sel.q == PAD_MUX_GROUP_MUXED_H_03_SEL_OBT_EXT_CLK ? 1'b1 : 1'b0;
-
-   lzc #(
-     .WIDTH(1),
-     .MODE(1'b0)
-   ) i_port_muxsel_obt_obt_ext_clk_i_arbiter (
-     .in_i(port_mux_sel_obt_obt_ext_clk_i_req),
-     .cnt_o(port_mux_sel_obt_obt_ext_clk_i_arbitrated),
-     .empty_o(port_mux_sel_obt_obt_ext_clk_i_no_connection)
-   );
-
-   always_comb begin
-     if (port_mux_sel_obt_obt_ext_clk_i_no_connection) begin
-        port_signals_pad2soc_o.obt.obt_ext_clk_i = 1'b0;
-     end else begin
-        unique case (port_mux_sel_obt_obt_ext_clk_i_arbitrated)
-          PORT_MUX_GROUP_MUXED_H_03_SEL_MUXED_H_03: begin
-            port_signals_pad2soc_o.obt.obt_ext_clk_i = pads_to_mux_i.muxed_h_03.pad2chip;
-          end
-          default: begin
-            port_signals_pad2soc_o.obt.obt_ext_clk_i = 1'b0;
           end
        endcase
      end

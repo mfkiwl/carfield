@@ -82,37 +82,6 @@
   assign load.i2c_sda_o = driver.i2c_sda_o; \
   assign load.i2c_sda_oen_i = driver.i2c_sda_oen_i; \
 
-`define ASSIGN_PERIPH_TC_PAD2SOC(load, driver) \
-  assign load.tc_active_i = driver.tc_active_i; \
-  assign load.tc_clk_i = driver.tc_clk_i; \
-  assign load.tc_data_i = driver.tc_data_i; \
-
-
-`define ASSIGN_PERIPH_PTME_PAD2SOC(load, driver) \
-  assign load.ptme_ext_clk_i = driver.ptme_ext_clk_i; \
-
-`define ASSIGN_PERIPH_PTME_SOC2PAD(load, driver) \
-  assign load.ptme_clk_o = driver.ptme_clk_o; \
-  assign load.ptme_enc_o = driver.ptme_enc_o; \
-  assign load.ptme_sync_o = driver.ptme_sync_o; \
-
-
-`define ASSIGN_PERIPH_HPC_SOC2PAD(load, driver) \
-  assign load.hpc_addr_0_o = driver.hpc_addr_0_o; \
-  assign load.hpc_addr_1_o = driver.hpc_addr_1_o; \
-  assign load.hpc_addr_2_o = driver.hpc_addr_2_o; \
-  assign load.hpc_cmd_en_o = driver.hpc_cmd_en_o; \
-  assign load.hpc_sample_o = driver.hpc_sample_o; \
-
-
-`define ASSIGN_PERIPH_LLC_SOC2PAD(load, driver) \
-  assign load.llc_line_0_o = driver.llc_line_0_o; \
-  assign load.llc_line_1_o = driver.llc_line_1_o; \
-
-`define ASSIGN_PERIPH_OBT_PAD2SOC(load, driver) \
-  assign load.obt_ext_clk_i = driver.obt_ext_clk_i; \
-
-
 `define ASSIGN_PERIPH_SPI_OT_PAD2SOC(load, driver) \
   assign load.spih_ot_sd_0_i = driver.spih_ot_sd_0_i; \
   assign load.spih_ot_sd_1_i = driver.spih_ot_sd_1_i; \

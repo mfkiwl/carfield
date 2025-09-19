@@ -349,7 +349,7 @@ package astral_padframe_periph_config_reg_pkg;
   } astral_padframe_periph_config_reg2hw_muxed_v_14_cfg_reg_t;
 
   typedef struct packed {
-    logic [2:0]  q;
+    logic [1:0]  q;
   } astral_padframe_periph_config_reg2hw_muxed_v_14_mux_sel_reg_t;
 
   typedef struct packed {
@@ -371,7 +371,7 @@ package astral_padframe_periph_config_reg_pkg;
   } astral_padframe_periph_config_reg2hw_muxed_v_15_cfg_reg_t;
 
   typedef struct packed {
-    logic [2:0]  q;
+    logic [1:0]  q;
   } astral_padframe_periph_config_reg2hw_muxed_v_15_mux_sel_reg_t;
 
   typedef struct packed {
@@ -393,7 +393,7 @@ package astral_padframe_periph_config_reg_pkg;
   } astral_padframe_periph_config_reg2hw_muxed_v_16_cfg_reg_t;
 
   typedef struct packed {
-    logic [2:0]  q;
+    logic [1:0]  q;
   } astral_padframe_periph_config_reg2hw_muxed_v_16_mux_sel_reg_t;
 
   typedef struct packed {
@@ -415,7 +415,7 @@ package astral_padframe_periph_config_reg_pkg;
   } astral_padframe_periph_config_reg2hw_muxed_v_17_cfg_reg_t;
 
   typedef struct packed {
-    logic [2:0]  q;
+    logic [1:0]  q;
   } astral_padframe_periph_config_reg2hw_muxed_v_17_mux_sel_reg_t;
 
   typedef struct packed {
@@ -437,7 +437,7 @@ package astral_padframe_periph_config_reg_pkg;
   } astral_padframe_periph_config_reg2hw_muxed_h_00_cfg_reg_t;
 
   typedef struct packed {
-    logic [2:0]  q;
+    logic [1:0]  q;
   } astral_padframe_periph_config_reg2hw_muxed_h_00_mux_sel_reg_t;
 
   typedef struct packed {
@@ -459,7 +459,7 @@ package astral_padframe_periph_config_reg_pkg;
   } astral_padframe_periph_config_reg2hw_muxed_h_01_cfg_reg_t;
 
   typedef struct packed {
-    logic [2:0]  q;
+    logic [1:0]  q;
   } astral_padframe_periph_config_reg2hw_muxed_h_01_mux_sel_reg_t;
 
   typedef struct packed {
@@ -481,7 +481,7 @@ package astral_padframe_periph_config_reg_pkg;
   } astral_padframe_periph_config_reg2hw_muxed_h_02_cfg_reg_t;
 
   typedef struct packed {
-    logic [2:0]  q;
+    logic [1:0]  q;
   } astral_padframe_periph_config_reg2hw_muxed_h_02_mux_sel_reg_t;
 
   typedef struct packed {
@@ -503,56 +503,56 @@ package astral_padframe_periph_config_reg_pkg;
   } astral_padframe_periph_config_reg2hw_muxed_h_03_cfg_reg_t;
 
   typedef struct packed {
-    logic [2:0]  q;
+    logic [1:0]  q;
   } astral_padframe_periph_config_reg2hw_muxed_h_03_mux_sel_reg_t;
 
   // Register -> HW type
   typedef struct packed {
-    astral_padframe_periph_config_reg2hw_info_reg_t info; // [204:173]
-    astral_padframe_periph_config_reg2hw_muxed_v_00_cfg_reg_t muxed_v_00_cfg; // [172:168]
-    astral_padframe_periph_config_reg2hw_muxed_v_00_mux_sel_reg_t muxed_v_00_mux_sel; // [167:165]
-    astral_padframe_periph_config_reg2hw_muxed_v_01_cfg_reg_t muxed_v_01_cfg; // [164:160]
-    astral_padframe_periph_config_reg2hw_muxed_v_01_mux_sel_reg_t muxed_v_01_mux_sel; // [159:157]
-    astral_padframe_periph_config_reg2hw_muxed_v_02_cfg_reg_t muxed_v_02_cfg; // [156:152]
-    astral_padframe_periph_config_reg2hw_muxed_v_02_mux_sel_reg_t muxed_v_02_mux_sel; // [151:150]
-    astral_padframe_periph_config_reg2hw_muxed_v_03_cfg_reg_t muxed_v_03_cfg; // [149:145]
-    astral_padframe_periph_config_reg2hw_muxed_v_03_mux_sel_reg_t muxed_v_03_mux_sel; // [144:143]
-    astral_padframe_periph_config_reg2hw_muxed_v_04_cfg_reg_t muxed_v_04_cfg; // [142:138]
-    astral_padframe_periph_config_reg2hw_muxed_v_04_mux_sel_reg_t muxed_v_04_mux_sel; // [137:135]
-    astral_padframe_periph_config_reg2hw_muxed_v_05_cfg_reg_t muxed_v_05_cfg; // [134:130]
-    astral_padframe_periph_config_reg2hw_muxed_v_05_mux_sel_reg_t muxed_v_05_mux_sel; // [129:127]
-    astral_padframe_periph_config_reg2hw_muxed_v_06_cfg_reg_t muxed_v_06_cfg; // [126:122]
-    astral_padframe_periph_config_reg2hw_muxed_v_06_mux_sel_reg_t muxed_v_06_mux_sel; // [121:120]
-    astral_padframe_periph_config_reg2hw_muxed_v_07_cfg_reg_t muxed_v_07_cfg; // [119:115]
-    astral_padframe_periph_config_reg2hw_muxed_v_07_mux_sel_reg_t muxed_v_07_mux_sel; // [114:112]
-    astral_padframe_periph_config_reg2hw_muxed_v_08_cfg_reg_t muxed_v_08_cfg; // [111:107]
-    astral_padframe_periph_config_reg2hw_muxed_v_08_mux_sel_reg_t muxed_v_08_mux_sel; // [106:104]
-    astral_padframe_periph_config_reg2hw_muxed_v_09_cfg_reg_t muxed_v_09_cfg; // [103:99]
-    astral_padframe_periph_config_reg2hw_muxed_v_09_mux_sel_reg_t muxed_v_09_mux_sel; // [98:96]
-    astral_padframe_periph_config_reg2hw_muxed_v_10_cfg_reg_t muxed_v_10_cfg; // [95:91]
-    astral_padframe_periph_config_reg2hw_muxed_v_10_mux_sel_reg_t muxed_v_10_mux_sel; // [90:88]
-    astral_padframe_periph_config_reg2hw_muxed_v_11_cfg_reg_t muxed_v_11_cfg; // [87:83]
-    astral_padframe_periph_config_reg2hw_muxed_v_11_mux_sel_reg_t muxed_v_11_mux_sel; // [82:80]
-    astral_padframe_periph_config_reg2hw_muxed_v_12_cfg_reg_t muxed_v_12_cfg; // [79:75]
-    astral_padframe_periph_config_reg2hw_muxed_v_12_mux_sel_reg_t muxed_v_12_mux_sel; // [74:72]
-    astral_padframe_periph_config_reg2hw_muxed_v_13_cfg_reg_t muxed_v_13_cfg; // [71:67]
-    astral_padframe_periph_config_reg2hw_muxed_v_13_mux_sel_reg_t muxed_v_13_mux_sel; // [66:64]
-    astral_padframe_periph_config_reg2hw_muxed_v_14_cfg_reg_t muxed_v_14_cfg; // [63:59]
-    astral_padframe_periph_config_reg2hw_muxed_v_14_mux_sel_reg_t muxed_v_14_mux_sel; // [58:56]
-    astral_padframe_periph_config_reg2hw_muxed_v_15_cfg_reg_t muxed_v_15_cfg; // [55:51]
-    astral_padframe_periph_config_reg2hw_muxed_v_15_mux_sel_reg_t muxed_v_15_mux_sel; // [50:48]
-    astral_padframe_periph_config_reg2hw_muxed_v_16_cfg_reg_t muxed_v_16_cfg; // [47:43]
-    astral_padframe_periph_config_reg2hw_muxed_v_16_mux_sel_reg_t muxed_v_16_mux_sel; // [42:40]
-    astral_padframe_periph_config_reg2hw_muxed_v_17_cfg_reg_t muxed_v_17_cfg; // [39:35]
-    astral_padframe_periph_config_reg2hw_muxed_v_17_mux_sel_reg_t muxed_v_17_mux_sel; // [34:32]
-    astral_padframe_periph_config_reg2hw_muxed_h_00_cfg_reg_t muxed_h_00_cfg; // [31:27]
-    astral_padframe_periph_config_reg2hw_muxed_h_00_mux_sel_reg_t muxed_h_00_mux_sel; // [26:24]
-    astral_padframe_periph_config_reg2hw_muxed_h_01_cfg_reg_t muxed_h_01_cfg; // [23:19]
-    astral_padframe_periph_config_reg2hw_muxed_h_01_mux_sel_reg_t muxed_h_01_mux_sel; // [18:16]
-    astral_padframe_periph_config_reg2hw_muxed_h_02_cfg_reg_t muxed_h_02_cfg; // [15:11]
-    astral_padframe_periph_config_reg2hw_muxed_h_02_mux_sel_reg_t muxed_h_02_mux_sel; // [10:8]
-    astral_padframe_periph_config_reg2hw_muxed_h_03_cfg_reg_t muxed_h_03_cfg; // [7:3]
-    astral_padframe_periph_config_reg2hw_muxed_h_03_mux_sel_reg_t muxed_h_03_mux_sel; // [2:0]
+    astral_padframe_periph_config_reg2hw_info_reg_t info; // [196:165]
+    astral_padframe_periph_config_reg2hw_muxed_v_00_cfg_reg_t muxed_v_00_cfg; // [164:160]
+    astral_padframe_periph_config_reg2hw_muxed_v_00_mux_sel_reg_t muxed_v_00_mux_sel; // [159:157]
+    astral_padframe_periph_config_reg2hw_muxed_v_01_cfg_reg_t muxed_v_01_cfg; // [156:152]
+    astral_padframe_periph_config_reg2hw_muxed_v_01_mux_sel_reg_t muxed_v_01_mux_sel; // [151:149]
+    astral_padframe_periph_config_reg2hw_muxed_v_02_cfg_reg_t muxed_v_02_cfg; // [148:144]
+    astral_padframe_periph_config_reg2hw_muxed_v_02_mux_sel_reg_t muxed_v_02_mux_sel; // [143:142]
+    astral_padframe_periph_config_reg2hw_muxed_v_03_cfg_reg_t muxed_v_03_cfg; // [141:137]
+    astral_padframe_periph_config_reg2hw_muxed_v_03_mux_sel_reg_t muxed_v_03_mux_sel; // [136:135]
+    astral_padframe_periph_config_reg2hw_muxed_v_04_cfg_reg_t muxed_v_04_cfg; // [134:130]
+    astral_padframe_periph_config_reg2hw_muxed_v_04_mux_sel_reg_t muxed_v_04_mux_sel; // [129:127]
+    astral_padframe_periph_config_reg2hw_muxed_v_05_cfg_reg_t muxed_v_05_cfg; // [126:122]
+    astral_padframe_periph_config_reg2hw_muxed_v_05_mux_sel_reg_t muxed_v_05_mux_sel; // [121:119]
+    astral_padframe_periph_config_reg2hw_muxed_v_06_cfg_reg_t muxed_v_06_cfg; // [118:114]
+    astral_padframe_periph_config_reg2hw_muxed_v_06_mux_sel_reg_t muxed_v_06_mux_sel; // [113:112]
+    astral_padframe_periph_config_reg2hw_muxed_v_07_cfg_reg_t muxed_v_07_cfg; // [111:107]
+    astral_padframe_periph_config_reg2hw_muxed_v_07_mux_sel_reg_t muxed_v_07_mux_sel; // [106:104]
+    astral_padframe_periph_config_reg2hw_muxed_v_08_cfg_reg_t muxed_v_08_cfg; // [103:99]
+    astral_padframe_periph_config_reg2hw_muxed_v_08_mux_sel_reg_t muxed_v_08_mux_sel; // [98:96]
+    astral_padframe_periph_config_reg2hw_muxed_v_09_cfg_reg_t muxed_v_09_cfg; // [95:91]
+    astral_padframe_periph_config_reg2hw_muxed_v_09_mux_sel_reg_t muxed_v_09_mux_sel; // [90:88]
+    astral_padframe_periph_config_reg2hw_muxed_v_10_cfg_reg_t muxed_v_10_cfg; // [87:83]
+    astral_padframe_periph_config_reg2hw_muxed_v_10_mux_sel_reg_t muxed_v_10_mux_sel; // [82:80]
+    astral_padframe_periph_config_reg2hw_muxed_v_11_cfg_reg_t muxed_v_11_cfg; // [79:75]
+    astral_padframe_periph_config_reg2hw_muxed_v_11_mux_sel_reg_t muxed_v_11_mux_sel; // [74:72]
+    astral_padframe_periph_config_reg2hw_muxed_v_12_cfg_reg_t muxed_v_12_cfg; // [71:67]
+    astral_padframe_periph_config_reg2hw_muxed_v_12_mux_sel_reg_t muxed_v_12_mux_sel; // [66:64]
+    astral_padframe_periph_config_reg2hw_muxed_v_13_cfg_reg_t muxed_v_13_cfg; // [63:59]
+    astral_padframe_periph_config_reg2hw_muxed_v_13_mux_sel_reg_t muxed_v_13_mux_sel; // [58:56]
+    astral_padframe_periph_config_reg2hw_muxed_v_14_cfg_reg_t muxed_v_14_cfg; // [55:51]
+    astral_padframe_periph_config_reg2hw_muxed_v_14_mux_sel_reg_t muxed_v_14_mux_sel; // [50:49]
+    astral_padframe_periph_config_reg2hw_muxed_v_15_cfg_reg_t muxed_v_15_cfg; // [48:44]
+    astral_padframe_periph_config_reg2hw_muxed_v_15_mux_sel_reg_t muxed_v_15_mux_sel; // [43:42]
+    astral_padframe_periph_config_reg2hw_muxed_v_16_cfg_reg_t muxed_v_16_cfg; // [41:37]
+    astral_padframe_periph_config_reg2hw_muxed_v_16_mux_sel_reg_t muxed_v_16_mux_sel; // [36:35]
+    astral_padframe_periph_config_reg2hw_muxed_v_17_cfg_reg_t muxed_v_17_cfg; // [34:30]
+    astral_padframe_periph_config_reg2hw_muxed_v_17_mux_sel_reg_t muxed_v_17_mux_sel; // [29:28]
+    astral_padframe_periph_config_reg2hw_muxed_h_00_cfg_reg_t muxed_h_00_cfg; // [27:23]
+    astral_padframe_periph_config_reg2hw_muxed_h_00_mux_sel_reg_t muxed_h_00_mux_sel; // [22:21]
+    astral_padframe_periph_config_reg2hw_muxed_h_01_cfg_reg_t muxed_h_01_cfg; // [20:16]
+    astral_padframe_periph_config_reg2hw_muxed_h_01_mux_sel_reg_t muxed_h_01_mux_sel; // [15:14]
+    astral_padframe_periph_config_reg2hw_muxed_h_02_cfg_reg_t muxed_h_02_cfg; // [13:9]
+    astral_padframe_periph_config_reg2hw_muxed_h_02_mux_sel_reg_t muxed_h_02_mux_sel; // [8:7]
+    astral_padframe_periph_config_reg2hw_muxed_h_03_cfg_reg_t muxed_h_03_cfg; // [6:2]
+    astral_padframe_periph_config_reg2hw_muxed_h_03_mux_sel_reg_t muxed_h_03_mux_sel; // [1:0]
   } astral_padframe_periph_config_reg2hw_t;
 
   // Register offsets

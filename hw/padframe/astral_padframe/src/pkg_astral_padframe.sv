@@ -28,8 +28,6 @@ package pkg_astral_padframe;
       logic        hyper_rwds_oen_i;
       logic        jtag_ot_tdo_o;
       logic        jtag_tdo_o;
-      logic        spw_data_o;
-      logic        spw_strb_o;
       logic        uart_tx_o;
      } pad_domain_periph_static_connection_signals_soc2pad_t;
 
@@ -58,8 +56,6 @@ package pkg_astral_padframe;
       logic        pwr_on_rst_ni;
       logic        ref_clk_i;
       logic        secure_boot_i;
-      logic        spw_data_i;
-      logic        spw_strb_i;
       logic        test_mode_i;
       logic        uart_rx_i;
      } pad_domain_periph_static_connection_signals_pad2soc_t;
@@ -152,39 +148,6 @@ package pkg_astral_padframe;
       logic        i2c_scl_i;
       logic        i2c_sda_i;
      } pad_domain_periph_port_group_i2c_pad2soc_t;
-
-   typedef struct packed {
-      logic        tc_active_i;
-      logic        tc_clk_i;
-      logic        tc_data_i;
-     } pad_domain_periph_port_group_tc_pad2soc_t;
-
-   typedef struct packed {
-      logic        ptme_clk_o;
-      logic        ptme_enc_o;
-      logic        ptme_sync_o;
-     } pad_domain_periph_port_group_ptme_soc2pad_t;
-
-   typedef struct packed {
-      logic        ptme_ext_clk_i;
-     } pad_domain_periph_port_group_ptme_pad2soc_t;
-
-   typedef struct packed {
-      logic        hpc_addr_0_o;
-      logic        hpc_addr_1_o;
-      logic        hpc_addr_2_o;
-      logic        hpc_cmd_en_o;
-      logic        hpc_sample_o;
-     } pad_domain_periph_port_group_hpc_soc2pad_t;
-
-   typedef struct packed {
-      logic        llc_line_0_o;
-      logic        llc_line_1_o;
-     } pad_domain_periph_port_group_llc_soc2pad_t;
-
-   typedef struct packed {
-      logic        obt_ext_clk_i;
-     } pad_domain_periph_port_group_obt_pad2soc_t;
 
    typedef struct packed {
       logic        spih_ot_csb_o;
@@ -311,9 +274,6 @@ package pkg_astral_padframe;
      pad_domain_periph_port_group_can_soc2pad_t can;
      pad_domain_periph_port_group_serial_link_soc2pad_t serial_link;
      pad_domain_periph_port_group_i2c_soc2pad_t i2c;
-     pad_domain_periph_port_group_ptme_soc2pad_t ptme;
-     pad_domain_periph_port_group_hpc_soc2pad_t hpc;
-     pad_domain_periph_port_group_llc_soc2pad_t llc;
      pad_domain_periph_port_group_spi_ot_soc2pad_t spi_ot;
      pad_domain_periph_port_group_pll_soc2pad_t pll;
      pad_domain_periph_port_group_gpio_soc2pad_t gpio;
@@ -325,9 +285,6 @@ package pkg_astral_padframe;
      pad_domain_periph_port_group_can_pad2soc_t can;
      pad_domain_periph_port_group_serial_link_pad2soc_t serial_link;
      pad_domain_periph_port_group_i2c_pad2soc_t i2c;
-     pad_domain_periph_port_group_tc_pad2soc_t tc;
-     pad_domain_periph_port_group_ptme_pad2soc_t ptme;
-     pad_domain_periph_port_group_obt_pad2soc_t obt;
      pad_domain_periph_port_group_spi_ot_pad2soc_t spi_ot;
      pad_domain_periph_port_group_pll_pad2soc_t pll;
      pad_domain_periph_port_group_gpio_pad2soc_t gpio;

@@ -336,8 +336,8 @@ module astral_padframe_periph_config_reg_top #(
   logic muxed_v_14_cfg_pull_sel_qs;
   logic muxed_v_14_cfg_pull_sel_wd;
   logic muxed_v_14_cfg_pull_sel_we;
-  logic [2:0] muxed_v_14_mux_sel_qs;
-  logic [2:0] muxed_v_14_mux_sel_wd;
+  logic [1:0] muxed_v_14_mux_sel_qs;
+  logic [1:0] muxed_v_14_mux_sel_wd;
   logic muxed_v_14_mux_sel_we;
   logic muxed_v_15_cfg_chip2pad_qs;
   logic muxed_v_15_cfg_chip2pad_wd;
@@ -354,8 +354,8 @@ module astral_padframe_periph_config_reg_top #(
   logic muxed_v_15_cfg_pull_sel_qs;
   logic muxed_v_15_cfg_pull_sel_wd;
   logic muxed_v_15_cfg_pull_sel_we;
-  logic [2:0] muxed_v_15_mux_sel_qs;
-  logic [2:0] muxed_v_15_mux_sel_wd;
+  logic [1:0] muxed_v_15_mux_sel_qs;
+  logic [1:0] muxed_v_15_mux_sel_wd;
   logic muxed_v_15_mux_sel_we;
   logic muxed_v_16_cfg_chip2pad_qs;
   logic muxed_v_16_cfg_chip2pad_wd;
@@ -372,8 +372,8 @@ module astral_padframe_periph_config_reg_top #(
   logic muxed_v_16_cfg_pull_sel_qs;
   logic muxed_v_16_cfg_pull_sel_wd;
   logic muxed_v_16_cfg_pull_sel_we;
-  logic [2:0] muxed_v_16_mux_sel_qs;
-  logic [2:0] muxed_v_16_mux_sel_wd;
+  logic [1:0] muxed_v_16_mux_sel_qs;
+  logic [1:0] muxed_v_16_mux_sel_wd;
   logic muxed_v_16_mux_sel_we;
   logic muxed_v_17_cfg_chip2pad_qs;
   logic muxed_v_17_cfg_chip2pad_wd;
@@ -390,8 +390,8 @@ module astral_padframe_periph_config_reg_top #(
   logic muxed_v_17_cfg_pull_sel_qs;
   logic muxed_v_17_cfg_pull_sel_wd;
   logic muxed_v_17_cfg_pull_sel_we;
-  logic [2:0] muxed_v_17_mux_sel_qs;
-  logic [2:0] muxed_v_17_mux_sel_wd;
+  logic [1:0] muxed_v_17_mux_sel_qs;
+  logic [1:0] muxed_v_17_mux_sel_wd;
   logic muxed_v_17_mux_sel_we;
   logic muxed_h_00_cfg_chip2pad_qs;
   logic muxed_h_00_cfg_chip2pad_wd;
@@ -408,8 +408,8 @@ module astral_padframe_periph_config_reg_top #(
   logic muxed_h_00_cfg_pull_sel_qs;
   logic muxed_h_00_cfg_pull_sel_wd;
   logic muxed_h_00_cfg_pull_sel_we;
-  logic [2:0] muxed_h_00_mux_sel_qs;
-  logic [2:0] muxed_h_00_mux_sel_wd;
+  logic [1:0] muxed_h_00_mux_sel_qs;
+  logic [1:0] muxed_h_00_mux_sel_wd;
   logic muxed_h_00_mux_sel_we;
   logic muxed_h_01_cfg_chip2pad_qs;
   logic muxed_h_01_cfg_chip2pad_wd;
@@ -426,8 +426,8 @@ module astral_padframe_periph_config_reg_top #(
   logic muxed_h_01_cfg_pull_sel_qs;
   logic muxed_h_01_cfg_pull_sel_wd;
   logic muxed_h_01_cfg_pull_sel_we;
-  logic [2:0] muxed_h_01_mux_sel_qs;
-  logic [2:0] muxed_h_01_mux_sel_wd;
+  logic [1:0] muxed_h_01_mux_sel_qs;
+  logic [1:0] muxed_h_01_mux_sel_wd;
   logic muxed_h_01_mux_sel_we;
   logic muxed_h_02_cfg_chip2pad_qs;
   logic muxed_h_02_cfg_chip2pad_wd;
@@ -444,8 +444,8 @@ module astral_padframe_periph_config_reg_top #(
   logic muxed_h_02_cfg_pull_sel_qs;
   logic muxed_h_02_cfg_pull_sel_wd;
   logic muxed_h_02_cfg_pull_sel_we;
-  logic [2:0] muxed_h_02_mux_sel_qs;
-  logic [2:0] muxed_h_02_mux_sel_wd;
+  logic [1:0] muxed_h_02_mux_sel_qs;
+  logic [1:0] muxed_h_02_mux_sel_wd;
   logic muxed_h_02_mux_sel_we;
   logic muxed_h_03_cfg_chip2pad_qs;
   logic muxed_h_03_cfg_chip2pad_wd;
@@ -462,8 +462,8 @@ module astral_padframe_periph_config_reg_top #(
   logic muxed_h_03_cfg_pull_sel_qs;
   logic muxed_h_03_cfg_pull_sel_wd;
   logic muxed_h_03_cfg_pull_sel_we;
-  logic [2:0] muxed_h_03_mux_sel_qs;
-  logic [2:0] muxed_h_03_mux_sel_wd;
+  logic [1:0] muxed_h_03_mux_sel_qs;
+  logic [1:0] muxed_h_03_mux_sel_wd;
   logic muxed_h_03_mux_sel_we;
 
   // Register instances
@@ -2246,7 +2246,7 @@ module astral_padframe_periph_config_reg_top #(
   prim_subreg #(
     .DW      (3),
     .SWACCESS("RW"),
-    .RESVAL  (3'h5)
+    .RESVAL  (3'h4)
   ) u_muxed_v_10_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -2405,7 +2405,7 @@ module astral_padframe_periph_config_reg_top #(
   prim_subreg #(
     .DW      (3),
     .SWACCESS("RW"),
-    .RESVAL  (3'h5)
+    .RESVAL  (3'h4)
   ) u_muxed_v_11_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -2564,7 +2564,7 @@ module astral_padframe_periph_config_reg_top #(
   prim_subreg #(
     .DW      (3),
     .SWACCESS("RW"),
-    .RESVAL  (3'h5)
+    .RESVAL  (3'h4)
   ) u_muxed_v_12_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -2723,7 +2723,7 @@ module astral_padframe_periph_config_reg_top #(
   prim_subreg #(
     .DW      (3),
     .SWACCESS("RW"),
-    .RESVAL  (3'h5)
+    .RESVAL  (3'h4)
   ) u_muxed_v_13_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -2880,9 +2880,9 @@ module astral_padframe_periph_config_reg_top #(
   // R[muxed_v_14_mux_sel]: V(False)
 
   prim_subreg #(
-    .DW      (3),
+    .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (3'h4)
+    .RESVAL  (2'h3)
   ) u_muxed_v_14_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -3039,9 +3039,9 @@ module astral_padframe_periph_config_reg_top #(
   // R[muxed_v_15_mux_sel]: V(False)
 
   prim_subreg #(
-    .DW      (3),
+    .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (3'h4)
+    .RESVAL  (2'h3)
   ) u_muxed_v_15_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -3198,9 +3198,9 @@ module astral_padframe_periph_config_reg_top #(
   // R[muxed_v_16_mux_sel]: V(False)
 
   prim_subreg #(
-    .DW      (3),
+    .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (3'h4)
+    .RESVAL  (2'h3)
   ) u_muxed_v_16_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -3357,9 +3357,9 @@ module astral_padframe_periph_config_reg_top #(
   // R[muxed_v_17_mux_sel]: V(False)
 
   prim_subreg #(
-    .DW      (3),
+    .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (3'h4)
+    .RESVAL  (2'h3)
   ) u_muxed_v_17_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -3516,9 +3516,9 @@ module astral_padframe_periph_config_reg_top #(
   // R[muxed_h_00_mux_sel]: V(False)
 
   prim_subreg #(
-    .DW      (3),
+    .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (3'h4)
+    .RESVAL  (2'h3)
   ) u_muxed_h_00_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -3675,9 +3675,9 @@ module astral_padframe_periph_config_reg_top #(
   // R[muxed_h_01_mux_sel]: V(False)
 
   prim_subreg #(
-    .DW      (3),
+    .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (3'h4)
+    .RESVAL  (2'h3)
   ) u_muxed_h_01_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -3834,9 +3834,9 @@ module astral_padframe_periph_config_reg_top #(
   // R[muxed_h_02_mux_sel]: V(False)
 
   prim_subreg #(
-    .DW      (3),
+    .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (3'h4)
+    .RESVAL  (2'h3)
   ) u_muxed_h_02_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -3993,9 +3993,9 @@ module astral_padframe_periph_config_reg_top #(
   // R[muxed_h_03_mux_sel]: V(False)
 
   prim_subreg #(
-    .DW      (3),
+    .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (3'h4)
+    .RESVAL  (2'h3)
   ) u_muxed_h_03_mux_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -4389,7 +4389,7 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_v_14_cfg_pull_sel_wd = reg_wdata[4];
 
   assign muxed_v_14_mux_sel_we = addr_hit[30] & reg_we & !reg_error;
-  assign muxed_v_14_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_v_14_mux_sel_wd = reg_wdata[1:0];
 
   assign muxed_v_15_cfg_chip2pad_we = addr_hit[31] & reg_we & !reg_error;
   assign muxed_v_15_cfg_chip2pad_wd = reg_wdata[0];
@@ -4407,7 +4407,7 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_v_15_cfg_pull_sel_wd = reg_wdata[4];
 
   assign muxed_v_15_mux_sel_we = addr_hit[32] & reg_we & !reg_error;
-  assign muxed_v_15_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_v_15_mux_sel_wd = reg_wdata[1:0];
 
   assign muxed_v_16_cfg_chip2pad_we = addr_hit[33] & reg_we & !reg_error;
   assign muxed_v_16_cfg_chip2pad_wd = reg_wdata[0];
@@ -4425,7 +4425,7 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_v_16_cfg_pull_sel_wd = reg_wdata[4];
 
   assign muxed_v_16_mux_sel_we = addr_hit[34] & reg_we & !reg_error;
-  assign muxed_v_16_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_v_16_mux_sel_wd = reg_wdata[1:0];
 
   assign muxed_v_17_cfg_chip2pad_we = addr_hit[35] & reg_we & !reg_error;
   assign muxed_v_17_cfg_chip2pad_wd = reg_wdata[0];
@@ -4443,7 +4443,7 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_v_17_cfg_pull_sel_wd = reg_wdata[4];
 
   assign muxed_v_17_mux_sel_we = addr_hit[36] & reg_we & !reg_error;
-  assign muxed_v_17_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_v_17_mux_sel_wd = reg_wdata[1:0];
 
   assign muxed_h_00_cfg_chip2pad_we = addr_hit[37] & reg_we & !reg_error;
   assign muxed_h_00_cfg_chip2pad_wd = reg_wdata[0];
@@ -4461,7 +4461,7 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_h_00_cfg_pull_sel_wd = reg_wdata[4];
 
   assign muxed_h_00_mux_sel_we = addr_hit[38] & reg_we & !reg_error;
-  assign muxed_h_00_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_h_00_mux_sel_wd = reg_wdata[1:0];
 
   assign muxed_h_01_cfg_chip2pad_we = addr_hit[39] & reg_we & !reg_error;
   assign muxed_h_01_cfg_chip2pad_wd = reg_wdata[0];
@@ -4479,7 +4479,7 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_h_01_cfg_pull_sel_wd = reg_wdata[4];
 
   assign muxed_h_01_mux_sel_we = addr_hit[40] & reg_we & !reg_error;
-  assign muxed_h_01_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_h_01_mux_sel_wd = reg_wdata[1:0];
 
   assign muxed_h_02_cfg_chip2pad_we = addr_hit[41] & reg_we & !reg_error;
   assign muxed_h_02_cfg_chip2pad_wd = reg_wdata[0];
@@ -4497,7 +4497,7 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_h_02_cfg_pull_sel_wd = reg_wdata[4];
 
   assign muxed_h_02_mux_sel_we = addr_hit[42] & reg_we & !reg_error;
-  assign muxed_h_02_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_h_02_mux_sel_wd = reg_wdata[1:0];
 
   assign muxed_h_03_cfg_chip2pad_we = addr_hit[43] & reg_we & !reg_error;
   assign muxed_h_03_cfg_chip2pad_wd = reg_wdata[0];
@@ -4515,7 +4515,7 @@ module astral_padframe_periph_config_reg_top #(
   assign muxed_h_03_cfg_pull_sel_wd = reg_wdata[4];
 
   assign muxed_h_03_mux_sel_we = addr_hit[44] & reg_we & !reg_error;
-  assign muxed_h_03_mux_sel_wd = reg_wdata[2:0];
+  assign muxed_h_03_mux_sel_wd = reg_wdata[1:0];
 
   // Read data return
   always_comb begin
@@ -4703,7 +4703,7 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[30]: begin
-        reg_rdata_next[2:0] = muxed_v_14_mux_sel_qs;
+        reg_rdata_next[1:0] = muxed_v_14_mux_sel_qs;
       end
 
       addr_hit[31]: begin
@@ -4715,7 +4715,7 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[32]: begin
-        reg_rdata_next[2:0] = muxed_v_15_mux_sel_qs;
+        reg_rdata_next[1:0] = muxed_v_15_mux_sel_qs;
       end
 
       addr_hit[33]: begin
@@ -4727,7 +4727,7 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[34]: begin
-        reg_rdata_next[2:0] = muxed_v_16_mux_sel_qs;
+        reg_rdata_next[1:0] = muxed_v_16_mux_sel_qs;
       end
 
       addr_hit[35]: begin
@@ -4739,7 +4739,7 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[36]: begin
-        reg_rdata_next[2:0] = muxed_v_17_mux_sel_qs;
+        reg_rdata_next[1:0] = muxed_v_17_mux_sel_qs;
       end
 
       addr_hit[37]: begin
@@ -4751,7 +4751,7 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[38]: begin
-        reg_rdata_next[2:0] = muxed_h_00_mux_sel_qs;
+        reg_rdata_next[1:0] = muxed_h_00_mux_sel_qs;
       end
 
       addr_hit[39]: begin
@@ -4763,7 +4763,7 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[40]: begin
-        reg_rdata_next[2:0] = muxed_h_01_mux_sel_qs;
+        reg_rdata_next[1:0] = muxed_h_01_mux_sel_qs;
       end
 
       addr_hit[41]: begin
@@ -4775,7 +4775,7 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[42]: begin
-        reg_rdata_next[2:0] = muxed_h_02_mux_sel_qs;
+        reg_rdata_next[1:0] = muxed_h_02_mux_sel_qs;
       end
 
       addr_hit[43]: begin
@@ -4787,7 +4787,7 @@ module astral_padframe_periph_config_reg_top #(
       end
 
       addr_hit[44]: begin
-        reg_rdata_next[2:0] = muxed_h_03_mux_sel_qs;
+        reg_rdata_next[1:0] = muxed_h_03_mux_sel_qs;
       end
 
       default: begin

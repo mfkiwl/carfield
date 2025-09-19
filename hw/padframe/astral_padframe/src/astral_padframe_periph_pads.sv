@@ -46,10 +46,6 @@ module astral_padframe_periph_pads
   inout wire logic pad_hyper_dq_6_pad,
   inout wire logic pad_hyper_dq_7_pad,
   inout wire logic pad_hyper_reset_n_pad,
-  inout wire logic pad_spw_data_in_pad,
-  inout wire logic pad_spw_strb_in_pad,
-  inout wire logic pad_spw_data_out_pad,
-  inout wire logic pad_spw_strb_out_pad,
   inout wire logic pad_uart_tx_out_pad,
   inout wire logic pad_uart_rx_in_pad,
   inout wire logic pad_muxed_v_00_pad,
@@ -759,78 +755,6 @@ module astral_padframe_periph_pads
     .Y   (  ),
     .PAD ( pad_hyper_reset_n_pad ),
     .A   ( static_connection_signals_soc2pad.hyper_reset_no ),
-    .DS0 ( 1'b0 ),
-    .DS1 ( 1'b0 ),
-    .IE  ( 1'b0 ),
-    .IS  ( 1'b0 ),
-    .OE  ( 1'b1 ),
-    .PE  ( 1'b0 ),
-    .POE ( 1'b0 ),
-    .PS  ( 1'b0 ),
-    .RTO ( io_pads_rto ),
-    .SNS ( io_pads_sns ),
-    .SR  ( 1'b0 )
-  );
-   (* dont_touch *)
-  PBIDIR_18_18_NT_DR_H i_spw_data_in (
-    .PO  (  ),
-    .Y   ( static_connection_signals_pad2soc.spw_data_i ),
-    .PAD ( pad_spw_data_in_pad ),
-    .A   ( 1'b0 ),
-    .DS0 ( 1'b0 ),
-    .DS1 ( 1'b0 ),
-    .IE  ( 1'b1 ),
-    .IS  ( 1'b0 ),
-    .OE  ( 1'b0 ),
-    .PE  ( 1'b0 ),
-    .POE ( 1'b0 ),
-    .PS  ( 1'b0 ),
-    .RTO ( io_pads_rto ),
-    .SNS ( io_pads_sns ),
-    .SR  ( 1'b0 )
-  );
-   (* dont_touch *)
-  PBIDIR_18_18_NT_DR_H i_spw_strb_in (
-    .PO  (  ),
-    .Y   ( static_connection_signals_pad2soc.spw_strb_i ),
-    .PAD ( pad_spw_strb_in_pad ),
-    .A   ( 1'b0 ),
-    .DS0 ( 1'b0 ),
-    .DS1 ( 1'b0 ),
-    .IE  ( 1'b1 ),
-    .IS  ( 1'b0 ),
-    .OE  ( 1'b0 ),
-    .PE  ( 1'b0 ),
-    .POE ( 1'b0 ),
-    .PS  ( 1'b0 ),
-    .RTO ( io_pads_rto ),
-    .SNS ( io_pads_sns ),
-    .SR  ( 1'b0 )
-  );
-   (* dont_touch *)
-  PBIDIR_18_18_NT_DR_H i_spw_data_out (
-    .PO  (  ),
-    .Y   (  ),
-    .PAD ( pad_spw_data_out_pad ),
-    .A   ( static_connection_signals_soc2pad.spw_data_o ),
-    .DS0 ( 1'b0 ),
-    .DS1 ( 1'b0 ),
-    .IE  ( 1'b0 ),
-    .IS  ( 1'b0 ),
-    .OE  ( 1'b1 ),
-    .PE  ( 1'b0 ),
-    .POE ( 1'b0 ),
-    .PS  ( 1'b0 ),
-    .RTO ( io_pads_rto ),
-    .SNS ( io_pads_sns ),
-    .SR  ( 1'b0 )
-  );
-   (* dont_touch *)
-  PBIDIR_18_18_NT_DR_H i_spw_strb_out (
-    .PO  (  ),
-    .Y   (  ),
-    .PAD ( pad_spw_strb_out_pad ),
-    .A   ( static_connection_signals_soc2pad.spw_strb_o ),
     .DS0 ( 1'b0 ),
     .DS1 ( 1'b0 ),
     .IE  ( 1'b0 ),
