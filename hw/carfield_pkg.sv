@@ -771,7 +771,7 @@ typedef logic [     AxiNarrowDataWidth-1:0] car_nar_dataw_t;
 typedef logic [        AxiNarrowStrobe-1:0] car_nar_strb_t;
 
 // APB Mapping
-localparam int unsigned NumApbMst = 7;
+localparam int unsigned NumApbMst = 5;
 
 typedef enum int {
   SystemTimerIdx   = 'd0,
