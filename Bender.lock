@@ -568,12 +568,6 @@ packages:
     - hwpe-ctrl
     - hwpe-stream
     - ibex
-  spacewire:
-    revision: null
-    version: null
-    source:
-      Path: /usr/scratch2/lagrev5/mciani/astral-project/spacewire
-    dependencies: []
   spatz:
     revision: 98de97f24fe42675c9b4a8cc08354a03af57400a
     version: null
@@ -588,12 +582,6 @@ packages:
     - register_interface
     - riscv-dbg
     - tech_cells_generic
-  streamer:
-    revision: null
-    version: null
-    source:
-      Path: /usr/scratch2/lagrev5/mciani/astral-project/streamer
-    dependencies: []
   tagger:
     revision: b288376b65b6bbd5feea196bb3c220f783d96e29
     version: null
