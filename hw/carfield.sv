@@ -380,8 +380,8 @@ localparam int unsigned CarfieldAxiMstRWidth  =
                                                        Cfg.AxiUserWidth );
 
 // External register interface synchronous with Cheshire's clock domain
-carfield_reg_req_t [iomsb(NumSyncRegSlv):0] ext_reg_req, ext_reg_req_cut;
-carfield_reg_rsp_t [iomsb(NumSyncRegSlv):0] ext_reg_rsp, ext_reg_rsp_cut;
+carfield_reg_req_t [cheshire_pkg::iomsb(NumSyncRegSlv):0] ext_reg_req, ext_reg_req_cut;
+carfield_reg_rsp_t [cheshire_pkg::iomsb(NumSyncRegSlv):0] ext_reg_rsp, ext_reg_rsp_cut;
 
 `ifndef GEN_NO_HYPERBUS // bender-xilinx.mk
 localparam int unsigned LlcIdWidth = Cfg.AxiMstIdWidth   +
@@ -428,42 +428,42 @@ logic hyper_isolate_req, hyper_isolated_rsp;
 logic security_island_isolate_req;
 logic ethernet_isolate_req, ethernet_isolated_rsp;
 
-logic [iomsb(Cfg.AxiExtNumSlv):0] slave_isolate_req, slave_isolated_rsp, slave_isolated;
-logic [iomsb(Cfg.AxiExtNumMst):0] master_isolated_rsp;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumSlv):0] slave_isolate_req, slave_isolated_rsp, slave_isolated;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0] master_isolated_rsp;
 
 // All AXI Slaves (except the Mailbox)
-logic [iomsb(NumSlaveCDCs):0][CarfieldAxiSlvAwWidth-1:0] axi_slv_ext_aw_data;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_aw_wptr;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_aw_rptr;
-logic [iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvWWidth-1:0] axi_slv_ext_w_data ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_w_wptr ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_w_rptr ;
-logic [iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvBWidth-1:0] axi_slv_ext_b_data ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_b_wptr ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_b_rptr ;
-logic [iomsb(NumSlaveCDCs):0][CarfieldAxiSlvArWidth-1:0] axi_slv_ext_ar_data;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_ar_wptr;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_ar_rptr;
-logic [iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvRWidth-1:0] axi_slv_ext_r_data ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_r_wptr ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_r_rptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][CarfieldAxiSlvAwWidth-1:0] axi_slv_ext_aw_data;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_aw_wptr;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_aw_rptr;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvWWidth-1:0] axi_slv_ext_w_data ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_w_wptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_w_rptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvBWidth-1:0] axi_slv_ext_b_data ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_b_wptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_b_rptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][CarfieldAxiSlvArWidth-1:0] axi_slv_ext_ar_data;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_ar_wptr;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_ar_rptr;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvRWidth-1:0] axi_slv_ext_r_data ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_r_wptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_r_rptr ;
 
 // All AXI Masters
-logic [iomsb(Cfg.AxiExtNumMst):0][CarfieldAxiMstAwWidth-1:0] axi_mst_ext_aw_data;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_aw_wptr;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_aw_rptr;
-logic [iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstWWidth-1:0] axi_mst_ext_w_data ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_w_wptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_w_rptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstBWidth-1:0] axi_mst_ext_b_data ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_b_wptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_b_rptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][CarfieldAxiMstArWidth-1:0] axi_mst_ext_ar_data;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_ar_wptr;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_ar_rptr;
-logic [iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstRWidth-1:0] axi_mst_ext_r_data ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_r_wptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_r_rptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][CarfieldAxiMstAwWidth-1:0] axi_mst_ext_aw_data;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_aw_wptr;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_aw_rptr;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstWWidth-1:0] axi_mst_ext_w_data ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_w_wptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_w_rptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstBWidth-1:0] axi_mst_ext_b_data ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_b_wptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_b_rptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][CarfieldAxiMstArWidth-1:0] axi_mst_ext_ar_data;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_ar_wptr;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_ar_rptr;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstRWidth-1:0] axi_mst_ext_r_data ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_r_wptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_r_rptr ;
 
 // soc reg signals
 carfield_reg2hw_t car_regs_reg2hw;

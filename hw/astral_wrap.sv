@@ -200,14 +200,6 @@ module astral_wrap
   assign st_soc2pad_signals.periph.hyper_reset_no   = hyperbus_rst_no_s[0];
   assign st_soc2pad_signals.periph.hyper_rwds_o     = hyperbus_rwds_out_s[0];
   assign st_soc2pad_signals.periph.hyper_rwds_oen_i = hyperbus_rwds_oe_s[0];
-  // TMTC
-  logic [2:0] hpc_addr_out_s;
-  assign soc2pad_port_signals.periph.hpc.hpc_addr_0_o = hpc_addr_out_s[0];
-  assign soc2pad_port_signals.periph.hpc.hpc_addr_1_o = hpc_addr_out_s[1];
-  assign soc2pad_port_signals.periph.hpc.hpc_addr_2_o = hpc_addr_out_s[2];
-  logic [1:0] llc_line_out_s;
-  assign soc2pad_port_signals.periph.llc.llc_line_0_o = llc_line_out_s[0];
-  assign soc2pad_port_signals.periph.llc.llc_line_1_o = llc_line_out_s[1];
 
   //  peripherals
 
@@ -665,10 +657,6 @@ module astral_wrap
     .pad_periph_hyper_dq_6_pad,
     .pad_periph_hyper_dq_7_pad,
     .pad_periph_hyper_reset_n_pad,
-    .pad_periph_spw_data_in_pad,
-    .pad_periph_spw_strb_in_pad,
-    .pad_periph_spw_data_out_pad,
-    .pad_periph_spw_strb_out_pad,
     .pad_periph_uart_tx_out_pad,
     .pad_periph_uart_rx_in_pad,
     .pad_periph_muxed_v_00_pad,
