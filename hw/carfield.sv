@@ -1359,7 +1359,7 @@ if (CarfieldIslandsCfg.pulp.enable) begin : gen_pulp_cluster
                                             master_isolated_rsp[IntClusterMstIdx];
 
 localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
-  CoreType: pulp_cluster_package::RISCY,
+  CoreType: pulp_cluster_package::RI5CY,
   NumCores: IntClusterNumCores,
   DmaNumPlugs: 4,
   DmaNumOutstandingBursts: 8,
@@ -1379,6 +1379,18 @@ localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
                         pulp_cluster_package::REDMULE}
             },
   HwpeNumPorts: 9,
+  HMRPresent: 1,
+  HMRDmrEnabled: 1,
+  HMRTmrEnabled: 1,
+  HMRDmrFIxed: 0,
+  HMRTmrFIxed: 0,
+  HMRInterleaveGrps: 1,
+  HMREnableRapidRecovery: 1,
+  HMRSeparateDataVoters: 1,
+  HMRSeparateAxiBus: 0,
+  HMRNumBusVoters: 1,
+  EnableECC: 1,
+  ECCInterco: 1,
   iCacheNumBanks: 2,
   iCacheNumLines: 1,
   iCacheNumWays: 4,
@@ -1410,10 +1422,12 @@ localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
   AxiCdcLogDepth: 3,
   AxiCdcSyncStages: carfield_pkg::SyncStages,
   SyncStages: carfield_pkg::SyncStages,
-  ClusterBaseAddr: carfield_pkg::CarfieldAxiMap.AxiStart[CarfieldAxiSlvIdx.pulp],
+  ClusterBaseAddr: carfield_pkg::CarfieldAxiMap.AxiStart[CarfieldAxiSlvIdx.pulp]
+                   - (carfield_pkg::IntClusterIndex << 22),
   ClusterPeriphOffs: carfield_pkg::PulpClustPeriphOffs,
   ClusterExternalOffs: carfield_pkg::PulpClustExtOffs,
   EnableRemapAddress: 0,
+  SnitchICache: 0,
   default: '0
 };
 
