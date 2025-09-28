@@ -50,7 +50,7 @@ include $(CAR_ROOT)/bender-safed.mk
 ######################
 
 CAR_NONFREE_REMOTE ?= git@iis-git.ee.ethz.ch:astral/astral-nonfree.git
-CAR_NONFREE_COMMIT ?= 089a4bc36000e38add44653374027cd68350fd26
+CAR_NONFREE_COMMIT ?= 11825e382bc1f78ba9dbda4bd1eb1b747d1d2b84
 
 ## @section Carfield platform nonfree components
 ## Clone the non-free verification IP for Carfield. Some components such as CI scripts and ASIC
