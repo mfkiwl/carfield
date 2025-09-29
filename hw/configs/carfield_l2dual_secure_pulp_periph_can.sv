@@ -29,7 +29,7 @@ localparam doub_bt EthernetSize = 'h00001000;
 // Peripherals
 localparam bit     PeriphEnable = 1;
 localparam doub_bt PeriphBase = 'h20001000;
-localparam doub_bt PeriphSize = 'h01000000;
+localparam doub_bt PeriphSize = 'h00FFF000;
 // Spatz cluster
 localparam bit     SpatzClusterEnable = 0;
 localparam doub_bt SpatzClusterBase = 'h51000000;
