@@ -17,7 +17,7 @@ dependencies:
   hyperbus:           { git: https://github.com/pulp-platform/hyperbus.git,             version: 0.0.9}
   dyn_mem:            { git: https://github.com/pulp-platform/dyn_spm.git,              rev: 480590062742230dc9bd4050358a15b4747bdf34 } # branch: main
   safety_island:      { git: https://github.com/pulp-platform/safety_island.git,        rev: aaef55c798ab53560faaf451a86668fa1e6d0f3b } # branch: carfield
-  pulp_cluster:       { git: https://github.com/pulp-platform/pulp_cluster.git,         rev: 6bc18dc1fd02cfce8d374dfc13e30dc585a677fb } # branch: yt/cluster_id
+  pulp_cluster:       { git: https://github.com/pulp-platform/pulp_cluster.git,         rev: 7dc5e41f33131269ff9cd5b12207b0bf4398d9da } # branch: yt/core-demux
   opentitan:          { git: https://github.com/pulp-platform/opentitan.git,            rev: 42df2697ad3d07608df942cb7e1928c05558af26 } # branch: mc/astral
   mailbox_unit:       { git: https://github.com/pulp-platform/mailbox_unit.git,         version: 1.1.0                                }
   apb:                { git: https://github.com/pulp-platform/apb.git,                  version: 0.2.3                                }
