@@ -444,7 +444,7 @@ packages:
     - idma
     - register_interface
   pulp_cluster:
-    revision: 7dc5e41f33131269ff9cd5b12207b0bf4398d9da
+    revision: caaa9735346bee71b51d1fe6ba526743bc41e135
     version: null
     source:
       Git: https://github.com/pulp-platform/pulp_cluster.git
