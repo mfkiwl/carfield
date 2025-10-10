@@ -271,6 +271,16 @@ $(CAR_HW_DIR)/padframe/astral_padframe: $(CAR_HW_DIR)/padframe/astral_padframe.y
 $(CAR_SW_DIR)/include/regs/padframe_regs.h: $(CAR_ROOT)/hw/padframe/astral_padframe/src/astral_padframe_periph_regs.hjson | venv
 	$(VENV)/$(PYTHON) utils/reggen/regtool.py -D $<  > $@
 
+## @section Astral IO file generation
+.PHONY: regenerate_iofile
+regenerate_iofile: $(CAR_ROOT)/iofile/astral.io
+
+$(CAR_ROOT)/iofile/astral.io: $(CAR_ROOT)/iofile/padring.csv
+	rm -rf $@
+	sed 's/;/,/g' "$<" > $<.tmp
+	mv $<.tmp $<
+	$(PYTHON) $(CAR_ROOT)/scripts/iogen.py $< $@
+
 ## Update host domain PLIC and CLINT interrupt controllers configuration. The default configuration
 ## in cheshire allows for one interruptible hart. When the number of external interruptible harts is
 ## updated in the Cheshire cfg (cheshire_pkg.sv), we need to regenerate the PLIC and CLINT
