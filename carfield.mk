@@ -20,7 +20,7 @@
 CAR_ROOT    ?= $(shell $(BENDER) path carfield)
 CAR_HW_DIR  := $(CAR_ROOT)/hw
 CAR_SW_DIR  := $(CAR_ROOT)/sw
-CAR_TGT_DIR := $(CAR_ROOT)/target/
+CAR_TGT_DIR := $(CAR_ROOT)/target
 CAR_XIL_DIR := $(CAR_TGT_DIR)/xilinx
 CAR_SIM_DIR := $(CAR_TGT_DIR)/sim
 SECD_ROOT ?= $(shell $(BENDER) path opentitan)
@@ -36,6 +36,8 @@ BENDER_PATH ?= $(shell which $(BENDER))
 
 PYTHON      ?= python3
 
+PADRICK ?= $(CAR_HW_DIR)/padframe/padrick
+
 # Include mandatory bender targets and defines for multiple targets (sim, fpga, synth)
 include $(CAR_ROOT)/bender-common.mk
 include $(CAR_ROOT)/bender-sim.mk
@@ -48,7 +50,7 @@ include $(CAR_ROOT)/bender-safed.mk
 ######################
 
 CAR_NONFREE_REMOTE ?= git@iis-git.ee.ethz.ch:astral/astral-nonfree.git
-CAR_NONFREE_COMMIT ?= 089a4bc36000e38add44653374027cd68350fd26
+CAR_NONFREE_COMMIT ?= 59aa6cfed0afe8a841c6fd478c07717a764fc4da
 
 ## @section Carfield platform nonfree components
 ## Clone the non-free verification IP for Carfield. Some components such as CI scripts and ASIC
@@ -100,6 +102,9 @@ SPATZD_MAKEDIR  := $(SPATZD_ROOT)/hw/system/spatz_cluster
 SPATZD_BINARY   ?=
 SPATZD_BOOTMODE ?= 0 # default jtag bootmode
 
+# PLL/FLL bypass
+BYPASS_PLL ?= 0
+
 ###########################
 # System HW configuration #
 ###########################
@@ -116,7 +121,7 @@ PLIC_NUM_INTRS := 89
 SERIAL_LINK_NUM_BITS := 16
 
 # AXI Real-Time unit configuration in Carfield
-AXIRT_NUM_MGRS := 10
+AXIRT_NUM_MGRS := 9
 AXIRT_NUM_SUBS := 2
 
 ##########################################
@@ -167,12 +172,8 @@ SAFED_SW_BUILD := safed-sw-build
 SAFED_SW_INIT := safed-sw-init
 endif
 
-ifeq ($(shell echo $(SAFED_PRESENT)), 1)
+ifeq ($(shell echo $(SPATZD_PRESENT)), 1)
 SPATZD_HW_INIT := spatzd-hw-init
-endif
-
-ifeq ($(shell echo $(SECURED_PRESENT)), 1)
-SECD_HW_INIT := secd-hw-init
 endif
 
 ## @section Carfield platform SW build
@@ -201,7 +202,7 @@ pulpd-sw-init: $(PULPD_ROOT) $(PULPD_ROOT)/pulp-runtime $(PULPD_ROOT)/regression
 $(PULPD_ROOT)/pulp-runtime: $(PULPD_ROOT)
 	$(MAKE) -C $(PULPD_ROOT) pulp-runtime
 $(PULPD_ROOT)/regression-tests: $(PULPD_ROOT)
-	$(MAKE) -C $(PULPD_ROOT) regression-tests
+	$(MAKE) -C $(PULPD_ROOT) regression_tests
 
 ## Build safe domain SW
 .PHONY: safed-sw-build
@@ -234,10 +235,6 @@ pulpd-sw-build: pulpd-sw-init
 ## for more information.
 car-hw-init: $(SPATZD_HW_INIT) chs-hw-init $(SECD_HW_INIT)
 
-#Build OpenTitan's debug rom with support for coreid != 0x0
-secd-hw-init:
-	$(MAKE) -C $(SECD_ROOT)/hw/vendor/pulp_riscv_dbg/debug_rom clean all FLAGS=-DCARFIELD=1
-
 ## @section Carfield platform PCRs generation
 .PHONY: regenerate_soc_regs
 ## Regenerate the toplevel PCRs from the CSV description of all registers in
@@ -261,6 +258,28 @@ $(CAR_SW_DIR)/include/regs/soc_ctrl.h: $(CAR_ROOT)/hw/regs/carfield_regs.hjson |
 .PHONY: $(CAR_SW_DIR)/hw/regs/pcr.md
 $(CAR_HW_DIR)/regs/pcr.md: $(CAR_ROOT)/hw/regs/carfield_regs.hjson | venv
 	$(VENV)/$(PYTHON) utils/reggen/regtool.py -d $<  > $@
+
+## @section Carfield padframe generation
+.PHONY: regenerate_padframe
+regenerate_padframe: $(CAR_HW_DIR)/padframe/astral_padframe $(CAR_SW_DIR)/include/regs/padframe_regs.h
+
+$(CAR_HW_DIR)/padframe/astral_padframe: $(CAR_HW_DIR)/padframe/astral_padframe.yml
+	$(PADRICK) generate rtl $< -o $@
+	sed -i.original '/i_pad_vss_core_v_2/d' $@/src/astral_padframe_periph_pads.sv
+
+.PHONY: $(CAR_SW_DIR)/include/regs/padframe_regs.h
+$(CAR_SW_DIR)/include/regs/padframe_regs.h: $(CAR_ROOT)/hw/padframe/astral_padframe/src/astral_padframe_periph_regs.hjson | venv
+	$(VENV)/$(PYTHON) utils/reggen/regtool.py -D $<  > $@
+
+## @section Astral IO file generation
+.PHONY: regenerate_iofile
+regenerate_iofile: $(CAR_ROOT)/iofile/astral.io
+
+$(CAR_ROOT)/iofile/astral.io: $(CAR_ROOT)/iofile/padring.csv
+	rm -rf $@
+	sed 's/;/,/g' "$<" > $<.tmp
+	mv $<.tmp $<
+	$(PYTHON) $(CAR_ROOT)/scripts/iogen.py $< $@
 
 ## Update host domain PLIC and CLINT interrupt controllers configuration. The default configuration
 ## in cheshire allows for one interruptible hart. When the number of external interruptible harts is
@@ -387,7 +406,7 @@ car-check-litmus-tests: $(LITMUS_WORK_DIR)/litmus.log
 ##############
 tech-repo := git@iis-git.ee.ethz.ch:Astral/gf12.git
 # no commit by default, change during development
-tech-commit := 26f9f03b6fcd9af8ace79bf5b4c6ea3a61c681a0 # branch: main
+tech-commit := e58cb2997247e74c3d258788c4c1dbce9cbda838 # branch: yt/astral-resume
 
 tech-clone:
 	git clone $(tech-repo) tech

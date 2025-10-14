@@ -12,6 +12,7 @@
 #include "params.h"
 #include "util.h"
 #include "car_util.h"
+#include "printf.h"
 
 // transfer
 #define SIZE_BYTES 256
@@ -27,6 +28,10 @@ int main(void) {
 
     // Put SMP Hart to sleep
     if (hart_id() != 0) wfi();
+
+    uint32_t rtc_freq = *reg32(&__base_regs, CHESHIRE_RTC_FREQ_REG_OFFSET);
+    uint64_t reset_freq = clint_get_core_freq(rtc_freq, 2500);
+    uart_init(&__base_uart, reset_freq, 115200);
 
     // enable and configure axi rt with fragmentation of 8 beats
     __axirt_claim(1, 1);
@@ -55,8 +60,11 @@ int main(void) {
     sys_dma_2d_blk_memcpy(DST_ADDR, SRC_ADDR, SIZE_BYTES, DST_STRIDE, SRC_STRIDE, NUM_REPS);
 
     // read budget registers and compare
-    volatile uint32_t read_budget = *reg32(&__base_axirt, AXI_RT_READ_BUDGET_LEFT_2_REG_OFFSET);
-    volatile uint32_t write_budget = *reg32(&__base_axirt, AXI_RT_WRITE_BUDGET_LEFT_2_REG_OFFSET);
+    volatile uint32_t read_budget = readd(&__base_axirt + AXI_RT_READ_BUDGET_LEFT_2_REG_OFFSET);
+    volatile uint32_t write_budget = readd(&__base_axirt + AXI_RT_WRITE_BUDGET_LEFT_2_REG_OFFSET);
+
+    printf("@0x%x: %d\n", &__base_axirt + AXI_RT_READ_BUDGET_LEFT_2_REG_OFFSET, read_budget);
+    printf("@0x%x: %d\n", &__base_axirt + AXI_RT_WRITE_BUDGET_LEFT_2_REG_OFFSET, write_budget);
 
     // check
     volatile uint8_t difference = (TOTAL_SIZE - read_budget) + (TOTAL_SIZE - write_budget);

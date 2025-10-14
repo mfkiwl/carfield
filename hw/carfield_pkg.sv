@@ -212,8 +212,8 @@ typedef struct packed {
   byte_bt pcrs;
   byte_bt pll;
   byte_bt padframe;
-  byte_bt l2ecc;
   byte_bt ethernet;
+  byte_bt l2ecc;
 } carfield_regbus_slave_idx_t;
 
 // Generate the number of AXI slave devices to be connected to the
@@ -322,6 +322,17 @@ function automatic int unsigned gen_carfield_domains(islands_cfg_t island_cfg);
   return ret;
 endfunction
 
+// Generate number of clock sources
+function automatic int unsigned gen_carfield_clock_srcs(islands_cfg_t island_cfg);
+  int unsigned ret = 2; // Number of clock sources starts from 2 (Host + rt clock)
+  if (island_cfg.safed.enable   ) begin ret++; end
+  if (island_cfg.periph.enable  ) begin ret++; end
+  if (island_cfg.spatz.enable   ) begin ret++; end
+  if (island_cfg.pulp.enable    ) begin ret++; end
+  if (island_cfg.secured.enable ) begin ret++; end
+  return ret;
+endfunction
+
 localparam islands_cfg_t CarfieldIslandsCfg = '{
   l2_port0:      '{L2Port0Enable, L2Port0Base, L2Port0Size},
   l2_port1:      '{L2Port1Enable, L2Port1Base, L2Port1Size},
@@ -352,6 +363,8 @@ localparam regbus_struct_t CarfieldRegBusMap = carfield_gen_regbus_map(NumTotalR
 
 localparam int unsigned CarfieldNumDomains = gen_carfield_domains(CarfieldIslandsCfg);
 
+localparam int unsigned NumFll = gen_carfield_clock_srcs(CarfieldIslandsCfg);
+
 typedef struct {
   int unsigned clock_div_value[CarfieldNumDomains];
 } carfield_clk_div_values_t;
@@ -373,6 +386,7 @@ typedef struct packed {
   byte_bt secured;
   byte_bt safed;
   byte_bt periph;
+  byte_bt ethernet;
 } carfield_domain_idx_t;
 
 function automatic carfield_domain_idx_t gen_domain_idx(islands_cfg_t island_cfg);
@@ -520,12 +534,14 @@ localparam dm::hartinfo_t [MaxHartId:0] SafetyIslandExtHartinfo =
       default: '0
   };
   localparam int unsigned SafetyIslandIrqs = SafetyIslandCfg.NumInterrupts;
+  localparam safety_island_pkg::bootmode_e SafetyIslandPreloaded = safety_island_pkg::Preloaded;
 `else
   localparam int unsigned SafetyIslandCfg = '0;
   localparam bit [31:0] SafedDebugOffs          = 0;
   localparam int unsigned SafetyIslandMemOffset = 0;
   localparam int unsigned SafetyIslandPerOffset = 0;
   localparam int unsigned SafetyIslandIrqs = 1;
+  localparam int unsigned SafetyIslandPreloaded = 0;
 `endif
 
 // Compute the number of atomic MSBs depending on the configuration
@@ -709,13 +725,13 @@ localparam int unsigned LogDepth   = 3;
 /* L2 Parameters */
 /*****************/
 localparam int unsigned NumL2Ports = (CarfieldIslandsCfg.l2_port1.enable) ? 2 : 1;
-localparam int unsigned L2MemSize = CarfieldIslandsCfg.l2_port0.size/2;
+localparam int unsigned L2MemSize = CarfieldIslandsCfg.l2_port0.size;
 localparam int unsigned L2NumRules = 4; // 2 rules per each access mode
                                         // (interleaved, non-interleaved)
 localparam doub_bt L2Port0InterlBase = CarfieldIslandsCfg.l2_port0.base;
 localparam doub_bt L2Port1InterlBase = CarfieldIslandsCfg.l2_port1.base;
-localparam doub_bt L2Port0NonInterlBase = CarfieldIslandsCfg.l2_port0.base + L2MemSize;
-localparam doub_bt L2Port1NonInterlBase = CarfieldIslandsCfg.l2_port1.base + L2MemSize;
+localparam doub_bt L2Port0NonInterlBase = CarfieldIslandsCfg.l2_port0.base + L2MemSize/2;
+localparam doub_bt L2Port1NonInterlBase = CarfieldIslandsCfg.l2_port1.base + L2MemSize/2;
 
 /******************************/
 /* Integer Cluster Parameters */
@@ -773,7 +789,7 @@ typedef struct packed {
 } carfield_addr_map_rule_t;
 
 localparam carfield_addr_map_rule_t [NumApbMst-1:0] PeriphApbAddrMapRule = '{
-   // 0: System Timer
+  // 0: System Timer
   '{ idx: SystemTimerIdx,   start_addr: SystemTimerBase,
                             end_addr: SystemTimerBase + SystemTimerSize  },
   // 1: Advanced Timer

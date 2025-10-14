@@ -237,6 +237,7 @@ module carfield_reg_top #(
   logic [19:0] hyperbus_clk_div_value_qs;
   logic [19:0] hyperbus_clk_div_value_wd;
   logic hyperbus_clk_div_value_we;
+  logic [4:0] fll_lock_qs;
 
   // Register instances
   // R[version0]: V(False)
@@ -1083,7 +1084,7 @@ module carfield_reg_top #(
   prim_subreg #(
     .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (2'h1)
+    .RESVAL  (2'h3)
   ) u_security_island_clk_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -1830,9 +1831,35 @@ module carfield_reg_top #(
   );
 
 
+  // R[fll_lock]: V(False)
+
+  prim_subreg #(
+    .DW      (5),
+    .SWACCESS("RO"),
+    .RESVAL  (5'h0)
+  ) u_fll_lock (
+    .clk_i   (clk_i    ),
+    .rst_ni  (rst_ni  ),
+
+    .we     (1'b0),
+    .wd     ('0  ),
+
+    // from internal hardware
+    .de     (hw2reg.fll_lock.de),
+    .d      (hw2reg.fll_lock.d ),
+
+    // to internal hardware
+    .qe     (),
+    .q      (reg2hw.fll_lock.q ),
+
+    // to register interface (read)
+    .qs     (fll_lock_qs)
+  );
 
 
-  logic [62:0] addr_hit;
+
+
+  logic [63:0] addr_hit;
   always_comb begin
     addr_hit = '0;
     addr_hit[ 0] = (reg_addr == CARFIELD_VERSION0_OFFSET);
@@ -1898,6 +1925,7 @@ module carfield_reg_top #(
     addr_hit[60] = (reg_addr == CARFIELD_ETH_CLK_DIV_VALUE_OFFSET);
     addr_hit[61] = (reg_addr == CARFIELD_HYPERBUS_CLK_DIV_EN_OFFSET);
     addr_hit[62] = (reg_addr == CARFIELD_HYPERBUS_CLK_DIV_VALUE_OFFSET);
+    addr_hit[63] = (reg_addr == CARFIELD_FLL_LOCK_OFFSET);
   end
 
   assign addrmiss = (reg_re || reg_we) ? ~|addr_hit : 1'b0 ;
@@ -1967,7 +1995,8 @@ module carfield_reg_top #(
                (addr_hit[59] & (|(CARFIELD_PERMIT[59] & ~reg_be))) |
                (addr_hit[60] & (|(CARFIELD_PERMIT[60] & ~reg_be))) |
                (addr_hit[61] & (|(CARFIELD_PERMIT[61] & ~reg_be))) |
-               (addr_hit[62] & (|(CARFIELD_PERMIT[62] & ~reg_be)))));
+               (addr_hit[62] & (|(CARFIELD_PERMIT[62] & ~reg_be))) |
+               (addr_hit[63] & (|(CARFIELD_PERMIT[63] & ~reg_be)))));
   end
 
   assign jedec_idcode_we = addr_hit[5] & reg_we & !reg_error;
@@ -2383,6 +2412,10 @@ module carfield_reg_top #(
 
       addr_hit[62]: begin
         reg_rdata_next[19:0] = hyperbus_clk_div_value_qs;
+      end
+
+      addr_hit[63]: begin
+        reg_rdata_next[4:0] = fll_lock_qs;
       end
 
       default: begin

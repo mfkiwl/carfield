@@ -43,6 +43,8 @@ module carfield
   input   logic                                       periph_clk_i,
   // accelerator and island clock
   input   logic                                       alt_clk_i,
+  // secure domain clock
+  input   logic                                       secd_clk_i,
   // external reference clock for timers (CLINT, islands)
   input   logic                                       rt_clk_i,
 
@@ -50,6 +52,8 @@ module carfield
 
   // testmode pin
   input   logic                                       test_mode_i,
+  // FLL lock input
+  input logic   [carfield_pkg::NumFll-1:0]            fll_lock_i,
   // Cheshire BOOT pins (3 pins)
   input   logic [1:0]                                 boot_mode_i,
   // Cheshire JTAG Interface
@@ -376,8 +380,8 @@ localparam int unsigned CarfieldAxiMstRWidth  =
                                                        Cfg.AxiUserWidth );
 
 // External register interface synchronous with Cheshire's clock domain
-carfield_reg_req_t [iomsb(NumSyncRegSlv):0] ext_reg_req, ext_reg_req_cut;
-carfield_reg_rsp_t [iomsb(NumSyncRegSlv):0] ext_reg_rsp, ext_reg_rsp_cut;
+carfield_reg_req_t [cheshire_pkg::iomsb(NumSyncRegSlv):0] ext_reg_req, ext_reg_req_cut;
+carfield_reg_rsp_t [cheshire_pkg::iomsb(NumSyncRegSlv):0] ext_reg_rsp, ext_reg_rsp_cut;
 
 `ifndef GEN_NO_HYPERBUS // bender-xilinx.mk
 localparam int unsigned LlcIdWidth = Cfg.AxiMstIdWidth   +
@@ -424,42 +428,42 @@ logic hyper_isolate_req, hyper_isolated_rsp;
 logic security_island_isolate_req;
 logic ethernet_isolate_req, ethernet_isolated_rsp;
 
-logic [iomsb(Cfg.AxiExtNumSlv):0] slave_isolate_req, slave_isolated_rsp, slave_isolated;
-logic [iomsb(Cfg.AxiExtNumMst):0] master_isolated_rsp;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumSlv):0] slave_isolate_req, slave_isolated_rsp, slave_isolated;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0] master_isolated_rsp;
 
 // All AXI Slaves (except the Mailbox)
-logic [iomsb(NumSlaveCDCs):0][CarfieldAxiSlvAwWidth-1:0] axi_slv_ext_aw_data;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_aw_wptr;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_aw_rptr;
-logic [iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvWWidth-1:0] axi_slv_ext_w_data ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_w_wptr ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_w_rptr ;
-logic [iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvBWidth-1:0] axi_slv_ext_b_data ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_b_wptr ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_b_rptr ;
-logic [iomsb(NumSlaveCDCs):0][CarfieldAxiSlvArWidth-1:0] axi_slv_ext_ar_data;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_ar_wptr;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_ar_rptr;
-logic [iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvRWidth-1:0] axi_slv_ext_r_data ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_r_wptr ;
-logic [iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_r_rptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][CarfieldAxiSlvAwWidth-1:0] axi_slv_ext_aw_data;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_aw_wptr;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_aw_rptr;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvWWidth-1:0] axi_slv_ext_w_data ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_w_wptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_w_rptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvBWidth-1:0] axi_slv_ext_b_data ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_b_wptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_b_rptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][CarfieldAxiSlvArWidth-1:0] axi_slv_ext_ar_data;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_ar_wptr;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_ar_rptr;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][ CarfieldAxiSlvRWidth-1:0] axi_slv_ext_r_data ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_r_wptr ;
+logic [cheshire_pkg::iomsb(NumSlaveCDCs):0][               LogDepth:0] axi_slv_ext_r_rptr ;
 
 // All AXI Masters
-logic [iomsb(Cfg.AxiExtNumMst):0][CarfieldAxiMstAwWidth-1:0] axi_mst_ext_aw_data;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_aw_wptr;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_aw_rptr;
-logic [iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstWWidth-1:0] axi_mst_ext_w_data ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_w_wptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_w_rptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstBWidth-1:0] axi_mst_ext_b_data ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_b_wptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_b_rptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][CarfieldAxiMstArWidth-1:0] axi_mst_ext_ar_data;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_ar_wptr;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_ar_rptr;
-logic [iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstRWidth-1:0] axi_mst_ext_r_data ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_r_wptr ;
-logic [iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_r_rptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][CarfieldAxiMstAwWidth-1:0] axi_mst_ext_aw_data;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_aw_wptr;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_aw_rptr;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstWWidth-1:0] axi_mst_ext_w_data ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_w_wptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_w_rptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstBWidth-1:0] axi_mst_ext_b_data ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_b_wptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_b_rptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][CarfieldAxiMstArWidth-1:0] axi_mst_ext_ar_data;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_ar_wptr;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_ar_rptr;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][ CarfieldAxiMstRWidth-1:0] axi_mst_ext_r_data ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_r_wptr ;
+logic [cheshire_pkg::iomsb(Cfg.AxiExtNumMst):0][               LogDepth:0] axi_mst_ext_r_rptr ;
 
 // soc reg signals
 carfield_reg2hw_t car_regs_reg2hw;
@@ -501,11 +505,13 @@ end
 
 // Clock Multiplexing for each sub block
 localparam int unsigned DomainClkDivValueWidth = 24;
+// One FLL is for the RT clock which does not go through the MUX.
+localparam int unsigned ClkMuxNumInputs = carfield_pkg::NumFll-1;
 typedef logic [DomainClkDivValueWidth-1:0] domain_clk_div_value_t;
 logic [NumDomains-1:0] domain_clk;
 logic [NumDomains-1:0] domain_clk_en;
 logic [NumDomains-1:0] domain_clk_gated;
-logic [NumDomains-1:0][1:0] domain_clk_sel;
+logic [NumDomains-1:0][$clog2(ClkMuxNumInputs)-1:0] domain_clk_sel;
 
 logic [NumDomains-1:0] domain_clk_div_changed;
 logic [NumDomains-1:0] domain_clk_div_decoupled_valid, domain_clk_div_decoupled_ready;
@@ -533,14 +539,14 @@ logic [NumDomains-1:0] rsts_n;
 
 for (genvar i = 0; i < NumDomains; i++) begin : gen_domain_clock_mux
   clk_mux_glitch_free #(
-    .NUM_INPUTS(3)
+    .NUM_INPUTS(carfield_pkg::NumFll-1)
   ) i_clk_mux (
-    .clks_i       ( {periph_clk_i, alt_clk_i, host_clk_i} ),
-    .test_clk_i   ( 1'b0                                  ),
-    .test_en_i    ( 1'b0                                  ),
-    .async_rstn_i ( host_pwr_on_rst_n                     ),
-    .async_sel_i  ( domain_clk_sel[i]                     ),
-    .clk_o        ( domain_clk[i]                         )
+    .clks_i       ( {secd_clk_i, periph_clk_i, alt_clk_i, host_clk_i} ),
+    .test_clk_i   ( 1'b0                                              ),
+    .test_en_i    ( 1'b0                                              ),
+    .async_rstn_i ( host_pwr_on_rst_n                                 ),
+    .async_sel_i  ( domain_clk_sel[i]                                 ),
+    .clk_o        ( domain_clk[i]                                     )
   );
 
   // The register file does not support back pressure directly. I.e the hardware side cannot tell
@@ -687,6 +693,9 @@ carfield_reg_top #(
   .hw2reg (car_regs_hw2reg),
   .devmode_i (1'b1)
 );
+
+assign car_regs_hw2reg.fll_lock.de = 1'b1;
+assign car_regs_hw2reg.fll_lock.d = fll_lock_i;
 
 // hyperbus reg req/rsp
 carfield_a32_d32_reg_req_t reg_hyper_req;
@@ -1350,13 +1359,13 @@ if (CarfieldIslandsCfg.pulp.enable) begin : gen_pulp_cluster
                                             master_isolated_rsp[IntClusterMstIdx];
 
 localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
-  CoreType: pulp_cluster_package::RISCY,
+  CoreType: pulp_cluster_package::RI5CY,
   NumCores: IntClusterNumCores,
   DmaNumPlugs: 4,
   DmaNumOutstandingBursts: 8,
   DmaBurstLength: 256,
   NumMstPeriphs: 1,
-  NumSlvPeriphs: 11,
+  NumSlvPeriphs: 12,
   ClusterAlias: 1,
   ClusterAliasBase: 'h0,
   NumSyncStages: 3,
@@ -1370,6 +1379,18 @@ localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
                         pulp_cluster_package::REDMULE}
             },
   HwpeNumPorts: 9,
+  HMRPresent: 1,
+  HMRDmrEnabled: 1,
+  HMRTmrEnabled: 1,
+  HMRDmrFIxed: 0,
+  HMRTmrFIxed: 0,
+  HMRInterleaveGrps: 1,
+  HMREnableRapidRecovery: 1,
+  HMRSeparateDataVoters: 1,
+  HMRSeparateAxiBus: 0,
+  HMRNumBusVoters: 1,
+  EnableECC: 1,
+  ECCInterco: 1,
   iCacheNumBanks: 2,
   iCacheNumLines: 1,
   iCacheNumWays: 4,
@@ -1401,10 +1422,12 @@ localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
   AxiCdcLogDepth: 3,
   AxiCdcSyncStages: carfield_pkg::SyncStages,
   SyncStages: carfield_pkg::SyncStages,
-  ClusterBaseAddr: carfield_pkg::CarfieldAxiMap.AxiStart[CarfieldAxiSlvIdx.pulp],
+  ClusterBaseAddr: carfield_pkg::CarfieldAxiMap.AxiStart[CarfieldAxiSlvIdx.pulp]
+                   - (carfield_pkg::IntClusterIndex << 22),
   ClusterPeriphOffs: carfield_pkg::PulpClustPeriphOffs,
   ClusterExternalOffs: carfield_pkg::PulpClustExtOffs,
   EnableRemapAddress: 0,
+  SnitchICache: 0,
   default: '0
 };
 
@@ -1413,7 +1436,7 @@ localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
    .Cfg( PulpClusterCfg )
   ) i_integer_cluster               (
 `else
-  int_cluster i_integer_cluster     (
+  pulp_cluster i_integer_cluster     (
 `endif
     .clk_i                       ( pulp_clk                                  ),
     .rst_ni                      ( pulp_rst_n                                ),
@@ -1488,7 +1511,8 @@ localparam pulp_cluster_package::pulp_cluster_cfg_t PulpClusterCfg = '{
   assign hostd_pulpcl_mbox_intr_ored  = |hostd_pulpcl_mbox_intr ;
   assign pulpcl_mbox_intr = hostd_pulpcl_mbox_intr_ored | safed_pulpcl_mbox_intr;
 
-  assign safed_pulpcl_mbox_intr = snd_mbox_intrs[SafedMboxOffset + CheshireNumIntHarts + 1];
+  // assign safed_pulpcl_mbox_intr = snd_mbox_intrs[SafedMboxOffset + CheshireNumIntHarts + 1];
+  assign safed_pulpcl_mbox_intr = '0;
 end else begin : gen_no_pulp_cluster
   assign pulp_rst_n = '0;
   assign pulp_pwr_on_rst_n = '0;
@@ -1656,10 +1680,14 @@ if (CarfieldIslandsCfg.spatz.enable) begin : gen_spatz_cluster
   assign spatzcl_mbox_intr = hostd_spatzcl_mbox_intr_ored | safed_spatzcl_mbox_intr;
   // verilog_lint: waive-stop line-length
 end else begin : gen_no_spatz_cluster
+  assign spatzcl_mbox_intr = '0;
+  assign spatzcl_timer_intr = '0;
   assign car_regs_hw2reg.spatz_cluster_isolate_status.d = 1'b0;
   assign car_regs_hw2reg.spatz_cluster_isolate_status.de = 1'b0;
   assign car_regs_hw2reg.spatz_cluster_busy.d = '0;
   assign car_regs_hw2reg.spatz_cluster_busy.de = 1'b0;
+  assign safed_spatzcl_mbox_intr = '0;
+  assign hostd_spatzcl_mbox_intr = '0;
   assign spatzcl_hostd_mbox_intr = '0;
   assign spatzcl_safed_mbox_intr = '0;
   assign spatz_rst_n = '0;
@@ -1870,6 +1898,7 @@ axi_riscv_atomics_structs #(
   .AxiUserIdLsb     ( Cfg.AxiUserAmoLsb      ),
   .RiscvWordWidth   ( 64                     ),
   .NAxiCuts         ( 0                      ),
+  .CutOupPopInpGnt  ( 1                      ),
   .axi_req_t        ( carfield_axi_slv_req_t ),
   .axi_rsp_t        ( carfield_axi_slv_rsp_t )
 ) i_atomics_mbox (
@@ -1939,11 +1968,11 @@ mailbox_unit #(
 );
 
 // Carfield peripherals
+logic eth_clk;
 if (CarfieldIslandsCfg.ethernet.enable) begin : gen_ethernet
   localparam int unsigned EthAsyncIdx = CarfieldRegBusSlvIdx.ethernet-NumSyncRegSlv;
   localparam int unsigned EthDivWidth = 20;
   localparam int unsigned DefaultEthClkDivValue = 1;
-  logic eth_clk;
   logic eth_clk_decoupled_valid, eth_clk_decoupled_ready;
 
   assign ethernet_isolate_req = car_regs_reg2hw.periph_isolate.q;
@@ -1960,6 +1989,17 @@ if (CarfieldIslandsCfg.ethernet.enable) begin : gen_ethernet
     .data_o  ( ),
     .busy_o  ( )
   );
+  // The Ethernet RGMII interfaces mandates a clock of 125MHz (in 1GBit mode) for both TX and RX
+  // clocks. We generate a 125MHz clock starting from the `periph_clk`. The (integer) division value
+  // is SW-programmable.
+  localparam int unsigned EthRgmiiPhyClkDivWidth = 20;
+  // We assume a peripheral clock of 250MHz to get the 125MHz clock for the RGMII interface. Hence,
+  // the default division value after PoR is 250/125.
+  localparam int unsigned EthRgmiiPhyClkDivDefaultValue = 2;
+  logic [EthRgmiiPhyClkDivWidth-1:0] eth_rgmii_phy_clk_div_value;
+  logic                     eth_rgmii_phy_clk_div_value_valid;
+  logic                     eth_rgmii_phy_clk_div_value_ready;
+  logic                     eth_rgmii_phy_clk0;
 
   clk_int_div #(
     .DIV_VALUE_WIDTH ( EthDivWidth ),
@@ -2050,6 +2090,7 @@ if (CarfieldIslandsCfg.ethernet.enable) begin : gen_ethernet
     .eth_rx_irq_o            ( car_eth_rx_intr                         )
   );
 end else begin : gen_no_ethernet
+  assign eth_clk                 = '0;
   assign ethernet_isolate_req    = '0;
   assign car_eth_rx_intr         = '0;
   assign eth_md_o                = '0;
@@ -2127,6 +2168,7 @@ if (CarfieldIslandsCfg.periph.enable) begin: gen_periph // Handle with care...
     .AxiUserIdLsb     ( Cfg.AxiUserAmoLsb      ),
     .RiscvWordWidth   ( 64                     ),
     .NAxiCuts         ( Cfg.RegAmoNumCuts      ),
+    .CutOupPopInpGnt  ( 1                      ),
     .axi_req_t        ( carfield_axi_slv_req_t ),
     .axi_rsp_t        ( carfield_axi_slv_rsp_t )
   ) i_atomics_peripherals (
@@ -2455,6 +2497,7 @@ if (CarfieldIslandsCfg.periph.enable) begin: gen_periph // Handle with care...
     assign can_tx_o = '0;
     assign apb_mst_rsp[CanIdx] = '0;
   end
+
 end else begin: gen_no_periph
   assign car_regs_hw2reg.periph_isolate_status.d = '0;
   assign car_regs_hw2reg.periph_isolate_status.de = '0;

@@ -141,42 +141,48 @@ extern "C" {
 #define CARFIELD_L2_CLK_EN_REG_OFFSET 0x80
 #define CARFIELD_L2_CLK_EN_L2_CLK_EN_BIT 0
 
-// Periph Domain pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
+// Periph Domain fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 ->
+// secd fll)
 #define CARFIELD_PERIPH_CLK_SEL_REG_OFFSET 0x84
 #define CARFIELD_PERIPH_CLK_SEL_PERIPH_CLK_SEL_MASK 0x3
 #define CARFIELD_PERIPH_CLK_SEL_PERIPH_CLK_SEL_OFFSET 0
 #define CARFIELD_PERIPH_CLK_SEL_PERIPH_CLK_SEL_FIELD \
   ((bitfield_field32_t) { .mask = CARFIELD_PERIPH_CLK_SEL_PERIPH_CLK_SEL_MASK, .index = CARFIELD_PERIPH_CLK_SEL_PERIPH_CLK_SEL_OFFSET })
 
-// Safety Island pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
+// Safety Island fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 ->
+// secd fll)
 #define CARFIELD_SAFETY_ISLAND_CLK_SEL_REG_OFFSET 0x88
 #define CARFIELD_SAFETY_ISLAND_CLK_SEL_SAFETY_ISLAND_CLK_SEL_MASK 0x3
 #define CARFIELD_SAFETY_ISLAND_CLK_SEL_SAFETY_ISLAND_CLK_SEL_OFFSET 0
 #define CARFIELD_SAFETY_ISLAND_CLK_SEL_SAFETY_ISLAND_CLK_SEL_FIELD \
   ((bitfield_field32_t) { .mask = CARFIELD_SAFETY_ISLAND_CLK_SEL_SAFETY_ISLAND_CLK_SEL_MASK, .index = CARFIELD_SAFETY_ISLAND_CLK_SEL_SAFETY_ISLAND_CLK_SEL_OFFSET })
 
-// Security Island pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
+// Security Island fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3
+// -> secd fll)
 #define CARFIELD_SECURITY_ISLAND_CLK_SEL_REG_OFFSET 0x8c
 #define CARFIELD_SECURITY_ISLAND_CLK_SEL_SECURITY_ISLAND_CLK_SEL_MASK 0x3
 #define CARFIELD_SECURITY_ISLAND_CLK_SEL_SECURITY_ISLAND_CLK_SEL_OFFSET 0
 #define CARFIELD_SECURITY_ISLAND_CLK_SEL_SECURITY_ISLAND_CLK_SEL_FIELD \
   ((bitfield_field32_t) { .mask = CARFIELD_SECURITY_ISLAND_CLK_SEL_SECURITY_ISLAND_CLK_SEL_MASK, .index = CARFIELD_SECURITY_ISLAND_CLK_SEL_SECURITY_ISLAND_CLK_SEL_OFFSET })
 
-// PULP Cluster pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
+// PULP Cluster fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 ->
+// secd fll)
 #define CARFIELD_PULP_CLUSTER_CLK_SEL_REG_OFFSET 0x90
 #define CARFIELD_PULP_CLUSTER_CLK_SEL_PULP_CLUSTER_CLK_SEL_MASK 0x3
 #define CARFIELD_PULP_CLUSTER_CLK_SEL_PULP_CLUSTER_CLK_SEL_OFFSET 0
 #define CARFIELD_PULP_CLUSTER_CLK_SEL_PULP_CLUSTER_CLK_SEL_FIELD \
   ((bitfield_field32_t) { .mask = CARFIELD_PULP_CLUSTER_CLK_SEL_PULP_CLUSTER_CLK_SEL_MASK, .index = CARFIELD_PULP_CLUSTER_CLK_SEL_PULP_CLUSTER_CLK_SEL_OFFSET })
 
-// Spatz Cluster pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
+// Spatz Cluster fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 ->
+// secd fll)
 #define CARFIELD_SPATZ_CLUSTER_CLK_SEL_REG_OFFSET 0x94
 #define CARFIELD_SPATZ_CLUSTER_CLK_SEL_SPATZ_CLUSTER_CLK_SEL_MASK 0x3
 #define CARFIELD_SPATZ_CLUSTER_CLK_SEL_SPATZ_CLUSTER_CLK_SEL_OFFSET 0
 #define CARFIELD_SPATZ_CLUSTER_CLK_SEL_SPATZ_CLUSTER_CLK_SEL_FIELD \
   ((bitfield_field32_t) { .mask = CARFIELD_SPATZ_CLUSTER_CLK_SEL_SPATZ_CLUSTER_CLK_SEL_MASK, .index = CARFIELD_SPATZ_CLUSTER_CLK_SEL_SPATZ_CLUSTER_CLK_SEL_OFFSET })
 
-// L2 Memory pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)
+// L2 Memory fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 -> secd
+// fll)
 #define CARFIELD_L2_CLK_SEL_REG_OFFSET 0x98
 #define CARFIELD_L2_CLK_SEL_L2_CLK_SEL_MASK 0x3
 #define CARFIELD_L2_CLK_SEL_L2_CLK_SEL_OFFSET 0
@@ -307,6 +313,13 @@ extern "C" {
 #define CARFIELD_HYPERBUS_CLK_DIV_VALUE_HYPERBUS_CLK_DIV_VALUE_OFFSET 0
 #define CARFIELD_HYPERBUS_CLK_DIV_VALUE_HYPERBUS_CLK_DIV_VALUE_FIELD \
   ((bitfield_field32_t) { .mask = CARFIELD_HYPERBUS_CLK_DIV_VALUE_HYPERBUS_CLK_DIV_VALUE_MASK, .index = CARFIELD_HYPERBUS_CLK_DIV_VALUE_HYPERBUS_CLK_DIV_VALUE_OFFSET })
+
+// FLL lock status
+#define CARFIELD_FLL_LOCK_REG_OFFSET 0xfc
+#define CARFIELD_FLL_LOCK_FLL_LOCK_MASK 0x1f
+#define CARFIELD_FLL_LOCK_FLL_LOCK_OFFSET 0
+#define CARFIELD_FLL_LOCK_FLL_LOCK_FIELD \
+  ((bitfield_field32_t) { .mask = CARFIELD_FLL_LOCK_FLL_LOCK_MASK, .index = CARFIELD_FLL_LOCK_FLL_LOCK_OFFSET })
 
 #ifdef __cplusplus
 }  // extern "C"
