@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0, see LICENSE for details.
 // SPDX-License-Identifier: Apache-2.0
 //
-// Alessandro Ottaviano <aottaviano@iis.ee.ethz.ch>
+// Yvan Tortorella <yvan.tortorella@unibo.it>
 //
 
 #include "car_memory_map.h"
@@ -14,47 +14,54 @@
 #include "regs/system_timer.h"
 #include "util.h"
 #include "car_util.h"
+#include "printf.h"
 
-// TODO: This test is really brittle. Its only purpose is to test timer accesses when the timer is
-// configured in freerunning mode and check if the value is within a sensible range. A better test
-// uses a periodic timer and checks if the periodic interrupts are taken. It will replace the
-// current test when interrupts are tested in the SoC.
+// In order to test the timer functionality, we reprogram the timer to do
+// consecutively the same count, and compare the result. We set the number
+// of runs to 4 so that the core can warm up the caches during the first two
+// iterations, and use the last 2 to compare the results. An empyrical analysis
+// shows that, in case of 500 rounds, the difference between two consecutive
+// reads is around 2% with no cache warmup, and drops under 1% with a single
+// cache warmup. In case of 250 rounds, with no cache warmup the difference is 4%.
 
-#define assert(expression) \
-    do { \
-	if (!expression) { \
-	    return 1; \
-	} \
-    } while (0)
-
-#define DUMMY_TIMER_CNT_GOLDEN_MIN 8000
-#define DUMMY_TIMER_CNT_GOLDEN_MAX 9000
+#define Runs 4
+#define Rounds 500
 
 int main(void) {
 
     // Put SMP Hart to sleep
     if (hart_id() != 0) wfi();
 
-    // Reset system timer
-    writed(1, CAR_SYSTEM_TIMER_BASE_ADDR + TIMER_RESET_LO_OFFSET);
+    volatile int time [Runs];
 
-    // Start system timer
-    writed(1, CAR_SYSTEM_TIMER_BASE_ADDR + TIMER_START_LO_OFFSET);
+    for (int i = 0; i < Runs; i++) {
+      // Reset system timer
+      writed(1, CAR_SYSTEM_TIMER_BASE_ADDR + TIMER_RESET_LO_OFFSET);
+      // Start system timer
+      writed(1, CAR_SYSTEM_TIMER_BASE_ADDR + TIMER_START_LO_OFFSET);
 
-    for (volatile int i = 0; i < 500; i++)
-	;
+      for (volatile int i = 0; i < Rounds; i++)
+	  ;
+      fencei();
 
-    // Stop system timer
-    writed(0, CAR_SYSTEM_TIMER_BASE_ADDR + TIMER_CFG_LO_OFFSET);
-
-    // Get system timer count
-    volatile int time = readd(CAR_SYSTEM_TIMER_BASE_ADDR + TIMER_CNT_LO_OFFSET);
-
-    // Note: the result is checked against a golden value that is probed from
-    // the waveforms, to check if the value is correctly read from sw.
-    if (time <= DUMMY_TIMER_CNT_GOLDEN_MIN || time >= DUMMY_TIMER_CNT_GOLDEN_MAX) {
-	return 1;
+      // Stop system timer
+      writed(0, CAR_SYSTEM_TIMER_BASE_ADDR + TIMER_CFG_LO_OFFSET);
+      // Get system timer count
+      time[i] = readd(CAR_SYSTEM_TIMER_BASE_ADDR + TIMER_CNT_LO_OFFSET);
     }
 
-    return 0;
+    // Extract the minimum value read from the timer and compute the difference
+    volatile int min, max;
+
+    if (time[Runs-2] < time[Runs-1]) {
+      min = time[Runs-2];
+      max = time[Runs-1];
+    } else {
+      min = time[Runs-1];
+      max = time[Runs-2];
+    }
+
+    float diff = 100*(max - min)/min;
+
+    return (diff > 1.0);
 }

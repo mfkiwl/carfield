@@ -16,7 +16,6 @@ module carfield_soc_fixture;
 
   import cheshire_pkg::*;
   import carfield_pkg::*;
-  import safety_island_pkg::*;
 
   ///////////
   //  DPI  //
@@ -34,19 +33,21 @@ module carfield_soc_fixture;
   localparam cheshire_cfg_t DutCfg = carfield_pkg::CarfieldCfgDefault;
   `CHESHIRE_TYPEDEF_ALL(, DutCfg)
 
-  localparam time         ClkPeriodSys  = 10ns;
+  localparam time         ClkPeriodSys  = 10ns; 
   localparam time         ClkPeriodJtag = 40ns;
+  localparam time         ClkPeriodPeriph = 4ns;
   localparam time         ClkPeriodRtc  = 1000ns; // 1MHz RTC clock. Note: needs to equal
                                                   // `DutCfg.RTCFreq` for successful autonomous boot
-                                                  // (e.g., SPI)
+                                                  // (e.g., SPI)                              
   localparam int unsigned RstCycles     = 5;
   localparam real         TAppl         = 0.1;
   localparam real         TTest         = 0.9;
 
-  localparam int NumPhys  = 2;
-  localparam int NumChips = 2;
+  localparam int NumPhys  = carfield_configuration::NumHypPhys;
+  localparam int NumChips = carfield_configuration::NumHypChips;
 
   logic       clk;
+  logic       periph_clk;
   logic       rst_n;
   logic       test_mode;
   logic [1:0] boot_mode;
@@ -88,6 +89,18 @@ module carfield_soc_fixture;
   logic i2c_scl_i;
   logic i2c_scl_en;
 
+  logic       eth_rxck;
+  logic [3:0] eth_rxd;
+  logic       eth_rxctl;
+  logic       eth_txck;
+  logic [3:0] eth_txd;
+  logic       eth_txctl;
+  logic       eth_rstn;
+  logic       eth_mdio_i;
+  logic       eth_mdio_o;
+  logic       eth_mdio_en;
+  logic       eth_mdc;
+
   logic                 spih_sck_o;
   logic                 spih_sck_en;
   logic [SpihNumCs-1:0] spih_csb_o;
@@ -122,12 +135,31 @@ module carfield_soc_fixture;
   logic [NumPhys-1:0]               hyper_dq_oe_o;
   logic [NumPhys-1:0]               hyper_reset_no;
 
+  logic ptme_clk, ptme_enc;
+  logic tc_active, tc_clock, tc_data;
+  logic [2:0] hpc_addr;
+  logic hpc_cmd_en, hpc_smp;
+  logic [1:0] llc_line;
+
   wire [NumPhys-1:0][NumChips-1:0]  pad_hyper_csn;
   wire [NumPhys-1:0]                pad_hyper_ck;
   wire [NumPhys-1:0]                pad_hyper_ckn;
   wire [NumPhys-1:0]                pad_hyper_rwds;
   wire [NumPhys-1:0]                pad_hyper_resetn;
   wire [NumPhys-1:0][7:0]           pad_hyper_dq;
+
+  wire spw_data_in, spw_strobe_in;
+  wire spw_data_out, spw_strobe_out;
+
+  logic eth_clk;
+
+  clk_rst_gen #(
+    .ClkPeriod    ( ClkPeriodPeriph ),
+    .RstClkCycles ( RstCycles       )
+  ) i_clk_rst_peri (
+    .clk_o  ( periph_clk   ),
+    .rst_no (  )
+  );
 
   carfield      #(
     .Cfg         ( DutCfg    ),
@@ -137,7 +169,7 @@ module carfield_soc_fixture;
     .reg_rsp_t   ( reg_rsp_t )
   ) i_dut                       (
     .host_clk_i                 ( clk                       ),
-    .periph_clk_i               ( clk                       ),
+    .periph_clk_i               ( periph_clk                ),
     .alt_clk_i                  ( clk                       ),
     .rt_clk_i                   ( rtc                       ),
     .pwr_on_rst_ni              ( rst_n                     ),
@@ -187,17 +219,17 @@ module carfield_soc_fixture;
     .spih_ot_sd_o               ( spi_secd_sd_o             ),
     .spih_ot_sd_en_o            ( spi_secd_sd_en            ),
     .spih_ot_sd_i               ( spi_secd_sd_i             ),
-    .eth_rxck_i                 ( '0                        ),
-    .eth_rxctl_i                ( '0                        ),
-    .eth_rxd_i                  ( '0                        ),
-    .eth_md_i                   ( '0                        ),
-    .eth_txck_o                 ( /* Currently unconnected, tie to 0 */ ),
-    .eth_txctl_o                ( /* Currently unconnected, tie to 0 */ ),
-    .eth_txd_o                  ( /* Currently unconnected, tie to 0 */ ),
-    .eth_md_o                   ( /* Currently unconnected, tie to 0 */ ),
-    .eth_md_oe                  ( /* Currently unconnected, tie to 0 */ ),
-    .eth_mdc_o                  ( /* Currently unconnected, tie to 0 */ ),
-    .eth_rst_n_o                ( /* Currently unconnected, tie to 0 */ ),
+    .eth_rxck_i                 ( eth_rxck                  ),
+    .eth_rxctl_i                ( eth_rxctl                 ),
+    .eth_rxd_i                  ( eth_rxd                   ),
+    .eth_md_i                   ( eth_mdio_i                ),
+    .eth_txck_o                 ( eth_txck                  ),
+    .eth_txctl_o                ( eth_txctl                 ),
+    .eth_txd_o                  ( eth_txd                   ),
+    .eth_md_o                   ( eth_mdio_o                ),
+    .eth_md_oe                  ( eth_mdio_en               ),
+    .eth_mdc_o                  ( eth_mdc                   ),
+    .eth_rst_n_o                ( eth_rstn                  ),
     .can_rx_i                   ( '0                        ),
     .can_tx_o                   (                           ),
     .gpio_i                     ( '0                        ),
@@ -217,6 +249,24 @@ module carfield_soc_fixture;
     .hyper_dq_o                 ( hyper_dq_o                ),
     .hyper_dq_oe_o              ( hyper_dq_oe_o             ),
     .hyper_reset_no             ( hyper_reset_no            ),
+    .tc_active_i                ( tc_active                 ),
+    .tc_clock_i                 ( tc_clock                  ),
+    .tc_data_i                  ( tc_data                   ),
+    .ptme_clk_o                 ( ptme_clk                  ),
+    .ptme_enc_o                 ( ptme_enc                  ),
+    .ptme_sync_o                (                           ),
+    .ptme_ext_clk_i             ( '0                        ),
+    .hpc_addr_o                 ( hpc_addr                  ),
+    .hpc_cmd_en_o               ( hpc_cmd_en                ),
+    .hpc_sample_o               ( hpc_smp                   ),
+    .llc_line_o                 ( llc_line                  ),
+    .obt_ext_clk_i              ( '0                        ),
+    .obt_pps_in_i               ( '0                        ),
+    .obt_sync_out_o             (                           ),
+    .spw_data_i                 ( spw_data_in               ),
+    .spw_strb_i                 ( spw_strobe_in             ),
+    .spw_data_o                 ( spw_data_out              ),
+    .spw_strb_o                 ( spw_strobe_out            ),
     .ext_reg_async_slv_req_i    ( '0                        ),
     .ext_reg_async_slv_ack_o    (                           ),
     .ext_reg_async_slv_data_i   ( '0                        ),
@@ -225,6 +275,8 @@ module carfield_soc_fixture;
     .ext_reg_async_slv_data_o   (                           ),
     .debug_signals_o            (                           )
   );
+
+  assign eth_clk = i_dut.eth_clk;
 
   //////////////////
   // Carfield VIP //
@@ -251,9 +303,12 @@ module carfield_soc_fixture;
     // memory model.
     .Hyp0UserPreloadMemFile ( `HYP0_PRELOAD_MEM_FILE ),
     .Hyp1UserPreloadMemFile ( `HYP1_PRELOAD_MEM_FILE ),
+    .HypNumPhys  ( NumPhys  ),
+    .HypNumChips ( NumChips ),
     .ClkPeriodSys  ( ClkPeriodSys ),
     .ClkPeriodJtag ( ClkPeriodJtag ),
     .ClkPeriodRtc  ( ClkPeriodRtc),
+    .ClkPeriodPeriph( ClkPeriodPeriph ),
     .RstCycles     ( RstCycles ),
     .TAppl         ( TAppl ),
     .TTest         ( TTest ),
@@ -264,16 +319,34 @@ module carfield_soc_fixture;
     // We use the clock/reset generated in cheshire VIP
     .clk_vip (),
     .rst_n_vip (),
+    .eth_clk ( eth_clk),
     // Multiplex incoming AXI req/rsp and convert through serial link
     .axi_slvs_req ( ext_to_vip_req ),
     .axi_slvs_rsp ( ext_to_vip_rsp ),
     .axi_muxed_req ( axi_muxed_req ),
     .axi_muxed_rsp ( axi_muxed_rsp ),
+    .ptme_clk_i    ( ptme_clk      ),
+    .ptme_enc_i    ( ptme_enc      ),
+    .hpc_addr_i    ( hpc_addr      ),
+    .hpc_cmd_en_i  ( hpc_cmd_en    ),
+    .hpc_smp_i     ( hpc_smp       ),
+    .llc_line_i    ( llc_line      ),
+    .tc_active     ( tc_active     ),     
+    .tc_clk        ( tc_clock      ),
+    .tc_data       ( tc_data       ),
+    .spw_din       ( spw_data_out  ),
+    .spw_sin       ( spw_strobe_out),
+    .spw_dout      ( spw_data_in   ),
+    .spw_sout      ( spw_strobe_in ),
     .*
   );
 
+  wire       eth_mdio;
   // I/O to INOUT behavioral conversion for carfield's peripherals that require it
-  vip_carfield_soc_tristate vip_tristate ( .* );
+  vip_carfield_soc_tristate #(
+    .HypNumPhys  ( NumPhys ),
+    .HypNumChips ( NumChips )
+  ) vip_tristate ( .* );
 
   //////////////////
   // Cheshire VIP //

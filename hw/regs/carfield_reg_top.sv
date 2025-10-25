@@ -225,18 +225,19 @@ module carfield_reg_top #(
   logic spatz_cluster_busy_qs;
   logic pulp_cluster_busy_qs;
   logic pulp_cluster_eoc_qs;
-  logic eth_rgmii_phy_clk_div_en_qs;
-  logic eth_rgmii_phy_clk_div_en_wd;
-  logic eth_rgmii_phy_clk_div_en_we;
-  logic [19:0] eth_rgmii_phy_clk_div_value_qs;
-  logic [19:0] eth_rgmii_phy_clk_div_value_wd;
-  logic eth_rgmii_phy_clk_div_value_we;
-  logic eth_mdio_clk_div_en_qs;
-  logic eth_mdio_clk_div_en_wd;
-  logic eth_mdio_clk_div_en_we;
-  logic [19:0] eth_mdio_clk_div_value_qs;
-  logic [19:0] eth_mdio_clk_div_value_wd;
-  logic eth_mdio_clk_div_value_we;
+  logic eth_clk_div_en_qs;
+  logic eth_clk_div_en_wd;
+  logic eth_clk_div_en_we;
+  logic [19:0] eth_clk_div_value_qs;
+  logic [19:0] eth_clk_div_value_wd;
+  logic eth_clk_div_value_we;
+  logic hyperbus_clk_div_en_qs;
+  logic hyperbus_clk_div_en_wd;
+  logic hyperbus_clk_div_en_we;
+  logic [19:0] hyperbus_clk_div_value_qs;
+  logic [19:0] hyperbus_clk_div_value_wd;
+  logic hyperbus_clk_div_value_we;
+  logic [4:0] fll_lock_qs;
 
   // Register instances
   // R[version0]: V(False)
@@ -1083,7 +1084,7 @@ module carfield_reg_top #(
   prim_subreg #(
     .DW      (2),
     .SWACCESS("RW"),
-    .RESVAL  (2'h1)
+    .RESVAL  (2'h3)
   ) u_security_island_clk_sel (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
@@ -1722,117 +1723,143 @@ module carfield_reg_top #(
   );
 
 
-  // R[eth_rgmii_phy_clk_div_en]: V(False)
+  // R[eth_clk_div_en]: V(False)
 
   prim_subreg #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h1)
-  ) u_eth_rgmii_phy_clk_div_en (
+  ) u_eth_clk_div_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (eth_rgmii_phy_clk_div_en_we),
-    .wd     (eth_rgmii_phy_clk_div_en_wd),
+    .we     (eth_clk_div_en_we),
+    .wd     (eth_clk_div_en_wd),
 
     // from internal hardware
     .de     (1'b0),
     .d      ('0  ),
 
     // to internal hardware
-    .qe     (reg2hw.eth_rgmii_phy_clk_div_en.qe),
-    .q      (reg2hw.eth_rgmii_phy_clk_div_en.q ),
+    .qe     (reg2hw.eth_clk_div_en.qe),
+    .q      (reg2hw.eth_clk_div_en.q ),
 
     // to register interface (read)
-    .qs     (eth_rgmii_phy_clk_div_en_qs)
+    .qs     (eth_clk_div_en_qs)
   );
 
 
-  // R[eth_rgmii_phy_clk_div_value]: V(False)
+  // R[eth_clk_div_value]: V(False)
 
   prim_subreg #(
     .DW      (20),
     .SWACCESS("RW"),
-    .RESVAL  (20'h64)
-  ) u_eth_rgmii_phy_clk_div_value (
+    .RESVAL  (20'ha)
+  ) u_eth_clk_div_value (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (eth_rgmii_phy_clk_div_value_we),
-    .wd     (eth_rgmii_phy_clk_div_value_wd),
+    .we     (eth_clk_div_value_we),
+    .wd     (eth_clk_div_value_wd),
 
     // from internal hardware
     .de     (1'b0),
     .d      ('0  ),
 
     // to internal hardware
-    .qe     (reg2hw.eth_rgmii_phy_clk_div_value.qe),
-    .q      (reg2hw.eth_rgmii_phy_clk_div_value.q ),
+    .qe     (reg2hw.eth_clk_div_value.qe),
+    .q      (reg2hw.eth_clk_div_value.q ),
 
     // to register interface (read)
-    .qs     (eth_rgmii_phy_clk_div_value_qs)
+    .qs     (eth_clk_div_value_qs)
   );
 
 
-  // R[eth_mdio_clk_div_en]: V(False)
+  // R[hyperbus_clk_div_en]: V(False)
 
   prim_subreg #(
     .DW      (1),
     .SWACCESS("RW"),
     .RESVAL  (1'h1)
-  ) u_eth_mdio_clk_div_en (
+  ) u_hyperbus_clk_div_en (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (eth_mdio_clk_div_en_we),
-    .wd     (eth_mdio_clk_div_en_wd),
+    .we     (hyperbus_clk_div_en_we),
+    .wd     (hyperbus_clk_div_en_wd),
 
     // from internal hardware
     .de     (1'b0),
     .d      ('0  ),
 
     // to internal hardware
-    .qe     (reg2hw.eth_mdio_clk_div_en.qe),
-    .q      (reg2hw.eth_mdio_clk_div_en.q ),
+    .qe     (reg2hw.hyperbus_clk_div_en.qe),
+    .q      (reg2hw.hyperbus_clk_div_en.q ),
 
     // to register interface (read)
-    .qs     (eth_mdio_clk_div_en_qs)
+    .qs     (hyperbus_clk_div_en_qs)
   );
 
 
-  // R[eth_mdio_clk_div_value]: V(False)
+  // R[hyperbus_clk_div_value]: V(False)
 
   prim_subreg #(
     .DW      (20),
     .SWACCESS("RW"),
-    .RESVAL  (20'h64)
-  ) u_eth_mdio_clk_div_value (
+    .RESVAL  (20'h1)
+  ) u_hyperbus_clk_div_value (
     .clk_i   (clk_i    ),
     .rst_ni  (rst_ni  ),
 
     // from register interface
-    .we     (eth_mdio_clk_div_value_we),
-    .wd     (eth_mdio_clk_div_value_wd),
+    .we     (hyperbus_clk_div_value_we),
+    .wd     (hyperbus_clk_div_value_wd),
 
     // from internal hardware
     .de     (1'b0),
     .d      ('0  ),
 
     // to internal hardware
-    .qe     (reg2hw.eth_mdio_clk_div_value.qe),
-    .q      (reg2hw.eth_mdio_clk_div_value.q ),
+    .qe     (reg2hw.hyperbus_clk_div_value.qe),
+    .q      (reg2hw.hyperbus_clk_div_value.q ),
 
     // to register interface (read)
-    .qs     (eth_mdio_clk_div_value_qs)
+    .qs     (hyperbus_clk_div_value_qs)
+  );
+
+
+  // R[fll_lock]: V(False)
+
+  prim_subreg #(
+    .DW      (5),
+    .SWACCESS("RO"),
+    .RESVAL  (5'h0)
+  ) u_fll_lock (
+    .clk_i   (clk_i    ),
+    .rst_ni  (rst_ni  ),
+
+    .we     (1'b0),
+    .wd     ('0  ),
+
+    // from internal hardware
+    .de     (hw2reg.fll_lock.de),
+    .d      (hw2reg.fll_lock.d ),
+
+    // to internal hardware
+    .qe     (),
+    .q      (reg2hw.fll_lock.q ),
+
+    // to register interface (read)
+    .qs     (fll_lock_qs)
   );
 
 
 
 
-  logic [62:0] addr_hit;
+  logic [63:0] addr_hit;
   always_comb begin
     addr_hit = '0;
     addr_hit[ 0] = (reg_addr == CARFIELD_VERSION0_OFFSET);
@@ -1894,10 +1921,11 @@ module carfield_reg_top #(
     addr_hit[56] = (reg_addr == CARFIELD_SPATZ_CLUSTER_BUSY_OFFSET);
     addr_hit[57] = (reg_addr == CARFIELD_PULP_CLUSTER_BUSY_OFFSET);
     addr_hit[58] = (reg_addr == CARFIELD_PULP_CLUSTER_EOC_OFFSET);
-    addr_hit[59] = (reg_addr == CARFIELD_ETH_RGMII_PHY_CLK_DIV_EN_OFFSET);
-    addr_hit[60] = (reg_addr == CARFIELD_ETH_RGMII_PHY_CLK_DIV_VALUE_OFFSET);
-    addr_hit[61] = (reg_addr == CARFIELD_ETH_MDIO_CLK_DIV_EN_OFFSET);
-    addr_hit[62] = (reg_addr == CARFIELD_ETH_MDIO_CLK_DIV_VALUE_OFFSET);
+    addr_hit[59] = (reg_addr == CARFIELD_ETH_CLK_DIV_EN_OFFSET);
+    addr_hit[60] = (reg_addr == CARFIELD_ETH_CLK_DIV_VALUE_OFFSET);
+    addr_hit[61] = (reg_addr == CARFIELD_HYPERBUS_CLK_DIV_EN_OFFSET);
+    addr_hit[62] = (reg_addr == CARFIELD_HYPERBUS_CLK_DIV_VALUE_OFFSET);
+    addr_hit[63] = (reg_addr == CARFIELD_FLL_LOCK_OFFSET);
   end
 
   assign addrmiss = (reg_re || reg_we) ? ~|addr_hit : 1'b0 ;
@@ -1967,7 +1995,8 @@ module carfield_reg_top #(
                (addr_hit[59] & (|(CARFIELD_PERMIT[59] & ~reg_be))) |
                (addr_hit[60] & (|(CARFIELD_PERMIT[60] & ~reg_be))) |
                (addr_hit[61] & (|(CARFIELD_PERMIT[61] & ~reg_be))) |
-               (addr_hit[62] & (|(CARFIELD_PERMIT[62] & ~reg_be)))));
+               (addr_hit[62] & (|(CARFIELD_PERMIT[62] & ~reg_be))) |
+               (addr_hit[63] & (|(CARFIELD_PERMIT[63] & ~reg_be)))));
   end
 
   assign jedec_idcode_we = addr_hit[5] & reg_we & !reg_error;
@@ -2117,17 +2146,17 @@ module carfield_reg_top #(
   assign pulp_cluster_boot_enable_we = addr_hit[55] & reg_we & !reg_error;
   assign pulp_cluster_boot_enable_wd = reg_wdata[0];
 
-  assign eth_rgmii_phy_clk_div_en_we = addr_hit[59] & reg_we & !reg_error;
-  assign eth_rgmii_phy_clk_div_en_wd = reg_wdata[0];
+  assign eth_clk_div_en_we = addr_hit[59] & reg_we & !reg_error;
+  assign eth_clk_div_en_wd = reg_wdata[0];
 
-  assign eth_rgmii_phy_clk_div_value_we = addr_hit[60] & reg_we & !reg_error;
-  assign eth_rgmii_phy_clk_div_value_wd = reg_wdata[19:0];
+  assign eth_clk_div_value_we = addr_hit[60] & reg_we & !reg_error;
+  assign eth_clk_div_value_wd = reg_wdata[19:0];
 
-  assign eth_mdio_clk_div_en_we = addr_hit[61] & reg_we & !reg_error;
-  assign eth_mdio_clk_div_en_wd = reg_wdata[0];
+  assign hyperbus_clk_div_en_we = addr_hit[61] & reg_we & !reg_error;
+  assign hyperbus_clk_div_en_wd = reg_wdata[0];
 
-  assign eth_mdio_clk_div_value_we = addr_hit[62] & reg_we & !reg_error;
-  assign eth_mdio_clk_div_value_wd = reg_wdata[19:0];
+  assign hyperbus_clk_div_value_we = addr_hit[62] & reg_we & !reg_error;
+  assign hyperbus_clk_div_value_wd = reg_wdata[19:0];
 
   // Read data return
   always_comb begin
@@ -2370,19 +2399,23 @@ module carfield_reg_top #(
       end
 
       addr_hit[59]: begin
-        reg_rdata_next[0] = eth_rgmii_phy_clk_div_en_qs;
+        reg_rdata_next[0] = eth_clk_div_en_qs;
       end
 
       addr_hit[60]: begin
-        reg_rdata_next[19:0] = eth_rgmii_phy_clk_div_value_qs;
+        reg_rdata_next[19:0] = eth_clk_div_value_qs;
       end
 
       addr_hit[61]: begin
-        reg_rdata_next[0] = eth_mdio_clk_div_en_qs;
+        reg_rdata_next[0] = hyperbus_clk_div_en_qs;
       end
 
       addr_hit[62]: begin
-        reg_rdata_next[19:0] = eth_mdio_clk_div_value_qs;
+        reg_rdata_next[19:0] = hyperbus_clk_div_value_qs;
+      end
+
+      addr_hit[63]: begin
+        reg_rdata_next[4:0] = fll_lock_qs;
       end
 
       default: begin

@@ -32,12 +32,12 @@ SECURITY_ISLAND_CLK_EN,1,rw,hro,0,0,Security Island clk gate enable
 PULP_CLUSTER_CLK_EN,1,rw,hro,0,0,PULP Cluster clk gate enable
 SPATZ_CLUSTER_CLK_EN,1,rw,hro,0,0,Spatz Cluster clk gate enable
 L2_CLK_EN,1,rw,hro,0,1,Shared L2 memory clk gate enable
-PERIPH_CLK_SEL,2,rw,hro,0,2,"Periph Domain pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)"
-SAFETY_ISLAND_CLK_SEL,2,rw,hro,0,1,"Safety Island pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)"
-SECURITY_ISLAND_CLK_SEL,2,rw,hro,0,1,"Security Island pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)"
-PULP_CLUSTER_CLK_SEL,2,rw,hro,0,1,"PULP Cluster pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)"
-SPATZ_CLUSTER_CLK_SEL,2,rw,hro,0,1,"Spatz Cluster pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)"
-L2_CLK_SEL,2,rw,hro,0,1,"L2 Memory pll select (0 -> host pll, 1 -> alt PLL, 2 -> per pll)"
+PERIPH_CLK_SEL,2,rw,hro,0,2,"Periph Domain fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 -> secd fll)"
+SAFETY_ISLAND_CLK_SEL,2,rw,hro,0,1,"Safety Island fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 -> secd fll)"
+SECURITY_ISLAND_CLK_SEL,2,rw,hro,0,3,"Security Island fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 -> secd fll)"
+PULP_CLUSTER_CLK_SEL,2,rw,hro,0,1,"PULP Cluster fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 -> secd fll)"
+SPATZ_CLUSTER_CLK_SEL,2,rw,hro,0,1,"Spatz Cluster fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 -> secd fll)"
+L2_CLK_SEL,2,rw,hro,0,1,"L2 Memory fll select (0 -> host fll, 1 -> alt fll, 2 -> per fll, 3 -> secd fll)"
 PERIPH_CLK_DIV_VALUE,24,rw,hro,1,1,Periph Domain clk divider value
 SAFETY_ISLAND_CLK_DIV_VALUE,24,rw,hro,1,1,Safety Island clk divider value
 SECURITY_ISLAND_CLK_DIV_VALUE,24,rw,hro,1,1,Security Island clk divider value
@@ -58,8 +58,8 @@ PULP_CLUSTER_BOOT_ENABLE,1,rw,hro,0,0,PULP Cluster boot enable
 SPATZ_CLUSTER_BUSY,1,ro,hrw,0,0,Spatz Cluster busy
 PULP_CLUSTER_BUSY,1,ro,hrw,0,0,PULP Cluster busy
 PULP_CLUSTER_EOC,1,ro,hrw,0,0,PULP Cluster end of computation
-ETH_RGMII_PHY_CLK_DIV_EN,1,rw,hro,1,1,Ethernet RGMII PHY clock divider enable bit
-ETH_RGMII_PHY_CLK_DIV_VALUE,20,rw,hro,1,100,Ethernet RGMII PHY clock divider value
-ETH_MDIO_CLK_DIV_EN,1,rw,hro,1,1,Ethernet MDIO clock divider enable bit
-ETH_MDIO_CLK_DIV_VALUE,20,rw,hro,1,100,Ethernet MDIO clock divider value
-
+ETH_CLK_DIV_EN,1,rw,hro,1,1,Ethernet clock divider enable bit
+ETH_CLK_DIV_VALUE,20,rw,hro,1,10,Ethernet clock divider value
+HYPERBUS_CLK_DIV_EN,1,rw,hro,1,1,Hyperbus clock divider enable bit
+HYPERBUS_CLK_DIV_VALUE,20,rw,hro,1,1,Hyperbus clock divider value
+FLL_LOCK,5,ro,hrw,0,0,FLL lock status

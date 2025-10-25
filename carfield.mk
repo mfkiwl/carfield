@@ -20,9 +20,11 @@
 CAR_ROOT    ?= $(shell $(BENDER) path carfield)
 CAR_HW_DIR  := $(CAR_ROOT)/hw
 CAR_SW_DIR  := $(CAR_ROOT)/sw
-CAR_TGT_DIR := $(CAR_ROOT)/target/
+CAR_TGT_DIR := $(CAR_ROOT)/target
 CAR_XIL_DIR := $(CAR_TGT_DIR)/xilinx
 CAR_SIM_DIR := $(CAR_TGT_DIR)/sim
+SECD_ROOT ?= $(shell $(BENDER) path opentitan)
+
 # Questasim
 CAR_VSIM_DIR := $(CAR_TGT_DIR)/sim/vsim
 
@@ -33,6 +35,8 @@ BENDER_ROOT ?= $(CAR_ROOT)/.bender
 BENDER_PATH ?= $(shell which $(BENDER))
 
 PYTHON      ?= python3
+
+PADRICK ?= $(CAR_HW_DIR)/padframe/padrick
 
 # Include mandatory bender targets and defines for multiple targets (sim, fpga, synth)
 include $(CAR_ROOT)/bender-common.mk
@@ -45,8 +49,8 @@ include $(CAR_ROOT)/bender-safed.mk
 # Nonfree components #
 ######################
 
-CAR_NONFREE_REMOTE ?= git@iis-git.ee.ethz.ch:carfield/carfield-nonfree.git
-CAR_NONFREE_COMMIT ?= 54ce7e49
+CAR_NONFREE_REMOTE ?= git@iis-git.ee.ethz.ch:astral/astral-nonfree.git
+CAR_NONFREE_COMMIT ?= 59aa6cfed0afe8a841c6fd478c07717a764fc4da
 
 ## @section Carfield platform nonfree components
 ## Clone the non-free verification IP for Carfield. Some components such as CI scripts and ASIC
@@ -55,10 +59,9 @@ CAR_NONFREE_COMMIT ?= 54ce7e49
 ## step will be skipped and the usage of the repository will **not** be compromised.
 car-nonfree-init:
 	git clone $(CAR_NONFREE_REMOTE) $(CAR_ROOT)/nonfree
-	cd nonfree && git checkout $(CAR_NONFREE_COMMIT)
-	cd nonfree/intel16 && icdesign intel16 -update all -nogui
+	cd $(CAR_ROOT)/nonfree && git checkout $(CAR_NONFREE_COMMIT)
 
--include nonfree/nonfree.mk
+-include $(CAR_ROOT)/nonfree/nonfree.mk
 
 #####################################
 # Islands' variables initialization #
@@ -99,6 +102,9 @@ SPATZD_MAKEDIR  := $(SPATZD_ROOT)/hw/system/spatz_cluster
 SPATZD_BINARY   ?=
 SPATZD_BOOTMODE ?= 0 # default jtag bootmode
 
+# PLL/FLL bypass
+BYPASS_PLL ?= 0
+
 ###########################
 # System HW configuration #
 ###########################
@@ -115,7 +121,7 @@ PLIC_NUM_INTRS := 89
 SERIAL_LINK_NUM_BITS := 16
 
 # AXI Real-Time unit configuration in Carfield
-AXIRT_NUM_MGRS := 10
+AXIRT_NUM_MGRS := 9
 AXIRT_NUM_SUBS := 2
 
 ##########################################
@@ -155,9 +161,23 @@ car-checkout: car-checkout-deps
 ############
 # Build SW #
 ############
-include $(CAR_SW_DIR)/sw.mk
+## @section Islands compile exclusion
+ifeq ($(shell echo $(PULPD_PRESENT)), 1)
+PULPD_SW_BUILD := pulpd-sw-build
+PULPD_SW_INIT := pulpd-sw-init
+endif
+
+ifeq ($(shell echo $(SAFED_PRESENT)), 1)
+SAFED_SW_BUILD := safed-sw-build
+SAFED_SW_INIT := safed-sw-init
+endif
+
+ifeq ($(shell echo $(SPATZD_PRESENT)), 1)
+SPATZD_HW_INIT := spatzd-hw-init
+endif
 
 ## @section Carfield platform SW build
+include $(CAR_SW_DIR)/sw.mk
 .PHONY: chs-sw-build
 ## Build the host domain (Cheshire) SW libraries and generates an archive (`libcheshire.a`)
 ## available for Carfield as static library at link time.
@@ -165,7 +185,7 @@ chs-sw-build: chs-sw-all
 
 .PHONY: car-sw-build
 ## Builds carfield application SW and specific libraries. It links against `libcheshire.a`.
-car-sw-build: chs-sw-build safed-sw-build pulpd-sw-build car-sw-all
+car-sw-build: chs-sw-build $(SAFED_SW_BUILD) $(PULPD_SW_BUILD) car-sw-all
 
 .PHONY: safed-sw-init pulpd-sw-init
 ## Clone safe domain's SW stack in the dedicated repository.
@@ -182,7 +202,7 @@ pulpd-sw-init: $(PULPD_ROOT) $(PULPD_ROOT)/pulp-runtime $(PULPD_ROOT)/regression
 $(PULPD_ROOT)/pulp-runtime: $(PULPD_ROOT)
 	$(MAKE) -C $(PULPD_ROOT) pulp-runtime
 $(PULPD_ROOT)/regression-tests: $(PULPD_ROOT)
-	$(MAKE) -C $(PULPD_ROOT) regression-tests
+	$(MAKE) -C $(PULPD_ROOT) regression_tests
 
 ## Build safe domain SW
 .PHONY: safed-sw-build
@@ -201,7 +221,7 @@ pulpd-sw-build: pulpd-sw-init
 #are a user external to ETH, the symlink will not work. We will integrate the compilation flow ASAP.
 
 #.PHONY: spatzd-sw-build spatzd-sw-build: $(MAKE) -C $(SPATZD_MAKEDIR) BENDER=$(BENDER_PATH)
-#LLVM_INSTALL_DIR=$(LLVM_SPATZ_DIR) GCC_INSTALL_DIR=$(GCC_SPATZ_DIR) −B
+#LLVM_INSTALL_DIR=$(LLVM_SPATZ_DIR) GCC_INSTALL_DIR=$(GCC_SPATZ_DIR) -B
 #SPATZ_CLUSTER_CFG=$(SPATZD_MAKEDIR)/cfg/carfield.hjson HTIF_SERVER=NO sw.vsim
 
 ###############
@@ -213,7 +233,7 @@ pulpd-sw-build: pulpd-sw-init
 ## Initialize Carfield HW. This step takes care of the generation of the missing hardware or the
 ## update of default HW configurations in some of the domains. See the two prerequisite's comment
 ## for more information.
-car-hw-init: spatzd-hw-init chs-hw-init
+car-hw-init: $(SPATZD_HW_INIT) chs-hw-init $(SECD_HW_INIT)
 
 ## @section Carfield platform PCRs generation
 .PHONY: regenerate_soc_regs
@@ -225,19 +245,41 @@ regenerate_soc_regs: $(CAR_ROOT)/hw/regs/carfield_reg_pkg.sv $(CAR_ROOT)/hw/regs
 
 .PHONY: $(CAR_ROOT)/hw/regs/carfield_regs.hjson
 $(CAR_ROOT)/hw/regs/carfield_regs.hjson: hw/regs/carfield_regs.csv | venv
-	$(VENV)/python ./scripts/csv_to_json.py --input $< --output $@
+	$(VENV)/$(PYTHON) ./scripts/csv_to_json.py --input $< --output $@
 
 .PHONY: $(CAR_ROOT)/hw/regs/carfield_reg_pkg.sv hw/regs/carfield_reg_top.sv
 $(CAR_ROOT)/hw/regs/carfield_reg_pkg.sv $(CAR_ROOT)/hw/regs/carfield_reg_top.sv: $(CAR_ROOT)/hw/regs/carfield_regs.hjson | venv
-	$(VENV)/python utils/reggen/regtool.py -r $< --outdir $(dir $@)
+	$(VENV)/$(PYTHON) utils/reggen/regtool.py -r $< --outdir $(dir $@)
 
 .PHONY: $(CAR_SW_DIR)/include/regs/soc_ctrl.h
 $(CAR_SW_DIR)/include/regs/soc_ctrl.h: $(CAR_ROOT)/hw/regs/carfield_regs.hjson | venv
-	$(VENV)/python utils/reggen/regtool.py -D $<  > $@
+	$(VENV)/$(PYTHON) utils/reggen/regtool.py -D $<  > $@
 
 .PHONY: $(CAR_SW_DIR)/hw/regs/pcr.md
 $(CAR_HW_DIR)/regs/pcr.md: $(CAR_ROOT)/hw/regs/carfield_regs.hjson | venv
-	$(VENV)/python utils/reggen/regtool.py -d $<  > $@
+	$(VENV)/$(PYTHON) utils/reggen/regtool.py -d $<  > $@
+
+## @section Carfield padframe generation
+.PHONY: regenerate_padframe
+regenerate_padframe: $(CAR_HW_DIR)/padframe/astral_padframe $(CAR_SW_DIR)/include/regs/padframe_regs.h
+
+$(CAR_HW_DIR)/padframe/astral_padframe: $(CAR_HW_DIR)/padframe/astral_padframe.yml
+	$(PADRICK) generate rtl $< -o $@
+	sed -i.original '/i_pad_vss_core_v_2/d' $@/src/astral_padframe_periph_pads.sv
+
+.PHONY: $(CAR_SW_DIR)/include/regs/padframe_regs.h
+$(CAR_SW_DIR)/include/regs/padframe_regs.h: $(CAR_ROOT)/hw/padframe/astral_padframe/src/astral_padframe_periph_regs.hjson | venv
+	$(VENV)/$(PYTHON) utils/reggen/regtool.py -D $<  > $@
+
+## @section Astral IO file generation
+.PHONY: regenerate_iofile
+regenerate_iofile: $(CAR_ROOT)/iofile/astral.io
+
+$(CAR_ROOT)/iofile/astral.io: $(CAR_ROOT)/iofile/padring.csv
+	rm -rf $@
+	sed 's/;/,/g' "$<" > $<.tmp
+	mv $<.tmp $<
+	$(PYTHON) $(CAR_ROOT)/scripts/iogen.py $< $@
 
 ## Update host domain PLIC and CLINT interrupt controllers configuration. The default configuration
 ## in cheshire allows for one interruptible hart. When the number of external interruptible harts is
@@ -284,7 +326,7 @@ include $(CAR_SIM_DIR)/sim.mk
 
 .PHONY: car-init-all
 ## Shortcut to initialize carfield with all the targets described above.
-car-init-all: car-checkout car-hw-init car-sim-init safed-sw-init pulpd-sw-init mibench
+car-init-all: car-checkout car-hw-init car-sim-init $(SAFED_SW_INIT) $(PULPD_SW_INIT) mibench
 
 ## Initialize Carfield and build SW
 .PHONY: car-all
@@ -324,7 +366,7 @@ include $(CAR_XIL_DIR)/xilinx.mk
 mibench: $(CAR_SW_DIR)/benchmarks/mibench
 
 $(CAR_SW_DIR)/benchmarks/mibench:
-	git clone git@github.com:alex96295/mibench.git -b carfield $@
+	git clone https://github.com/alex96295/mibench.git -b carfield $@
 
 # Litmus tests
 LITMUS_WORK_DIR  := work-litmus
@@ -363,8 +405,14 @@ car-check-litmus-tests: $(LITMUS_WORK_DIR)/litmus.log
 # Technology #
 ##############
 tech-repo := git@iis-git.ee.ethz.ch:Astral/gf12.git
-tech-init:
+# no commit by default, change during development
+tech-commit := e58cb2997247e74c3d258788c4c1dbce9cbda838 # branch: yt/astral-resume
+
+tech-clone:
 	git clone $(tech-repo) tech
+
+tech-init: tech-clone
+	cd $(TECH_ROOT) && git checkout $(tech-commit) && cd $(CAR_ROOT)
 	$(MAKE) -C $(TECH_ROOT) init
 
 ########
